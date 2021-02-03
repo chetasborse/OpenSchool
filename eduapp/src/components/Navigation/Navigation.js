@@ -15,13 +15,13 @@ import Login from '../Users/Login';
 import Register from '../Users/Register';
 import Logout from '../Users/Logout';
 import Profile from '../Users/Profile';
+import {connect} from 'react-redux';
 
 class Navigation extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isOpen: false,
-            loggedIn: this.props.LoggedIn
+            isOpen: false
         }
     }
 
@@ -29,14 +29,6 @@ class Navigation extends Component {
         this.setState({
             isOpen: !this.state.isOpen
         })
-    }
-
-    componentDidUpdate(PrevProps, PrevState) {
-        if(PrevProps.LoggedIn != this.props.LoggedIn) {
-            this.setState({
-                loggedIn: !this.state.loggedIn
-            })
-        }
     }
 
     render(){
@@ -51,7 +43,7 @@ class Navigation extends Component {
                                 <NavItem>
                                     <Link className="linkclass" to="/">Home</Link>
                                 </NavItem>
-                                {!this.state.loggedIn &&
+                                {!this.props.LoggedIn &&
                                 <React.Fragment>
                                     <NavItem>
                                         <Link className="linkclass" to="/Login">Login</Link>
@@ -62,7 +54,7 @@ class Navigation extends Component {
                                 </React.Fragment>
                                 }
                                 {
-                                    this.state.loggedIn &&
+                                    this.props.LoggedIn &&
                                     <React.Fragment>
                                         <NavItem>
                                             <Link className="linkclass" to="/Profile">Profile</Link>
@@ -77,23 +69,22 @@ class Navigation extends Component {
                     </Container>
                 </Navbar>
                 <Switch>  
-                    <Route path="/Login" render={(props) => (!this.props.LoggedIn ? (<Login {...this.props}/>) : (<Redirect to="/"></Redirect>))}/>
-                    <Route path="/Register" render={(props) => (!this.props.LoggedIn ? (<Register {...this.props}/>) : (<Redirect to="/"></Redirect>))}/>
-                    <Route path="/Logout" render={(props) => (this.props.LoggedIn ? (<Logout {...this.props}/>) : (<Redirect to="/Login"></Redirect>))}/>
-                    <Route path="/Profile" render={(props) => (this.props.LoggedIn ? (<Profile {...this.props} />) : (<Redirect to="/"></Redirect>))}/>
+                    <Route path="/Login" render={(props) => (!this.props.LoggedIn ? (<Login/>) : (<Redirect to="/"></Redirect>))}/>
+                    <Route path="/Register" render={(props) => (!this.props.LoggedIn ? (<Register/>) : (<Redirect to="/"></Redirect>))}/>
+                    <Route path="/Logout" render={(props) => (this.props.LoggedIn ? (<Logout/>) : (<Redirect to="/Login"></Redirect>))}/>
+                    <Route path="/Profile" render={(props) => (this.props.LoggedIn ? (<Profile/>) : (<Redirect to="/"></Redirect>))}/>
                     <Route path="/" exact component={Home}/>                           
                 </Switch> 
-                {/* <Switch>  
-                    <Route path="/Login" render={(props) => (!this.props.LoggedIn ? (<Login {...props} setLogin={this.props.setLogin} LoggedIn={this.props.LoggedIn}/>) : (<Redirect to="/"></Redirect>))}/>
-                    <Route path="/Register" render={(props) => (!this.props.LoggedIn ? (<Register {...props} setLogin={this.props.setLogin} LoggedIn={this.props.LoggedIn}/>) : (<Redirect to="/"></Redirect>))}/>
-                    <Route path="/Logout" render={(props) => (this.props.LoggedIn ? (<Logout {...props} setLogin={this.props.setLogin} LoggedIn={this.props.LoggedIn} logout={this.props.logout}/>) : (<Redirect to="/Login"></Redirect>))}/>
-                    <Route path="/Profile" render={(props) => (this.props.LoggedIn ? (<Profile {...props} />) : (<Redirect to="/"></Redirect>))}/>
-                    <Route path="/" exact component={Home}/>                           
-                </Switch>                                  */}
             </Router>
         )
     }
 }
 
-export default Navigation
+const mapStateToProps = state => {
+    return {
+        LoggedIn: state.users.loggedIn
+    }
+}
+
+export default connect(mapStateToProps)(Navigation)
 

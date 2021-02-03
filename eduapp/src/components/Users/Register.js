@@ -79,12 +79,10 @@ class Register extends Component {
             {
                 this.state.register &&
                 <Container>
-                    {/* <Router> */}
                         <Switch> 
-                            <Route path="/Login" render={(props) => (<Login {...props} setLogin={this.props.setLogin} LoggedIn={this.props.LoggedIn}/>)}/>   
+                            <Route path="/Login" render={(props) => (<Login/>)}/>   
                             <Route path="/Register" render={(props) => (<Redirect to="/Login"></Redirect>)}/>
                         </Switch>
-                    {/* </Router> */}
                 </Container>
             }
             </React.Fragment>

@@ -1,10 +1,14 @@
 import React from 'react'
+//import {Provider} from 'react-redux'
 import './App.css';
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 import Navigation from './components/Navigation/Navigation';
+import {connect} from 'react-redux'
+import { checkUser } from './redux/Users/userActions';
+//import store from './redux/store';
 
-function App() {
+function App(props) {
 
   axios.defaults.withCredentials = true;
 
@@ -14,22 +18,11 @@ function App() {
 
 
   useEffect(() => {
-    axios.get("http://localhost:5000/users/login")
-    .then((response) => {
-
-      if(response.data.loggedIn === true) {
-        setLogin(true);
-        setUser(response.data.user[0].username)
-        setPassword(response.data.user[0].password)
-      }
-      else {
-        setLogin(false);
-      }
-    })
-    .catch(error => {
-      console.log(error)
-    })
-  }, [LoggedIn])
+    props.checkUser()
+    setLogin(props.loggedIn)
+    setUser(props.username)
+    setPassword(props.password)
+  }, [props.loggedIn])
 
   const logout = () => {
     axios.post("http://localhost:5000/users/logout")
@@ -43,10 +36,24 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Navigation setLogin={setLogin} LoggedIn={LoggedIn} logout={logout} username={Username} password={Password}/>
-    </div>
+      <div className="App">
+        <Navigation/>
+      </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.users.loggedIn,
+    username: state.users.username,
+    password: state.users.password
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    checkUser: () => dispatch(checkUser())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

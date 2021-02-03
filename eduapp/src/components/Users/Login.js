@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Button, Form, FormGroup, Label, Input, Col, Container } from 'reactstrap';
 import './Styles.css'
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux'
+import { login } from '../../redux/Users/userActions';
 
 
 axios.defaults.withCredentials = true;
@@ -24,12 +26,14 @@ class Login extends Component {
         }
         axios.post("http://localhost:5000/users/login", body)
         .then(response => {
-            // console.log(response.data.message);
+            
             if(typeof response.data.message !== 'undefined') {
                 alert(response.data.message)
             }
             else {
                 alert("Welcome user")
+                this.props.login(response.data[0])
+                console.log(response.data[0])
                 this.props.setLogin(true)
             }
         })
@@ -69,4 +73,10 @@ class Login extends Component {
     }
 }
 
-export default Login;
+const mapDispatchToProps = dispatch => {
+    return {
+        login: (data) => dispatch(login(data))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Login);
