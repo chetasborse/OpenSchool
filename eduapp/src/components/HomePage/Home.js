@@ -111,13 +111,29 @@ class Home extends Component {
 
         const pending = this.props.pending_requests.map((req) => (
             <React.Fragment key={req.request_id}>
-                <Row style={{border: "1px solid black"}}>
-                    <div>Subject: {req.subject_id}</div>
-                    <div>Topic: {req.topic}</div>
-                    <div>TimeSlot: {req.time_slot}</div>
-                    <div>Date: {req.req_date}</div>
-                    <div>Language: {req.language_id}</div>
-                </Row>
+                <Container style={{border: "1px solid black"}}>
+                    <Row>
+                        <Col>
+                            {/* Subject: {req.subject_id} */}
+                            Subject: {this.props.all_subjects[req.subject_id - 1].subject_name}
+                        </Col>
+                        <Col>
+                            Topic: {req.topic}
+                        </Col>
+                        <Col>
+                            Language: {this.props.all_languages[req.language_id - 1].language_name}
+                            {/* Language: {req.subject_id} */}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            TimeSlot: {req.time_slot}
+                        </Col>
+                        <Col>
+                        Date: {req.req_date}
+                        </Col>
+                    </Row>
+                </Container>
             </React.Fragment>
         ))
 
