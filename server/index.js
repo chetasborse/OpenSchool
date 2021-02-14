@@ -4,11 +4,11 @@ const config = require("./config");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser')
-const session = require('express-session')
-//const createTable = require("./createtable");
+const session = require('express-session');
 
 const routes = [
     "users",
+    "session",
 ];
 
 app.use(cors({
@@ -27,7 +27,7 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            expires: 20,
+            expires: 24 * 60 * 60,
         },
     })
 );

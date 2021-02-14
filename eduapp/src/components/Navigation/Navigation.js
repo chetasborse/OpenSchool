@@ -16,6 +16,8 @@ import Register from '../Users/Register';
 import Logout from '../Users/Logout';
 import Profile from '../Users/Profile';
 import {connect} from 'react-redux';
+import Request_view from '../Sessions/Request_view';
+// import Request_session from '../Sessions/Request_session';
 
 class Navigation extends Component {
     constructor(props) {
@@ -59,6 +61,18 @@ class Navigation extends Component {
                                         <NavItem>
                                             <Link className="linkclass" to="/Profile">Profile</Link>
                                         </NavItem>
+                                        {/* {
+                                            !this.props.is_teacher &&
+                                            <NavItem>
+                                                <Link className="linkclass" to="/Request_Session">Req_Sess</Link>
+                                            </NavItem>
+                                        } */}
+                                        {
+                                            this.props.is_teacher &&
+                                            <NavItem>
+                                                <Link className="linkclass" to="/View_Requests">Requests</Link>
+                                            </NavItem>
+                                        }
                                         <NavItem>
                                             <Link className="linkclass" to="/Logout">Logout</Link>
                                         </NavItem>
@@ -73,6 +87,8 @@ class Navigation extends Component {
                     <Route path="/Register" render={(props) => (!this.props.LoggedIn ? (<Register/>) : (<Redirect to="/"></Redirect>))}/>
                     <Route path="/Logout" render={(props) => (this.props.LoggedIn ? (<Logout/>) : (<Redirect to="/Login"></Redirect>))}/>
                     <Route path="/Profile" render={(props) => (this.props.LoggedIn ? (<Profile/>) : (<Redirect to="/"></Redirect>))}/>
+                    <Route path="/View_Requests" render={(props) => (this.props.LoggedIn ? (this.props.is_teacher ? (<Request_view/>): (<Redirect to="/"></Redirect>)): (<Redirect to="/Login"></Redirect>))}/>
+                    {/* <Route path="/Request_Session" render={(props) => (this.props.LoggedIn ? (!this.props.is_teacher ? (<Request_session/>): (<Redirect to="/View_Requests"></Redirect>)): (<Redirect to="/Login"></Redirect>))}/> */}
                     <Route path="/" exact component={Home}/>                           
                 </Switch> 
             </Router>
@@ -82,7 +98,8 @@ class Navigation extends Component {
 
 const mapStateToProps = state => {
     return {
-        LoggedIn: state.users.loggedIn
+        LoggedIn: state.users.loggedIn,
+        is_teacher: state.users.is_teacher
     }
 }
 

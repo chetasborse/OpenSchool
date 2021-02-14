@@ -34,7 +34,6 @@ class Login extends Component {
                 alert("Welcome user")
                 this.props.login(response.data[0])
                 console.log(response.data[0])
-                this.props.setLogin(true)
             }
         })
         .catch(error => {
