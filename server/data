@@ -1,5 +1,3 @@
 insert into users(user_id, username, password) values (-1, "tp", "tp");
-
 insert into languages(language_name) values ("English"), ("Marathi"), ("Hindi"), ("Kannada"), ("Tamil"), ("Telugu");
-
 insert into subject(subject_name) values ("Chemistry"), ("Physics"), ("Biology"), ("Algebra"), ("Geometry"), ("Science"), ("Maths");
