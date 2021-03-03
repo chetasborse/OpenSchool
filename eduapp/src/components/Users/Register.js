@@ -92,6 +92,10 @@ class Register extends Component {
         })
     }
 
+    handle_image = e => {
+        
+    }
+
     componentDidUpdate(PrevProps, PrevState) {
         if(PrevState.register != this.state.register) {
             console.log(this.state.register)
@@ -119,6 +123,7 @@ class Register extends Component {
                                 <Input type="text" name="first_name" id="first_name" placeholder="Enter your name" value={this.state.first_name} onChange={this.handle}></Input>
                             </Col>
                         </FormGroup>
+
                         <FormGroup row>
                             <Label for="last_name" sm={2}>Last Name:</Label>
                             <Col sm={10}>

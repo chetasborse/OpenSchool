@@ -23,6 +23,7 @@ class Profile extends Component {
             selected_subject_id: '',
             selected_language: '',
             selected_language_id: '',
+            profile_photo: null,
         }
     }
 
@@ -47,6 +48,16 @@ class Profile extends Component {
 
     complete_edit = () => {
         this.toggle_profile()
+        const data = new FormData();
+        data.append('file', this.state.profile_photo)
+        data.append('user_id', this.props.user_id)
+        data.append('first_name', this.state.first_name)
+        data.append('last_name', this.state.last_name)
+        data.append('email_id', this.state.email_id)
+        data.append('grade', this.state.grade)
+        data.append('board', this.state.board)
+        data.append('qualification', this.state.qualification)
+        data.append('oldurl', this.props.image_link)
         var body = {
             user_id: this.props.user_id,
             first_name: this.state.first_name,
@@ -57,7 +68,7 @@ class Profile extends Component {
             qualification: this.state.qualification
         }
         if(this.props.is_teacher) {
-            axios.post("http://localhost:5000/users/editteacher", body)
+            axios.post("http://localhost:5000/users/editteacher", data)
             .then(response => {
                 this.props.checkUser()
                 alert('Profile updated')
@@ -67,7 +78,7 @@ class Profile extends Component {
             })
         }
         else {
-            axios.post("http://localhost:5000/users/editstudent", body)
+            axios.post("http://localhost:5000/users/editstudent", data)
             .then(response => {
                 this.props.checkUser()
                 alert('Profile updated')
@@ -95,6 +106,12 @@ class Profile extends Component {
         this.setState({
             type_selected: true,
             board: e.target[e.target.selectedIndex].value
+        })
+    }
+
+    handle_file = e => {
+        this.setState({
+            profile_photo: e.target.files[0]
         })
     }
 
@@ -199,7 +216,8 @@ class Profile extends Component {
                             <p>Username: {username}</p>
                             <p>Name: {first_name} {last_name}</p>
                             <p>Email: {email_id}</p>
-                            <p>Image Link: {image_link}</p>
+                            {/* <p>Image Link: {image_link}</p> */}
+                            <img src={this.props.image_link} height="100px"></img>
                             <p>Sessions taken: {session_taken}</p>
                             {is_teacher &&
                                 <React.Fragment>
@@ -235,6 +253,12 @@ class Profile extends Component {
                                         <Label for="email" sm={2}>Email Id:</Label>
                                         <Col sm={10}>
                                             <Input type="text" name="email_id" id="email_id" placeholder="Enter your email id" value={this.state.email_id} onChange={this.handle}></Input>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Label for="file" sm={2}>Profile Photo:</Label>
+                                        <Col sm={10}>
+                                            <Input type="file" name="file" id="file" placeholder="Upload a profile photo" onChange={this.handle_file}></Input>
                                         </Col>
                                     </FormGroup>
                                     {

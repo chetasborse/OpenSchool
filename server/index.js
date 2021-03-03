@@ -32,6 +32,8 @@ app.use(
     })
 );
 
+app.use(express.static('public'));
+
 app.get("/", (req, res) => res.send("This is the server page"))
 
 routes.forEach((route) => app.use(`/${route}`, require(`./routes/${route}`)));
