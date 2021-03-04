@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Navigation from './components/Navigation/Navigation';
 import {connect} from 'react-redux'
 import { checkUser, getInterest, set_all_lang_and_subs } from './redux/Users/userActions';
+import Tp from './components/Tp';
 //import store from './redux/store';
 
 function App(props) {
@@ -30,6 +31,7 @@ function App(props) {
   return (
       <div className="App">
         <Navigation/>
+        {/* <Tp/> */}
       </div>
   );
 }

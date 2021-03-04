@@ -17,7 +17,7 @@ class Register extends Component {
             first_name: '',
             last_name: '',
             email_id: '',
-            image_link: '',
+            image_link: 'http://localhost:5000/profile_pics/default.png',
             qualification: '',
             grade: 1,
             board: '',

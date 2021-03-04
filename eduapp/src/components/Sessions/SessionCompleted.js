@@ -32,6 +32,32 @@ class SessionCompleted extends Component {
                 user_id: this.props.teacher_id,
                 student_id: this.props.user_id
             }
+            var bod = {
+                topic: this.props.topic,
+                review: this.state.rate,
+                first_name: this.props.first_name,
+                last_name: this.props.last_name,
+            }
+            bod.type = "finish_student"
+            bod.receiver = this.props.email_id
+            axios.post("http://localhost:5000/users/sendmail", bod)
+            .then(res=> {
+                console.log("email sent")
+            })
+            .catch(err=> {
+                console.log("error in sending mail")
+            })
+            bod.type = "finish_teacher"
+            bod.receiver = this.props.email
+            bod.first_name = this.props.first
+            bod.last_name = this.props.last
+            axios.post("http://localhost:5000/users/sendmail", bod)
+            .then(res=> {
+                console.log("email sent")
+            })
+            .catch(err=> {
+                console.log("error in sending mail")
+            })
             axios.post("http://localhost:5000/users/update_points", body1)
             .then(resp => {
                 console.log("Points updated")
@@ -96,7 +122,10 @@ class SessionCompleted extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        user_id: state.users.user_id
+        user_id: state.users.user_id,
+        email_id: state.users.email_id,
+        first: state.users.first_name,
+        last: state.users.last_name
     }
 }
 

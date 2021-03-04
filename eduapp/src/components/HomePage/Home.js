@@ -59,6 +59,11 @@ class Home extends Component {
         const upcoming = this.props.upcoming_sessions.map((up) => (
             <React.Fragment key={up.session_id}>
                 <Container style={{border: "1px solid black"}}>
+                    <Row>
+                        <Col>
+                            <img src={up.image_link} className="profilepic2"></img>
+                        </Col>
+                    </Row>
                     {   this.props.is_teacher &&
                         <Row>
                         <Col>
@@ -103,7 +108,7 @@ class Home extends Component {
                     </Row>
                     {
                         !this.props.is_teacher &&
-                        <SessionCompleted session_id={up.session_id} teacher_id={up.teacher_id} refresh= {this.refresh}/>
+                        <SessionCompleted session_id={up.session_id} teacher_id={up.teacher_id} refresh= {this.refresh} topic= {up.topic} first_name={up.first_name} last_name={up.last_name} email = {up.email_id}/>
                     }
                 </Container>
             </React.Fragment>
@@ -140,6 +145,11 @@ class Home extends Component {
         const past = this.props.past_sessions.map((up) => (
             <React.Fragment key={up.session_id}>
                 <Container style={{border: "1px solid black"}}>
+                    <Row>
+                        <Col>
+                            <img src={up.image_link} className="profilepic2"></img>
+                        </Col>
+                    </Row>
                     {   this.props.is_teacher &&
                         <Row>
                         <Col>
@@ -211,16 +221,16 @@ class Home extends Component {
                     <Container style={{border: "1px solid #cecece", height: "500px", overflow: "auto"}}>
                         <Row>
                             <Col>
-                                <Button color="none" onClick={this.showupcoming}>Upcoming Sessions</Button>
+                                <Button color="warning" onClick={this.showupcoming}>Upcoming Sessions</Button>
                             </Col>
                             {
                                 !this.props.is_teacher &&
                                 <Col>
-                                    <Button color="none" onClick={this.showpending}>Pending Requests</Button>
+                                    <Button color="warning" onClick={this.showpending}>Pending Requests</Button>
                                 </Col>
                             }
                             <Col>
-                                <Button color="none" onClick={this.showpast}>Past Sessions</Button>
+                                <Button color="warning" onClick={this.showpast}>Past Sessions</Button>
                             </Col>
                         </Row>
                         <Row>

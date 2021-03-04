@@ -10,6 +10,7 @@ const path = require('path')
 
 const jwt = require('jsonwebtoken');
 const { promisify } = require("util");
+const { sendEmail } = require("../mail");
 const pipeline = promisify(require("stream").pipeline)
 
 
@@ -40,7 +41,7 @@ router.post("/register", (req, res) => {
 
 
 router.post("/teacher", (req, res) => {
-    var query = `insert into teachers(user_id, first_name, last_name, email_id, image_link, qualification, rating_points, sessions_taken) values (${req.body.id}, "${req.body.first_name}", "${req.body.last_name}", "${req.body.email_id}", "none", "${req.body.qualification}" , 0, 0);`
+    var query = `insert into teachers(user_id, first_name, last_name, email_id, image_link, qualification, rating_points, sessions_taken) values (${req.body.id}, "${req.body.first_name}", "${req.body.last_name}", "${req.body.email_id}", "${req.body.image_link}", "${req.body.qualification}" , 0, 0);`
     db.query(query, (err, result) => {
         if(err) {
             res.status(400).send(err.message);
@@ -62,7 +63,7 @@ router.get("/teacher", (req, res) => {
 })
 
 router.post("/student", (req, res) => {
-    var query = `insert into students(user_id, first_name, last_name, email_id, image_link, grade, board, session_taken) values (${req.body.id}, "${req.body.first_name}", "${req.body.last_name}", "${req.body.email_id}", "none", ${req.body.grade}, "${req.body.board}" , 0);`
+    var query = `insert into students(user_id, first_name, last_name, email_id, image_link, grade, board, session_taken) values (${req.body.id}, "${req.body.first_name}", "${req.body.last_name}", "${req.body.email_id}", "${req.body.image_link}", ${req.body.grade}, "${req.body.board}" , 0);`
     db.query(query, (err, result) => {
         if(err) {
             res.status(400).send(err.message);
@@ -132,26 +133,32 @@ router.post('/editteacher', upload.single("file"), async function (req, res, nex
 
     var filename = ''
     var image_url = ''
+
+    console.log(req.file)
     
-    if(req.file !== undefined) {
+    if(req.file === null) {
+        image_url = req.body.oldurl
+    }
+    else {
+        var def = false
+        if(req.body.oldurl.localeCompare("http://localhost:5000/profile_pics/default.png") === 0)
+            def = true
         try {
             filename = req.body.user_id + Math.floor(Math.random() * 1000) + req.file.detectedFileExtension;
             await pipeline(req.file.stream, fs.createWriteStream(`${__dirname}/../public/profile_pics/${filename}`))
             image_url = `http://localhost:5000/profile_pics/${filename}`
-            const paths = `${__dirname}/../public/${req.body.oldurl.slice(22)}`
-            fs.unlink(paths, (err) => {
-                if(err) {
-                    console.log(err)
-                    return
-                }
-            })
+            if(!def) {
+                const paths = `${__dirname}/../public/${req.body.oldurl.slice(22)}`
+                fs.unlink(paths, (err) => {
+                    if(err) {
+                        console.log(err)
+                    }
+                })
+            }
         }
         catch(error){
             console.log(error)
         }
-    }
-    else {
-        filename = ''
     }
 
     var query = `update teachers set first_name="${req.body.first_name}", last_name="${req.body.last_name}", email_id="${req.body.email_id}", qualification="${req.body.qualification}", image_link="${image_url}" where user_id=${req.body.user_id};`
@@ -168,26 +175,32 @@ router.post('/editstudent', upload.single("file"), async function (req, res, nex
 
     var filename = ''
     var image_url = ''
+
+    console.log(req.file)
     
-    if(req.file !== undefined) {
+    if(req.file === null) {
+        image_url = req.body.oldurl
+    }
+    else {
+        var def = false
+        if(req.body.oldurl.localeCompare("http://localhost:5000/profile_pics/default.png") === 0)
+            def = true
         try {
             filename = req.body.user_id + Math.floor(Math.random() * 1000) + req.file.detectedFileExtension;
             await pipeline(req.file.stream, fs.createWriteStream(`${__dirname}/../public/profile_pics/${filename}`))
             image_url = `http://localhost:5000/profile_pics/${filename}`
-            const paths = `${__dirname}/../public/${req.body.oldurl.slice(22)}`
-            fs.unlink(paths, (err) => {
-                if(err) {
-                    console.log(err)
-                    return
-                }
-            })
+            if(!def) {
+                const paths = `${__dirname}/../public/${req.body.oldurl.slice(22)}`
+                fs.unlink(paths, (err) => {
+                    if(err) {
+                        console.log(err)
+                    }
+                })
+            }
         }
         catch(error){
             console.log(error)
         }
-    }
-    else {
-        filename = ''
     }
 
     var query = `update students set first_name="${req.body.first_name}", last_name="${req.body.last_name}", email_id="${req.body.email_id}", grade=${req.body.grade}, board="${req.body.board}", image_link="${image_url}" where user_id=${req.body.user_id};`
@@ -371,28 +384,12 @@ router.get("/recommendations", (req, res) => {
     })
 })
 
-
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//       cb(null, 'public')
-//     },
-//     filename: (req, file, cb) => {
-//       cb(null, Date.now() + '-' +file.originalname)
-//     }
-//   })
-
-// const upload = multer({ storage: storage }).single('file')
-
-// router.post('/upload', (req, res) => {
-//     upload(req, res, (err) => {
-//       if (err) {
-//         res.sendStatus(500);
-//       }
-//       res.send(req.file);
-      
-//     });
-//     console.log("hey")
-// });
+router.post("/sendmail", (req, res) => {
+    console.log(req.body)
+    sendEmail(req.body.receiver, req.body, req.body.type)
+    sendEmail(req.body)
+    res.status(200).send("yes")
+})
 
   
 

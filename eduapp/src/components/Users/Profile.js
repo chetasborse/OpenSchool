@@ -58,15 +58,6 @@ class Profile extends Component {
         data.append('board', this.state.board)
         data.append('qualification', this.state.qualification)
         data.append('oldurl', this.props.image_link)
-        var body = {
-            user_id: this.props.user_id,
-            first_name: this.state.first_name,
-            last_name: this.state.last_name,
-            email_id: this.state.email_id,
-            grade: this.state.grade,
-            board: this.state.board,
-            qualification: this.state.qualification
-        }
         if(this.props.is_teacher) {
             axios.post("http://localhost:5000/users/editteacher", data)
             .then(response => {
@@ -162,7 +153,7 @@ class Profile extends Component {
     render() {
         const {username, first_name, last_name, email_id, session_taken,image_link, grade, board, qualification, rating_points, is_teacher} = this.props
 
-        var subjects = this.props.subjects.map((subject, index) => (
+        var subjects = this.props.subjects ? this.props.subjects.map((subject, index) => (
             <React.Fragment key={subject.subject_id}>
                 <Row>
                     <Col sm={1}></Col>
@@ -176,9 +167,9 @@ class Profile extends Component {
                     </Col>
                 </Row>
             </React.Fragment>
-        ))
+        )): <React.Fragment></React.Fragment>
 
-        var languages = this.props.languages.map((language, index) => (
+        var languages = this.props.languages !== undefined ? this.props.languages.map((language, index) => (
             // <div key={language.language_id}>{index + 1} {language.language_name}</div>
             <React.Fragment key={language.language_id}>
                 <Row>
@@ -193,7 +184,7 @@ class Profile extends Component {
                     </Col>
                 </Row>
             </React.Fragment>
-        ))
+        )):<React.Fragment></React.Fragment>
 
 
         var all_subjects = this.state.subjects.map((subject) => (
@@ -217,7 +208,7 @@ class Profile extends Component {
                             <p>Name: {first_name} {last_name}</p>
                             <p>Email: {email_id}</p>
                             {/* <p>Image Link: {image_link}</p> */}
-                            <img src={this.props.image_link} height="100px"></img>
+                            <img src={this.props.image_link} className="profilepic"></img>
                             <p>Sessions taken: {session_taken}</p>
                             {is_teacher &&
                                 <React.Fragment>

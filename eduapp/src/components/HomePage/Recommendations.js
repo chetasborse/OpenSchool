@@ -54,6 +54,11 @@ class Recommendations extends Component {
                 <Container style={{border: "1px solid #cece"}}>
                     <Row>
                         <Col>
+                            <img src={rec.image_link} className="profilepic2"></img>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
                             Teacher: {rec.first_name} {rec.last_name}
                         </Col>
                     </Row>

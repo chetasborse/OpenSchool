@@ -6,3 +6,18 @@
 .dashboard {
     text-align: left;
 }
+
+.profilepic2 {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: width 1s, height 1s, border-radius 1s;
+}
+
+.profilepic2:hover {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 0%;
+}

@@ -48,6 +48,32 @@ class Request_view extends Component {
                 axios.post("http://localhost:5000/session/session", body)
                 .then(response => {
                     console.log(response)
+                    var bod1 = req
+                    bod1.type = "teacher_session_confirm"
+                    bod1.receiver = this.props.email_id
+                    axios.post("http://localhost:5000/users/sendmail", bod1)
+                    .then(re => {
+                        console.log("Email sent successfully")
+                    })
+                    .catch(err => {
+                        console.log("Error in sending mail")
+                    })
+
+                    var bod2 = req
+                    bod2.type = "student_session_confirm"
+                    bod2.first_name = this.props.first_name
+                    bod2.last_name = this.props.last_name
+                    bod2.sessions_taken = this.props.sessions_taken
+                    bod2.rating = this.props.rating
+                    bod2.qualification = this.props.qualification
+                    bod2.receiver = req.email_id
+                    axios.post("http://localhost:5000/users/sendmail", bod2)
+                    .then(re => {
+                        console.log("Email sent successfully")
+                    })
+                    .catch(err => {
+                        console.log("Error in sending mail")
+                    })
                 })
                 .catch(err => {
                     console.log(err.message)
@@ -66,6 +92,7 @@ class Request_view extends Component {
     }
 
     render() {
+        
 
         const reqs = this.state.requests.map((req) => (
             <React.Fragment key={req.request_id}>
@@ -134,7 +161,13 @@ const mapStateToProps = state => {
     return {
         user_id: state.users.user_id,
         all_subjects: state.users.all_subjects,
-        all_languages: state.users.all_languages 
+        all_languages: state.users.all_languages,
+        email_id: state.users.email_id,
+        first_name: state.users.first_name,
+        last_name: state.users.last_name,
+        sessions_taken: state.users.session_taken,
+        qualification: state.users.qualification,
+        rating: state.users.rating_points 
     }
 }
 

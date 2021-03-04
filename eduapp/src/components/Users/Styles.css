@@ -2,3 +2,18 @@
     margin-top: 75px;
     margin-bottom: 150px;
 }
+
+.profilepic {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: width 2s, height 2s, border-radius 2s;
+}
+
+.profilepic:hover {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 0%;
+}

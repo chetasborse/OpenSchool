@@ -1,3 +1,4 @@
 /node_modules
 /public/profile_pics/*
 /public/images/*
+!/public/profile_pics/default.png
