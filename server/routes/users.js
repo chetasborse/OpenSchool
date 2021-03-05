@@ -385,8 +385,8 @@ router.get("/recommendations", (req, res) => {
 })
 
 router.post("/sendmail", (req, res) => {
-    console.log(req.body)
-    sendEmail(req.body.receiver, req.body, req.body.type)
+    //console.log(req.body)
+    //sendEmail(req.body.receiver, req.body, req.body.type)
     sendEmail(req.body)
     res.status(200).send("yes")
 })

@@ -1,4 +1,4 @@
-import { ADD_PENDING_SESSION, SET_PAST_SESSIONS, SET_PENDING_REQUESTS, SET_UPCOMING_SESSIONS } from "./sessionTypes"
+import { ADD_PENDING_SESSION, SET_MEETING_URL, SET_PAST_SESSIONS, SET_PENDING_REQUESTS, SET_UPCOMING_SESSIONS } from "./sessionTypes"
 
 const sessions_initial_State = {
     upcoming_sessions: [],
@@ -24,6 +24,10 @@ const sessionReducer = (state = sessions_initial_State, action) => {
             ...state,
             pending_requests: [...state.pending_requests, action.payload]
         }
+        // case SET_MEETING_URL: return {
+        //     ...state,
+        //     upcoming_sessions: state.upcoming_sessions
+        // }
         default: return state
     }
 }

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Container, Row } from 'reactstrap';
+import { Button, Col, Container, FormGroup, Input, Label, Row } from 'reactstrap';
 import { fetch_home } from '../../redux/Session/sessionAction';
+import MeetingLinkShare from '../Sessions/MeetingLinkShare';
 import ReqSession from '../Sessions/ReqSession';
 import SessionCompleted from '../Sessions/SessionCompleted';
 import Recommendations from './Recommendations';
@@ -106,6 +107,24 @@ class Home extends Component {
                             Date: {up.req_date}
                         </Col>
                     </Row>
+                    {
+                        !this.props.is_teacher && 
+                        <Row>
+                            <Col>
+                                Meeting Url: {up.meeting_url? <a href={up.meeting_url} target="_blank">{up.meeting_url}</a>: `The mentor hasn't sent meeting url yet. Try refreshing`}
+                            </Col>
+                        </Row>
+                    }
+                    {
+                        this.props.is_teacher &&
+                        (!up.meeting_url ?
+                        <MeetingLinkShare session_id={up.session_id} student_mail={up.email_id} student_first={up.first_name} student_last={up.last_name} topic={up.topic} date={up.req_date} time={up.time_slot}/>: 
+                        <Row>
+                            <Col>
+                                Meeting Url: <a href={up.meeting_url} target="_blank">{up.meeting_url}</a>
+                            </Col>
+                        </Row>)
+                    }
                     {
                         !this.props.is_teacher &&
                         <SessionCompleted session_id={up.session_id} teacher_id={up.teacher_id} refresh= {this.refresh} topic= {up.topic} first_name={up.first_name} last_name={up.last_name} email = {up.email_id}/>

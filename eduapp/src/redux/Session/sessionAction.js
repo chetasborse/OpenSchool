@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ADD_PENDING_SESSION, SET_PAST_SESSIONS, SET_PENDING_REQUESTS, SET_UPCOMING_SESSIONS } from "./sessionTypes"
+import { ADD_PENDING_SESSION, SET_MEETING_URL, SET_PAST_SESSIONS, SET_PENDING_REQUESTS, SET_UPCOMING_SESSIONS } from "./sessionTypes"
 
 
 export const fetch_home = (id, is_teacher, dispatch) => {
@@ -79,6 +79,13 @@ export const send_request = (data, dispatch) => {
         .catch(err => {
             console.log(err.message)
         })
+    }
+}
+
+export const set_meeting_url = (value) => {
+    return {
+        type: SET_MEETING_URL,
+        payload: value
     }
 }
 

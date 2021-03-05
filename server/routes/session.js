@@ -5,7 +5,7 @@ const router = require("express").Router();
 const db = mysql.createPool(config.mysql);
 
 router.get("/upcoming_sessions_teachers", (req, res) => {
-    const query = `select * from students join (select requests.request_id, requests.subject_id, requests.topic, requests.time_slot, requests.req_date, requests.language_id, sessions_taken.session_id, sessions_taken.student_id, sessions_taken.teacher_id, sessions_taken.completed, sessions_taken.review from requests join sessions_taken on requests.request_id = sessions_taken.request_id where sessions_taken.teacher_id = ${req.query.user_id} and completed = 0) sess on sess.student_id = students.user_id;`
+    const query = `select * from students join (select requests.request_id, requests.subject_id, requests.topic, requests.time_slot, requests.req_date, requests.language_id, sessions_taken.session_id, sessions_taken.student_id, sessions_taken.teacher_id, sessions_taken.completed, sessions_taken.review, sessions_taken.meeting_url from requests join sessions_taken on requests.request_id = sessions_taken.request_id where sessions_taken.teacher_id = ${req.query.user_id} and completed = 0) sess on sess.student_id = students.user_id;`
     db.query(query, (err, result) => {
         if(err) {
             res.status(400).send("Unable to fetch upcoming sessions")
@@ -18,7 +18,7 @@ router.get("/upcoming_sessions_teachers", (req, res) => {
 })
 
 router.get("/upcoming_sessions_students", (req, res) => {
-    const query = `select * from teachers join (select requests.request_id, requests.subject_id, requests.topic, requests.time_slot, requests.req_date, requests.language_id, sessions_taken.session_id, sessions_taken.student_id, sessions_taken.teacher_id, sessions_taken.completed, sessions_taken.review from requests join sessions_taken on requests.request_id = sessions_taken.request_id where sessions_taken.student_id = ${req.query.user_id} and completed = 0) sess on sess.teacher_id = teachers.user_id;`
+    const query = `select * from teachers join (select requests.request_id, requests.subject_id, requests.topic, requests.time_slot, requests.req_date, requests.language_id, sessions_taken.session_id, sessions_taken.student_id, sessions_taken.teacher_id, sessions_taken.completed, sessions_taken.review, sessions_taken.meeting_url from requests join sessions_taken on requests.request_id = sessions_taken.request_id where sessions_taken.student_id = ${req.query.user_id} and completed = 0) sess on sess.teacher_id = teachers.user_id;`
 
     db.query(query, (err, result) => {
         if(err) {
@@ -132,6 +132,19 @@ router.post("/session_completed", (req, res) => {
         }
         else {
             res.status(200).send(result)
+        }
+    })
+})
+
+router.post("/send_meeting_url", (req, res) => {
+    var query = `update sessions_taken set meeting_url = "${req.body.meeting_url}" where session_id = ${req.body.session_id};`
+
+    db.query(query, (err, result) => {
+        if(err) {
+            res.status(400).send("Meeting Url not set")
+        }
+        else {
+            res.status(200).send("Meeting set successfully")
         }
     })
 })

@@ -91,7 +91,7 @@ const getEmailData = (to, dat, template) => {
                 </html>`
             }
             break;
-            case "finish_teacher":
+        case "finish_teacher":
             data = {
                 from: "Eduapp <jjeff3087@gmail.com>",
                 to: to,
@@ -112,6 +112,64 @@ const getEmailData = (to, dat, template) => {
                             <p>Student: ${dat.first_name} ${dat.last_name}</p>
                             <p>Topic: ${dat.topic}</p>
                             <h5>Review given: ${dat.review}/5</h5>
+                        </div>
+                    </body>
+                </html>`
+            }
+            break;
+        case "student_send_url":
+            data = {
+                from: "Eduapp <jjeff3087@gmail.com>",
+                to: to,
+                subject: `Meeting Link`,
+                html: `<!DOCTYPE html>
+                <html>
+                    <head>
+                        <title>
+                            Session
+                        </title>
+                    </head>
+                    <body>
+                        <div>
+                            <h1>Hi ${dat.first_name} ${dat.last_name}</h1>
+                            <h3>Your mentor for a session on ${dat.topic} has sent meeting URL</h3>
+                            <br>
+                            <h4>Details</h4>
+                            <p>Topic: ${dat.topic}</p>
+                            <p>Time: ${dat.time}</p>
+                            <p>Date: ${dat.date}</p>
+                            <h5>Meeting URL: <a href="${dat.meeting_url}">${dat.meeting_url}</a></h5>
+                            <br>
+                            <h6>Enjoy the session :)</h6>
+                        </div>
+                    </body>
+                </html>`
+            }
+            break;
+        case "teacher_send_url":
+            data = {
+                from: "Eduapp <jjeff3087@gmail.com>",
+                to: to,
+                subject: `Meeting Link`,
+                html: `<!DOCTYPE html>
+                <html>
+                    <head>
+                        <title>
+                            Session
+                        </title>
+                    </head>
+                    <body>
+                        <div>
+                            <h1>Hi ${dat.first_name} ${dat.last_name}</h1>
+                            <h3>You have created a meeting on the topic of ${dat.topic}</h3>
+                            <br>
+                            <h4>Details</h4>
+                            <p>Topic: ${dat.topic}</p>
+                            <p>Time: ${dat.time}</p>
+                            <p>Date: ${dat.date}</p>
+                            <h5>Meeting URL: <a href="${dat.meeting_url}">${dat.meeting_url}</a></h5>
+                            <br>
+                            <h6>Enjoy the session :)</h6>
                         </div>
                     </body>
                 </html>`
