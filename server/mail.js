@@ -1,5 +1,4 @@
 const mailer = require("nodemailer");
-const { Hello } = require("./templates/hello");
 
 const getEmailData = (to, dat, template) => {
     let data = null;
@@ -7,7 +6,7 @@ const getEmailData = (to, dat, template) => {
     switch(template) {
         case "teacher_session_confirm":
             data = {
-                from: "Eduapp <jjeff3087@gmail.com>",
+                from: "OpenSchool <jjeff3087@gmail.com>",
                 to: to,
                 subject: `Approval of request`,
                 html: `<!DOCTYPE html>
@@ -37,7 +36,7 @@ const getEmailData = (to, dat, template) => {
 
         case "student_session_confirm":
             data = {
-                from: "Eduapp <jjeff3087@gmail.com>",
+                from: "OpenSchool <jjeff3087@gmail.com>",
                 to: to,
                 subject: `Your request has been approved`,
                 html: `<!DOCTYPE html>
@@ -67,7 +66,7 @@ const getEmailData = (to, dat, template) => {
             break;
         case "finish_student":
             data = {
-                from: "Eduapp <jjeff3087@gmail.com>",
+                from: "OpenSchool <jjeff3087@gmail.com>",
                 to: to,
                 subject: `Thank you for taking the session`,
                 html: `<!DOCTYPE html>
@@ -93,7 +92,7 @@ const getEmailData = (to, dat, template) => {
             break;
         case "finish_teacher":
             data = {
-                from: "Eduapp <jjeff3087@gmail.com>",
+                from: "OpenSchool <jjeff3087@gmail.com>",
                 to: to,
                 subject: `Thank you for taking the session`,
                 html: `<!DOCTYPE html>
@@ -119,7 +118,7 @@ const getEmailData = (to, dat, template) => {
             break;
         case "student_send_url":
             data = {
-                from: "Eduapp <jjeff3087@gmail.com>",
+                from: "OpenSchool <jjeff3087@gmail.com>",
                 to: to,
                 subject: `Meeting Link`,
                 html: `<!DOCTYPE html>
@@ -148,7 +147,7 @@ const getEmailData = (to, dat, template) => {
             break;
         case "teacher_send_url":
             data = {
-                from: "Eduapp <jjeff3087@gmail.com>",
+                from: "OpenSchool <jjeff3087@gmail.com>",
                 to: to,
                 subject: `Meeting Link`,
                 html: `<!DOCTYPE html>
