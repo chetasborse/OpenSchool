@@ -58,9 +58,11 @@ class Navigation extends Component {
                                 {
                                     this.props.LoggedIn &&
                                     <React.Fragment>
-                                        <NavItem>
-                                            <Link className="linkclass" to="/Profile">Profile</Link>
-                                        </NavItem>
+                                        {   !this.props.is_admin &&
+                                            <NavItem>
+                                                <Link className="linkclass" to="/Profile">Profile</Link>
+                                            </NavItem>
+                                        }
                                         {/* {
                                             !this.props.is_teacher &&
                                             <NavItem>
@@ -86,7 +88,7 @@ class Navigation extends Component {
                     <Route path="/Login" render={(props) => (!this.props.LoggedIn ? (<Login/>) : (<Redirect to="/"></Redirect>))}/>
                     <Route path="/Register" render={(props) => (!this.props.LoggedIn ? (<Register/>) : (<Redirect to="/"></Redirect>))}/>
                     <Route path="/Logout" render={(props) => (this.props.LoggedIn ? (<Logout/>) : (<Redirect to="/Login"></Redirect>))}/>
-                    <Route path="/Profile" render={(props) => (this.props.LoggedIn ? (<Profile/>) : (<Redirect to="/"></Redirect>))}/>
+                    <Route path="/Profile" render={(props) => (this.props.LoggedIn && !this.props.is_admin ? (<Profile/>) : (<Redirect to="/"></Redirect>))}/>
                     <Route path="/View_Requests" render={(props) => (this.props.LoggedIn ? (this.props.is_teacher ? (<Request_view/>): (<Redirect to="/"></Redirect>)): (<Redirect to="/Login"></Redirect>))}/>
                     {/* <Route path="/Request_Session" render={(props) => (this.props.LoggedIn ? (!this.props.is_teacher ? (<Request_session/>): (<Redirect to="/View_Requests"></Redirect>)): (<Redirect to="/Login"></Redirect>))}/> */}
                     <Route path="/" exact component={Home}/>                           
@@ -99,7 +101,8 @@ class Navigation extends Component {
 const mapStateToProps = state => {
     return {
         LoggedIn: state.users.loggedIn,
-        is_teacher: state.users.is_teacher
+        is_teacher: state.users.is_teacher,
+        is_admin: state.users.is_admin
     }
 }
 

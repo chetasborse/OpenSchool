@@ -15,6 +15,9 @@ export const fetch_home = (id, is_teacher, dispatch) => {
         .catch((err) => {
             console.log(err.message)
         })
+        // if(is_admin) {
+
+        // }
         if(is_teacher) {
             axios.get("http://localhost:5000/session/upcoming_sessions_teachers", {
                 params : {

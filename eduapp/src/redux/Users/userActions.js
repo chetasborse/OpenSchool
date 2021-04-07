@@ -1,4 +1,4 @@
-import { ADD_LANGUAGE, ADD_SUBJECT, DELETE_LANGUAGE, DELETE_SUBJECT, ERROR, GET_LANGUAGE, GET_STUDENT, GET_SUBJECT, GET_TEACHER, SET_ALL_LANG, SET_ALL_SUB ,LOGIN, LOGOUT, SET_LOGIN } from "./userTypes"
+import { ADD_LANGUAGE, ADD_SUBJECT, DELETE_LANGUAGE, DELETE_SUBJECT, ERROR, GET_LANGUAGE, GET_STUDENT, GET_SUBJECT, GET_TEACHER, SET_ALL_LANG, SET_ALL_SUB ,LOGIN, LOGOUT, SET_LOGIN, GET_ADMIN } from "./userTypes"
 import axios from 'axios'
 
 export const checkUser = (dispatch) => {
@@ -33,6 +33,9 @@ export const checkUser = (dispatch) => {
                     .catch((err)=> {
                         console.log(err)
                     })
+                }
+                else if(response.data.user[0].user_type == 2) {
+                    dispatch(getadmin());
                 }
                 else {
                     axios.get("http://localhost:5000/users/teacher", {
@@ -223,6 +226,12 @@ export const getteacher = (value) => {
     return {
         type: GET_TEACHER,
         payload: value
+    }
+}
+
+export const getadmin = () => {
+    return {
+        type: GET_ADMIN
     }
 }
 

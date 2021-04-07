@@ -16,6 +16,7 @@ create table teachers
     qualification varchar(50),
     rating_points int,
     sessions_taken int,
+    verify int,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 

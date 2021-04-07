@@ -14,37 +14,39 @@ class Recommendations extends Component {
 
     componentDidMount() {
         // if(this.props.loggedIn)
-        axios.get("http://localhost:5000/users/recommendations", {
-            params : {
-                student_id: this.props.user_id
-            }
-        })
-        .then(response => {
-            this.setState({
-                recomms: response.data
+        if(!this.props.is_admin && this.props.loggedIn) {
+            axios.get("http://localhost:5000/users/recommendations", {
+                params : {
+                    student_id: this.props.user_id
+                }
             })
-        })
-        .catch(err => {
-            console.log(err.message)
-        })
+            .then(response => {
+                this.setState({
+                    recomms: response.data
+                })
+            })
+            .catch(err => {
+                console.log(err.message)
+            })
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevProps.user_id != this.props.user_id) {
+        if(prevProps.user_id != this.props.user_id && !this.props.is_admin) {
             axios.get("http://localhost:5000/users/recommendations", {
             params : {
                 student_id: this.props.user_id
             }
-        })
-        .then(response => {
-            this.setState({
-                recomms: response.data
             })
-        })
-        .catch(err => {
-            console.log(err.message)
-        })
-        }
+            .then(response => {
+                this.setState({
+                    recomms: response.data
+                })
+            })
+            .catch(err => {
+                console.log(err.message)
+            })
+            }
     }
 
     render() {
@@ -81,20 +83,24 @@ class Recommendations extends Component {
 
         return(
             <Container>
-                    <Row>
-                        <Col style={{textAlign: "left", marginTop: "30px"}}>
-                            <h2 className="dashboard">Recommendations</h2>
-                        </Col>
-                    </Row>
-                    {
-                        this.state.recomms.length === 0 ? <h3>Add favorite subjects in profile to see recommendations</h3>
-                        :
+                {
+                    <React.Fragment>
                         <Row>
-                            {
-                                recommens
-                            }
+                            <Col style={{textAlign: "left", marginTop: "30px"}}>
+                                <h2 className="dashboard">Recommendations</h2>
+                            </Col>
                         </Row>
-                    }
+                        {
+                            this.state.recomms.length === 0 ? <h3>Add favorite subjects in profile to see recommendations</h3>
+                            :
+                            <Row>
+                                {
+                                    recommens
+                                }
+                            </Row>
+                        }
+                    </React.Fragment>
+                }
             </Container>
         )
     }
@@ -103,7 +109,8 @@ class Recommendations extends Component {
 const mapStateToProps = state => {
     return {
         user_id: state.users.user_id,
-        loggedin: state.users.loggedIn      
+        loggedin: state.users.loggedIn,
+        is_admin: state.admin.is_admin      
     }
 }
 

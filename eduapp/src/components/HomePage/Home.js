@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Container, FormGroup, Input, Label, Row } from 'reactstrap';
 import { fetch_home } from '../../redux/Session/sessionAction';
+import AdminHome from '../Admin/AdminHome';
 import MeetingLinkShare from '../Sessions/MeetingLinkShare';
 import ReqSession from '../Sessions/ReqSession';
 import SessionCompleted from '../Sessions/SessionCompleted';
@@ -48,7 +49,7 @@ class Home extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevProps.user_id != this.props.user_id) {
+        if(prevProps.user_id != this.props.user_id && !this.props.is_admin) {
             if(this.props.LoggedIn) {
                 this.props.fetchHome(this.props.user_id , this.props.is_teacher)
             }
@@ -220,56 +221,68 @@ class Home extends Component {
 
         return(
             <div className="toplookout">
-                <Container>
-                    <Col style={{textAlign: "left"}}>
-                        <h2 className="dashboard">Dashboard</h2>
-                        {this.props.LoggedIn && !this.props.is_teacher &&
-                            <ReqSession/>
-                        }
-                    </Col>
-                    {
-                        this.props.LoggedIn &&
-                    <Col style={{textAlign: "right"}}>
-                        <Button color="danger" onClick={this.refresh}>Refresh Tab</Button>
-                    </Col>
-                    }
-                </Container>
-                <br></br>
                 {
-                    this.props.LoggedIn &&
-                    <Container style={{border: "1px solid #cecece", height: "500px", overflow: "auto"}}>
-                        <Row>
-                            <Col>
-                                <Button color="warning" onClick={this.showupcoming}>Upcoming Sessions</Button>
-                            </Col>
-                            {
-                                !this.props.is_teacher &&
-                                <Col>
-                                    <Button color="warning" onClick={this.showpending}>Pending Requests</Button>
-                                </Col>
-                            }
-                            <Col>
-                                <Button color="warning" onClick={this.showpast}>Past Sessions</Button>
-                            </Col>
-                        </Row>
-                        <Row>
-                            {   this.state.show_upcom &&
-                                (this.props.upcoming_sessions.length === 0 ?
-                                <Container style={{textAlign: "center"}}>No upcoming Sessions</Container> : <Container>{upcoming}</Container>)
-                            }
-                            {   this.state.show_pend &&
-                                (this.props.pending_requests.length === 0 ?
-                                <Container style={{textAlign: "center"}}>No Pending Requests</Container> : <Container>{pending}</Container>)
-                            }
-                            {   this.state.show_past &&
-                                (this.props.past_sessions.length === 0 ?
-                                <Container style={{textAlign: "center"}}>No Past Sessions</Container> : <Container>{past}</Container>)
-                            }
-                        </Row>
-                    </Container>
+                    this.props.is_admin &&
+                    <React.Fragment>
+                        <h2 style={{textAlign: "center"}}>Welcome to the admin page</h2>
+                        <AdminHome/>
+                    </React.Fragment>
                 }
                 {
-                    this.props.LoggedIn && !this.props.is_teacher &&
+                    !this.props.is_admin &&
+                    <React.Fragment>
+                    <Container>
+                        <Col style={{textAlign: "left"}}>
+                            <h2 className="dashboard">Dashboard</h2>
+                            {this.props.LoggedIn && !this.props.is_teacher &&
+                                <ReqSession/>
+                            }
+                        </Col>
+                        {
+                            this.props.LoggedIn &&
+                        <Col style={{textAlign: "right"}}>
+                            <Button color="danger" onClick={this.refresh}>Refresh Tab</Button>
+                        </Col>
+                        }
+                    </Container>
+                    <br></br>
+                    {
+                        this.props.LoggedIn &&
+                        <Container style={{border: "1px solid #cecece", height: "500px", overflow: "auto"}}>
+                            <Row>
+                                <Col>
+                                    <Button color="warning" onClick={this.showupcoming}>Upcoming Sessions</Button>
+                                </Col>
+                                {
+                                    !this.props.is_teacher &&
+                                    <Col>
+                                        <Button color="warning" onClick={this.showpending}>Pending Requests</Button>
+                                    </Col>
+                                }
+                                <Col>
+                                    <Button color="warning" onClick={this.showpast}>Past Sessions</Button>
+                                </Col>
+                            </Row>
+                            <Row>
+                                {   this.state.show_upcom &&
+                                    (this.props.upcoming_sessions.length === 0 ?
+                                    <Container style={{textAlign: "center"}}>No upcoming Sessions</Container> : <Container>{upcoming}</Container>)
+                                }
+                                {   this.state.show_pend &&
+                                    (this.props.pending_requests.length === 0 ?
+                                    <Container style={{textAlign: "center"}}>No Pending Requests</Container> : <Container>{pending}</Container>)
+                                }
+                                {   this.state.show_past &&
+                                    (this.props.past_sessions.length === 0 ?
+                                    <Container style={{textAlign: "center"}}>No Past Sessions</Container> : <Container>{past}</Container>)
+                                }
+                            </Row>
+                        </Container>
+                    }
+                    </React.Fragment>
+                }
+                {
+                    this.props.LoggedIn && !this.props.is_teacher && !this.props.is_admin &&
                     <Recommendations/>
                 }
             </div>
@@ -286,7 +299,8 @@ const mapStateToProps = state => {
         past_sessions: state.session.past_sessions,
         user_id: state.users.user_id,
         all_subjects: state.users.all_subjects,
-        all_languages: state.users.all_languages 
+        all_languages: state.users.all_languages,
+        is_admin: state.users.is_admin 
     }
 }
 

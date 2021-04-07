@@ -1,4 +1,4 @@
-const { LOGIN, LOGOUT, ERROR, SET_LOGIN, GET_TEACHER, GET_STUDENT, GET_LANGUAGE, GET_SUBJECT, ADD_LANGUAGE, ADD_SUBJECT, DELETE_SUBJECT, DELETE_LANGUAGE, SET_ALL_LANG, SET_ALL_SUB } = require("./userTypes")
+const { LOGIN, LOGOUT, ERROR, SET_LOGIN, GET_TEACHER, GET_STUDENT, GET_LANGUAGE, GET_SUBJECT, ADD_LANGUAGE, ADD_SUBJECT, DELETE_SUBJECT, DELETE_LANGUAGE, SET_ALL_LANG, SET_ALL_SUB, GET_ADMIN } = require("./userTypes")
 
 const userInitialState = {
     loggedIn: false,
@@ -20,6 +20,8 @@ const userInitialState = {
     languages: [],
     all_subjects: [],
     all_languages: [],
+    is_admin: false,
+    verfied: 0,
 }
 
 const userReducer = (state = userInitialState, action) => {
@@ -51,7 +53,9 @@ const userReducer = (state = userInitialState, action) => {
             qualification: action.payload.qualification,
             rating_points: action.payload.rating_points,
             session_taken: action.payload.sessions_taken,
-            is_teacher: true
+            is_teacher: true,
+            verfied: action.payload.verfied,
+            is_admin: false
         }
         case GET_STUDENT: return {
             ...state,
@@ -63,7 +67,12 @@ const userReducer = (state = userInitialState, action) => {
             grade: action.payload.grade,
             board: action.payload.board,
             session_taken: action.payload.session_taken,
-            is_teacher: false
+            is_teacher: false,
+            is_admin: false
+        }
+        case GET_ADMIN: return {
+            ...state,
+            is_admin: true
         }
         case GET_LANGUAGE: return {
             ...state,

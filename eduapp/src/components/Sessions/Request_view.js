@@ -8,25 +8,28 @@ class Request_view extends Component {
     constructor(props) {
         super(props) 
         this.state = {
-            requests: []
+            requests: [],
+            verfied: props.verfied
         }
     }
     
     componentDidMount() {
-        axios.get("http://localhost:5000/session/request", {
-            params: {
-                user_id: this.props.user_id
-            }
-        })
-        .then(response => {
-            this.setState({
-                requests: response.data
+        if(this.props.verfied === 1) {
+            axios.get("http://localhost:5000/session/request", {
+                params: {
+                    user_id: this.props.user_id
+                }
             })
-            console.log(response.data)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .then(response => {
+                this.setState({
+                    requests: response.data
+                })
+                console.log(response.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
     }
 
     approveRequest = (req) => {
@@ -146,12 +149,27 @@ class Request_view extends Component {
 
         return(
             <div className="toplookout">
-                <h3>Requests</h3>
-                <Container style={{border: "1px solid #cecece"}}>
-                    {
-                        this.state.requests.length === 0 ? <Container>No requests</Container> : <Container>{reqs}</Container>
-                    }
-                </Container>
+                {   this.state.verfied == 1 ?
+                    <React.Fragment>
+                        <h3>Requests</h3>
+                        <Container style={{border: "1px solid #cecece"}}>
+                            {
+                                this.state.requests.length === 0 ? <Container>No requests</Container> : <Container>{reqs}</Container>
+                            }
+                        </Container>
+                    </React.Fragment> :
+                    (
+                        this.state.verfied == 0 ?
+                        <React.Fragment>
+                            <h3>Your account hasn't been verified yet.</h3>
+                            <p>You will see the requests once the administrator verifies your profile</p>
+                            <p>If you haven't mailed your qualification documnents yet, please do it at the earliest</p>
+                        </React.Fragment>:
+                        <React.Fragment>
+                            <h3>Sorry {this.props.first_name} {this.props.last_name}, your account has been <span style={{color: "red"}}>suspended</span></h3>
+                        </React.Fragment>
+                    )
+                }
             </div>
         )
     }
@@ -167,7 +185,8 @@ const mapStateToProps = state => {
         last_name: state.users.last_name,
         sessions_taken: state.users.session_taken,
         qualification: state.users.qualification,
-        rating: state.users.rating_points 
+        rating: state.users.rating_points,
+        verfied: state.users.verfied 
     }
 }
 

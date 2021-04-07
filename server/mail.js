@@ -174,6 +174,48 @@ const getEmailData = (to, dat, template) => {
                 </html>`
             }
             break;
+        case "send_verification":
+            data = {
+                from: "OpenSchool <jjeff3087@gmail.com>",
+                to: to,
+                subject: `Verification of account`,
+                html: `<!DOCTYPE html>
+                <html>
+                    <head>
+                        <title>
+                            Session
+                        </title>
+                    </head>
+                    <body>
+                        <div>
+                            <h1>Hi ${dat.first_name} ${dat.last_name}</h1>
+                            <h3>Your account has been verified</h3>
+                        </div>
+                    </body>
+                </html>`
+            }
+            break;
+        case "send_suspension":
+            data = {
+                from: "OpenSchool <jjeff3087@gmail.com>",
+                to: to,
+                subject: `Meeting Link`,
+                html: `<!DOCTYPE html>
+                <html>
+                    <head>
+                        <title>
+                            Session
+                        </title>
+                    </head>
+                    <body>
+                        <div>
+                            <h1>Hi ${dat.first_name} ${dat.last_name}</h1>
+                            <h3>Your account has been suspended</h3>
+                        </div>
+                    </body>
+                </html>`
+            }
+            break;
         default:
             data;        
     }

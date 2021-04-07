@@ -373,7 +373,7 @@ router.post("/update_session_count", (req, res) => {
 
 
 router.get("/recommendations", (req, res) => {
-    var query = `select * from teachers join (select distinct teacher_subjects.teacher_id as t_id from student_subjects join teacher_subjects on student_subjects.subject_id = teacher_subjects.subject_id where student_subjects.student_id = ${req.query.student_id}) teach where teach.t_id = teachers.user_id order by teachers.rating_points DESC limit 12;`
+    var query = `select * from teachers join (select distinct teacher_subjects.teacher_id as t_id from student_subjects join teacher_subjects on student_subjects.subject_id = teacher_subjects.subject_id where student_subjects.student_id = ${req.query.student_id}) teach where teach.t_id = teachers.user_id and teachers.verfied = 1 order by teachers.rating_points DESC limit 12;`
     db.query(query, (err, result) => {
         if(err) {
             res.status(400).send(err.message)
@@ -391,6 +391,53 @@ router.post("/sendmail", (req, res) => {
     res.status(200).send("yes")
 })
 
+router.post("/verify", (req, res) => {
+    var query = `update teachers set verfied = 1 where user_id = ${req.body.user_id};`
+    db.query(query, (err, result) => {
+        if(err) {
+            res.status(400).send(err.message)
+        }
+        else {
+            res.status(200).send(result);
+        }
+    })
+})
+
+router.post("/suspend", (req, res) => {
+    var query = `update teachers set verfied = 2 where user_id = ${req.body.user_id};`
+    db.query(query, (err, result) => {
+        if(err) {
+            res.status(400).send(err.message)
+        }
+        else {
+            res.status(200).send(result);
+        }
+    })
+})
+
+router.get("/get_all_teachers", (req, res) => {
+    var query = `select * from teachers order by user_id DESC;`
+    db.query(query, (err, result) => {
+        if(err) {
+            res.status(400).send(err.message)
+        }
+        else {
+            res.status(200).send(result);
+        }
+    })
+})
+
+router.get("/get_all_students", (req, res) => {
+    var query = `select * from students order by user_id DESC;`
+    db.query(query, (err, result) => {
+        if(err) {
+            res.status(400).send(err.message)
+        }
+        else {
+            res.status(200).send(result);
+        }
+    })
+})
   
 
 
