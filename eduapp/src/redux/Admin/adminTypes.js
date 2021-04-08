@@ -1,0 +1,3 @@
+export const SET_TEACHERS = 'SET_TEACHERS'
+export const SET_STUDENTS = 'SET_STUDENTS'
+export const SET_VERIFIED = 'SET_VERIFIED'
