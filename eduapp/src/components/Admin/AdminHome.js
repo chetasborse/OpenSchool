@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
-import { Button, Collapse, Container, Table } from 'reactstrap';
+import { Button, Col, Collapse, Container, Table } from 'reactstrap';
 import { fetchAllUsers, verifyTeacher } from '../../redux/Admin/adminActions';
 
 class AdminHome extends Component {
@@ -17,6 +17,10 @@ class AdminHome extends Component {
     componentDidMount() {
         this.props.fetchAllusers();
     }
+
+    // refresh = () => {
+    //     this.props.fetchAllUsers();
+    // }
 
     toggle_mentor = () => {
         this.setState({
@@ -63,7 +67,6 @@ class AdminHome extends Component {
     }
 
     suspend = (id, email_id, first_name, last_name) => {
-        // alert(`Suspended ${id}`)
         const data = {
             user_id: id
         }
@@ -126,6 +129,14 @@ class AdminHome extends Component {
 
         return(
             <div>
+                <Container>
+                    <Col style={{textAlign: "center"}}>
+                        <h2>Welcome to the admin page</h2>
+                    </Col>
+                    <Col style={{textAlign: "right"}}>
+                        <Button color="danger" onClick={() => this.props.fetchAllusers()}>Refresh Tab</Button>
+                    </Col>
+                </Container>
                 <Button color="warning" onClick={this.toggle_mentor} style={{ marginBottom: '1rem' }}>Mentors</Button>
                 <Collapse isOpen={this.state.teacher_toggle}>
                     <Container style={{border: "1px solid black", height: "500px", overflow: 'auto'}}>

@@ -224,7 +224,6 @@ class Home extends Component {
                 {
                     this.props.is_admin &&
                     <React.Fragment>
-                        <h2 style={{textAlign: "center"}}>Welcome to the admin page</h2>
                         <AdminHome/>
                     </React.Fragment>
                 }

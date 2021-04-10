@@ -3,6 +3,15 @@
     margin-bottom: 150px;
 }
 
+.link {
+    color:red;
+}
+
+.link:hover {
+    color: red;
+    cursor: pointer;
+}
+
 .profilepic {
     width: 200px;
     height: 200px;

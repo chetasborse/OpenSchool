@@ -17,6 +17,7 @@ import Logout from '../Users/Logout';
 import Profile from '../Users/Profile';
 import {connect} from 'react-redux';
 import Request_view from '../Sessions/Request_view';
+import ForgotPassword from '../Admin/ForgotPassword';
 // import Request_session from '../Sessions/Request_session';
 
 class Navigation extends Component {
@@ -88,6 +89,7 @@ class Navigation extends Component {
                     <Route path="/Login" render={(props) => (!this.props.LoggedIn ? (<Login/>) : (<Redirect to="/"></Redirect>))}/>
                     <Route path="/Register" render={(props) => (!this.props.LoggedIn ? (<Register/>) : (<Redirect to="/"></Redirect>))}/>
                     <Route path="/Logout" render={(props) => (this.props.LoggedIn ? (<Logout/>) : (<Redirect to="/Login"></Redirect>))}/>
+                    <Route path="/ForgotPassword" render={(props) => (!this.props.LoggedIn ? (<ForgotPassword/>) : (<Redirect to="/"></Redirect>))}/>
                     <Route path="/Profile" render={(props) => (this.props.LoggedIn && !this.props.is_admin ? (<Profile/>) : (<Redirect to="/"></Redirect>))}/>
                     <Route path="/View_Requests" render={(props) => (this.props.LoggedIn ? (this.props.is_teacher ? (<Request_view/>): (<Redirect to="/"></Redirect>)): (<Redirect to="/Login"></Redirect>))}/>
                     {/* <Route path="/Request_Session" render={(props) => (this.props.LoggedIn ? (!this.props.is_teacher ? (<Request_session/>): (<Redirect to="/View_Requests"></Redirect>)): (<Redirect to="/Login"></Redirect>))}/> */}

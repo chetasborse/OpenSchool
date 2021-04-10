@@ -216,6 +216,30 @@ const getEmailData = (to, dat, template) => {
                 </html>`
             }
             break;
+        case "otp":
+            data = {
+                from: "OpenSchool <jjeff3087@gmail.com>",
+                to: to,
+                subject: `OTP for changing password`,
+                html: `<!DOCTYPE html>
+                <html>
+                    <head>
+                        <title>
+                            Request for Password Change
+                        </title>
+                    </head>
+                    <body>
+                        <div>
+                            <h1>Hi ${dat.first_name} ${dat.last_name}</h1>
+                            <br>
+                            <h4>OTP for your changing password is <b>${dat.otp}</b></h4>
+                            <br>
+                            <h5>Enter this otp in the space provided in the application</h5>
+                        </div>
+                    </body>
+                </html>`
+            }
+            break;
         default:
             data;        
     }

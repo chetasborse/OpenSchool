@@ -42,6 +42,14 @@ class Login extends Component {
 
     }
 
+    forgotPass = ()  => {
+        var otp = Math.floor(Math.random() * 1000000)
+        var prom = prompt("A mail has been sent with the otp. Enter the otp here to continue");
+        if(prom == otp) {
+            console.log("otp matches")
+        }
+    }
+
     render() {
         return(
 
@@ -63,6 +71,9 @@ class Login extends Component {
                 </FormGroup>
                 <FormGroup>
                         Don't have an account? <Link to="/Register">Sign up</Link>
+                </FormGroup>
+                <FormGroup>
+                        <Link className="link" to="/ForgotPassword">Forgot Password?</Link>
                 </FormGroup>
                 <Button>Login</Button>
             </Form>

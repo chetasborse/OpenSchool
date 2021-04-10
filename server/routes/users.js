@@ -11,6 +11,7 @@ const path = require('path')
 const jwt = require('jsonwebtoken');
 const { promisify } = require("util");
 const { sendEmail } = require("../mail");
+const { RSA_PKCS1_OAEP_PADDING } = require("constants");
 const pipeline = promisify(require("stream").pipeline)
 
 
@@ -39,9 +40,8 @@ router.post("/register", (req, res) => {
     
 });
 
-
 router.post("/teacher", (req, res) => {
-    var query = `insert into teachers(user_id, first_name, last_name, email_id, image_link, qualification, rating_points, sessions_taken) values (${req.body.id}, "${req.body.first_name}", "${req.body.last_name}", "${req.body.email_id}", "${req.body.image_link}", "${req.body.qualification}" , 0, 0);`
+    var query = `insert into teachers(user_id, first_name, last_name, email_id, image_link, qualification, rating_points, sessions_taken, verfied) values (${req.body.id}, "${req.body.first_name}", "${req.body.last_name}", "${req.body.email_id}", "${req.body.image_link}", "${req.body.qualification}" , 0, 0, 0);`
     db.query(query, (err, result) => {
         if(err) {
             res.status(400).send(err.message);
@@ -113,6 +113,20 @@ router.post("/login", (req, res) => {
     })
 })
 
+router.get("/user", (req, res) => {
+    var query = `select * from users where username = "${req.query.username}";`
+    db.query(query, (err, result) => {
+        if(err) {
+            return res.status(400).send(err.message)
+        }
+        if(result.length > 0) {
+            return res.status(200).send(result)
+        }
+        else {
+            return res.status(200).send({message: "User doesn't exist"})
+        }
+    })
+})
 
 router.get('/login', (req, res) => {
     //console.log(`After login req ${req.session.user}`)
@@ -130,10 +144,10 @@ router.post('/logout', (req, res) => {
 })
 
 router.post('/editteacher', upload.single("file"), async function (req, res, next) {
-
+    
     var filename = ''
     var image_url = ''
-
+    
     console.log(req.file)
     
     if(req.file === null) {
@@ -142,7 +156,7 @@ router.post('/editteacher', upload.single("file"), async function (req, res, nex
     else {
         var def = false
         if(req.body.oldurl.localeCompare("http://localhost:5000/profile_pics/default.png") === 0)
-            def = true
+        def = true
         try {
             filename = req.body.user_id + Math.floor(Math.random() * 1000) + req.file.detectedFileExtension;
             await pipeline(req.file.stream, fs.createWriteStream(`${__dirname}/../public/profile_pics/${filename}`))
@@ -160,7 +174,7 @@ router.post('/editteacher', upload.single("file"), async function (req, res, nex
             console.log(error)
         }
     }
-
+    
     var query = `update teachers set first_name="${req.body.first_name}", last_name="${req.body.last_name}", email_id="${req.body.email_id}", qualification="${req.body.qualification}", image_link="${image_url}" where user_id=${req.body.user_id};`
     
     db.query(query, (err, result) => {
@@ -172,10 +186,10 @@ router.post('/editteacher', upload.single("file"), async function (req, res, nex
 })
 
 router.post('/editstudent', upload.single("file"), async function (req, res, next) {
-
+    
     var filename = ''
     var image_url = ''
-
+    
     console.log(req.file)
     
     if(req.file === null) {
@@ -184,7 +198,7 @@ router.post('/editstudent', upload.single("file"), async function (req, res, nex
     else {
         var def = false
         if(req.body.oldurl.localeCompare("http://localhost:5000/profile_pics/default.png") === 0)
-            def = true
+        def = true
         try {
             filename = req.body.user_id + Math.floor(Math.random() * 1000) + req.file.detectedFileExtension;
             await pipeline(req.file.stream, fs.createWriteStream(`${__dirname}/../public/profile_pics/${filename}`))
@@ -202,7 +216,7 @@ router.post('/editstudent', upload.single("file"), async function (req, res, nex
             console.log(error)
         }
     }
-
+    
     var query = `update students set first_name="${req.body.first_name}", last_name="${req.body.last_name}", email_id="${req.body.email_id}", grade=${req.body.grade}, board="${req.body.board}", image_link="${image_url}" where user_id=${req.body.user_id};`
     db.query(query, (err, result) => {
         if(err) {
@@ -385,8 +399,6 @@ router.get("/recommendations", (req, res) => {
 })
 
 router.post("/sendmail", (req, res) => {
-    //console.log(req.body)
-    //sendEmail(req.body.receiver, req.body, req.body.type)
     sendEmail(req.body)
     res.status(200).send("yes")
 })
@@ -438,7 +450,23 @@ router.get("/get_all_students", (req, res) => {
         }
     })
 })
-  
+
+router.post("/resetPassword", (req, res) => {
+    const user_type = req.body.user_type
+    bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+
+        var query = `update users set password = "${hash}" where username = "${req.body.username}";`
+        db.query(query, (err, result) => {
+            if(err) {
+                
+                res.status(400).send(err.message);
+            }
+            return res.status(200).send(result);
+        })
+        
+    })
+
+})
 
 
 module.exports = router;
