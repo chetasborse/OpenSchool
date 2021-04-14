@@ -1,3 +1,5 @@
+use eduapp;
+
 create table users 
 ( 
     user_id int PRIMARY KEY AUTO_INCREMENT, 
@@ -16,7 +18,7 @@ create table teachers
     qualification varchar(50),
     rating_points int,
     sessions_taken int,
-    verify int,
+    verfied int,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
@@ -97,23 +99,8 @@ create table sessions_taken
     request_id int,
     completed int,
     review int,
+    meeting_url varchar(150);
     FOREIGN KEY (teacher_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (student_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (request_id) REFERENCES requests(request_id) ON DELETE CASCADE
 );
-
-create table message 
-(
-    message_id int PRIMARY KEY AUTO_INCREMENT,
-    sender_id int,
-    receiver_id int,
-    message_text varchar(150),
-    session_id int,
-    timestamp_t timestamp,
-    FOREIGN KEY (sender_id) REFERENCES users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (receiver_id) REFERENCES users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (session_id) REFERENCES sessions_taken(session_id)
-);
-
-
--- insert into users(user_id, username, password) values (-1, "tp", "tp");  hi line taka lagech tables create jhalyavar nahitar pudhe problem hoil
