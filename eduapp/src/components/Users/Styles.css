@@ -31,4 +31,13 @@
     border-bottom: 1px solid black;
     padding-top: 25px;
     padding-bottom: 25px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.padded{
+    padding-top: 20px;
+}
+
+.font1{
+    font-family: 'Times New Roman', Times, serif;
 }

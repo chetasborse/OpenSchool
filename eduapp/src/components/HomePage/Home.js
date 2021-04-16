@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   Button,
+  ButtonGroup,
   Col,
   Container,
   FormGroup,
@@ -66,7 +67,7 @@ class Home extends Component {
   render() {
     const upcoming = this.props.upcoming_sessions.map((up) => (
       <React.Fragment key={up.session_id}>
-        <Container style={{ border: "1px solid black" }}>
+        <Container className="spaceout">
           <Row>
             <Col>
               <img src={up.image_link} className="profilepic2"></img>
@@ -84,38 +85,63 @@ class Home extends Component {
           {!this.props.is_teacher && (
             <Row>
               <Col>
-                Teacher: {up.first_name} {up.last_name}
+                <h4>
+                  <b>
+                    {" "}
+                    📖 {this.props.all_subjects[up.subject_id - 1].subject_name}
+                  </b>
+                </h4>
+                {/* Subject: {this.props.all_subjects.find(sub => sub.id = up.subject_id).subject_name} */}
+                <Col>
+                  <h4>
+                    <i> - {up.topic} </i>
+                  </h4>
+                </Col>
               </Col>
-              <Col>Qualification: {up.grade}</Col>
+              <Col>
+                <h5>
+                  {" "}
+                  <i>by </i>
+                  <b>
+                    <i>
+                      {up.first_name} {up.last_name}, {up.qualification}
+                    </i>
+                  </b>
+                </h5>
+                <Col>
+                  <h5>
+                    {" "}
+                    🔡{" "}
+                    {this.props.all_languages[up.language_id - 1].language_name}
+                    {/* Language: {this.props.all_languages.find(lang => lang.id = up.language_id).language_name} */}
+                  </h5>
+                </Col>
+              </Col>
+              {/* <Col>Qualification: {up.qualification}</Col> */}
             </Row>
           )}
+          <Row></Row>
           <Row>
             <Col>
-              Subject: {this.props.all_subjects[up.subject_id - 1].subject_name}
-              {/* Subject: {this.props.all_subjects.find(sub => sub.id = up.subject_id).subject_name} */}
+              <h4>⏲️ {up.time_slot}</h4>
             </Col>
-            <Col sm={3}>
-              Language:{" "}
-              {this.props.all_languages[up.language_id - 1].language_name}
-              {/* Language: {this.props.all_languages.find(lang => lang.id = up.language_id).language_name} */}
+            <Col>
+              <h5>📅 {String(up.req_date).slice(0, 10)}</h5>
             </Col>
-            <Col>Topic: {up.topic}</Col>
-          </Row>
-          <Row>
-            <Col>Time Slot: {up.time_slot}</Col>
-            <Col>Date: {up.req_date}</Col>
           </Row>
           {!this.props.is_teacher && (
             <Row>
-              <Col>
-                Meeting Url:{" "}
-                {up.meeting_url ? (
-                  <a href={up.meeting_url} target="_blank">
-                    {up.meeting_url}
-                  </a>
-                ) : (
-                  `The mentor hasn't sent meeting url yet. Try refreshing`
-                )}
+              <Col className="padded">
+                <h5 className="padded">
+                  🔗{" "}
+                  {up.meeting_url ? (
+                    <a href={up.meeting_url} target="_blank">
+                      {up.meeting_url}
+                    </a>
+                  ) : (
+                    `The mentor hasn't sent meeting url yet. Try refreshing`
+                  )}
+                </h5>
               </Col>
             </Row>
           )}
@@ -175,7 +201,7 @@ class Home extends Component {
           </Row>
           <Row>
             <Col>
-              <h5>📅 {req.req_date}</h5>
+              <h5>📅 {String(req.req_date).slice(0, 10)}</h5>
             </Col>
             <Col>
               <h5>⏲️ {req.time_slot}</h5>
@@ -193,7 +219,7 @@ class Home extends Component {
 
     const past = this.props.past_sessions.map((up) => (
       <React.Fragment key={up.session_id}>
-        <Container style={{ border: "1px solid black" }}>
+        <Container className="spaceout">
           <Row>
             <Col>
               <img src={up.image_link} className="profilepic2"></img>
@@ -211,29 +237,54 @@ class Home extends Component {
           {!this.props.is_teacher && (
             <Row>
               <Col>
-                Teacher: {up.first_name} {up.last_name}
+                <h4>
+                  <b>
+                    {" "}
+                    📖 {this.props.all_subjects[up.subject_id - 1].subject_name}
+                  </b>
+                </h4>
+                <Col>
+                  <h5>
+                    <i> - {up.topic} </i>
+                  </h5>
+                </Col>
               </Col>
-              <Col>Qualification: {up.grade}</Col>
+              <Col>
+                <h5>
+                  {" "}
+                  <i>by </i>
+                  <b>
+                    <i>
+                      {up.first_name} {up.last_name}, {up.qualification}
+                    </i>
+                  </b>
+                </h5>
+                <Col>
+                  <h5>
+                    {" "}
+                    🔡{" "}
+                    {this.props.all_languages[up.language_id - 1].language_name}
+                    {/* Language: {this.props.all_languages.find(lang => lang.id = up.language_id).language_name} */}
+                  </h5>
+                </Col>
+              </Col>
             </Row>
           )}
+          <Row></Row>
           <Row>
             <Col>
-              Subject: {this.props.all_subjects[up.subject_id - 1].subject_name}
-              {/* Subject: {this.props.all_subjects.find(sub => sub.id = up.subject_id).subject_name} */}
+              <h5>⏲️ {up.time_slot}</h5>
             </Col>
-            <Col sm={3}>
-              Language:{" "}
-              {this.props.all_languages[up.language_id - 1].language_name}
-              {/* Language: {this.props.all_languages.find(lang => lang.id = up.language_id).language_name} */}
+            <Col>
+              <h5>📅 {String(up.req_date).slice(0, 10)}</h5>
             </Col>
-            <Col>Topic: {up.topic}</Col>
           </Row>
           <Row>
-            <Col>Time Slot: {up.time_slot}</Col>
-            <Col>Date: {up.req_date}</Col>
-          </Row>
-          <Row>
-            <h3>Ratings for this session: {up.review}/5</h3>
+            <Col className="padded">
+              <h4 className="padded">
+                <b>🎖️Rating: {up.review}/5</b>
+              </h4>
+            </Col>
           </Row>
         </Container>
       </React.Fragment>
@@ -250,7 +301,7 @@ class Home extends Component {
           <React.Fragment>
             <Container>
               <Col style={{ textAlign: "left" }}>
-                <h2 className="dashboard">Dashboard</h2>
+                <h2 className="dashboard font1">Dashboard</h2>
                 {this.props.LoggedIn && !this.props.is_teacher && (
                   <ReqSession />
                 )}
@@ -272,7 +323,7 @@ class Home extends Component {
                   overflow: "auto",
                 }}
               >
-                <Row>
+                {/* <Row>
                   <Col>
                     <Button color="warning" onClick={this.showupcoming}>
                       Upcoming Sessions
@@ -290,7 +341,18 @@ class Home extends Component {
                       Past Sessions
                     </Button>
                   </Col>
-                </Row>
+                </Row> */}
+                <ButtonGroup style={{ alignSelf: "left" }}>
+                  <Button color="warning" onClick={this.showupcoming}>
+                    Upcoming Sessions
+                  </Button>
+                  <Button color="warning" onClick={this.showpending}>
+                    Pending Requests
+                  </Button>
+                  <Button color="warning" onClick={this.showpast}>
+                    Past Sessions
+                  </Button>
+                </ButtonGroup>
                 <Row>
                   {this.state.show_upcom &&
                     (this.props.upcoming_sessions.length === 0 ? (
