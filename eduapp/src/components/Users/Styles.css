@@ -17,7 +17,7 @@
     height: 200px;
     object-fit: cover;
     border-radius: 50%;
-    transition: width 2s, height 2s, border-radius 2s;
+    transition: width 1.5s, height 1.5s, border-radius 1.5s;
 }
 
 .profilepic:hover {
@@ -25,4 +25,19 @@
     height: 400px;
     object-fit: cover;
     border-radius: 0%;
+}
+
+.spaceout{
+    border-bottom: 1px solid black;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.padded{
+    padding-top: 20px;
+}
+
+.font1{
+    font-family: 'Times New Roman', Times, serif;
 }
