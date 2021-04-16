@@ -3,6 +3,23 @@
     margin-bottom: 150px;
 }
 
+Form {
+  margin: 30px;
+  text-align: left;
+}
+
+#login-btn {
+  margin-bottom: 40px;
+}
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
 .link {
     color:red;
 }

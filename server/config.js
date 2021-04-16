@@ -2,7 +2,7 @@ module.exports = {
   mysql: {
     host: "localhost",
     user: "root",
-    password: "elephant9",
+    password: "password",
     database: "eduapp",
   },
   port: 5000,
