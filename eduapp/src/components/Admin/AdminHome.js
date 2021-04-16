@@ -104,6 +104,9 @@ class AdminHome extends Component {
                 <td>{teacher.first_name} {teacher.last_name}</td>
                 <td>{teacher.email_id}</td>
                 <td>{teacher.qualification}</td>
+                <td><a href={teacher.doc_link} target="_blank">View</a></td>
+                <td>
+                </td>
                 <td>
                 {
                     teacher.verfied == 0 ?
@@ -146,6 +149,7 @@ class AdminHome extends Component {
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Qualification</th>
+                                    <th>Documents</th>
                                     <th>Verify</th>
                                 </tr>
                             </thead>

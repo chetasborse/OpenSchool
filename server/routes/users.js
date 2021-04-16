@@ -40,8 +40,21 @@ router.post("/register", (req, res) => {
     
 });
 
-router.post("/teacher", (req, res) => {
-    var query = `insert into teachers(user_id, first_name, last_name, email_id, image_link, qualification, rating_points, sessions_taken, verfied) values (${req.body.id}, "${req.body.first_name}", "${req.body.last_name}", "${req.body.email_id}", "${req.body.image_link}", "${req.body.qualification}" , 0, 0, 0);`
+router.post("/teacher", upload.single("file"), async function (req, res, next) {
+    var doc_url = '';
+
+    try {
+        var filename = req.body.id + Math.floor(Math.random() * 1000) + req.file.detectedFileExtension;
+    
+        await pipeline(req.file.stream, fs.createWriteStream(`${__dirname}/../public/documents/${filename}`))
+        doc_url = `http://localhost:5000/documents/${filename}`
+    }
+    catch(err) {
+        console.log(err)
+    }
+
+
+    var query = `insert into teachers(user_id, first_name, last_name, email_id, image_link, qualification, rating_points, sessions_taken, verfied, doc_link) values (${req.body.id}, "${req.body.first_name}", "${req.body.last_name}", "${req.body.email_id}", "${req.body.image_link}", "${req.body.qualification}" , 0, 0, 0, "${doc_url}");`
     db.query(query, (err, result) => {
         if(err) {
             res.status(400).send(err.message);

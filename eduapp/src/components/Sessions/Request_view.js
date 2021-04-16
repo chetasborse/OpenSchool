@@ -163,7 +163,7 @@ class Request_view extends Component {
                         <React.Fragment>
                             <h3>Your account hasn't been verified yet.</h3>
                             <p>You will see the requests once the administrator verifies your profile</p>
-                            <p>If you haven't mailed your qualification documnents yet, please do it at the earliest</p>
+                            <p>Try refreshing the page</p>
                         </React.Fragment>:
                         <React.Fragment>
                             <h3>Sorry {this.props.first_name} {this.props.last_name}, your account has been <span style={{color: "red"}}>suspended</span></h3>

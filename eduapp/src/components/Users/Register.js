@@ -21,6 +21,7 @@ class Register extends Component {
             qualification: '',
             grade: 1,
             board: '',
+            qualification_proof: '',
             is_teacher: false,
             type_selected: false,
             register: false
@@ -37,13 +38,21 @@ class Register extends Component {
                     register: true,
                     id: response.data.insertId
                 })
+                const data = new FormData();
+                data.append('file', this.state.qualification_proof)
+                data.append('id', response.data.insertId)
+                data.append('first_name', this.state.first_name)
+                data.append('last_name', this.state.last_name)
+                data.append('email_id', this.state.email_id)
+                data.append('image_link', this.state.image_link)
+                data.append('qualification', this.state.qualification)
                 if(this.state.is_teacher) {
-                    axios.post("http://localhost:5000/users/teacher", this.state)
+                    axios.post("http://localhost:5000/users/teacher", data)
                     .then(res=>{
                         console.log("success")
                     })
                     .catch(err=> {
-                        console.log("fail")
+                        console.log(err)
                     })
                 }
                 else {
@@ -92,9 +101,16 @@ class Register extends Component {
         })
     }
 
+    handle_file = e => {
+        this.setState({
+            qualification_proof: e.target.files[0]
+        })
+    }
+
     handle_image = e => {
         
     }
+
 
     componentDidUpdate(PrevProps, PrevState) {
         if(PrevState.register != this.state.register) {
@@ -155,6 +171,12 @@ class Register extends Component {
                                         <Input type="text" name="qualification" id="qualification" placeholder="Enter your Qualification" value={this.state.qualification} onChange={this.handle} required></Input>
                                     </Col>
                                 </FormGroup>
+                                <FormGroup row>
+                                        <Label for="file" sm={2}>Proof of qualification:</Label>
+                                        <Col sm={10}>
+                                            <Input type="file" name="file" id="file" placeholder="Upload a proof" onChange={this.handle_file} required></Input>
+                                        </Col>
+                                    </FormGroup>
                             </React.Fragment>
                         }
                         {
