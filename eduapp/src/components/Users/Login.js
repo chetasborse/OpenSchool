@@ -7,7 +7,6 @@ import {connect} from 'react-redux'
 import { login } from '../../redux/Users/userActions';
 import cover from "../../login_cover.jpg";
 
-
 axios.defaults.withCredentials = true;
 
 class Login extends Component {
@@ -59,7 +58,7 @@ class Login extends Component {
               <div className="row" id="login-content">
 
                 <div className="col-12 col-md-8">
-                  <img src={cover} id="cover" alt="team" width="100%"/>
+                  <img src={cover} id="cover" alt="graphic" width="100%"/>
                 </div>
 
                 <div className="content-section col-12 col-md-4">
