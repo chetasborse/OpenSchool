@@ -48,15 +48,15 @@ class Navigation extends Component {
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="ml-auto" navbar>
                                 <NavItem>
-                                    <NavLink className="nav-link" to="/">Home</NavLink>
+                                    <NavLink className="nav-link" href="/">Home</NavLink>
                                 </NavItem>
                                 {!this.props.LoggedIn &&
                                 <React.Fragment>
                                     <NavItem>
-                                        <NavLink className="nav-link" to="/Login">Login</NavLink>
+                                        <NavLink className="nav-link" href="/Login">Login</NavLink>
                                     </NavItem>
                                     <NavItem>
-                                        <NavLink className="nav-link" to="/Register">Register</NavLink>
+                                        <NavLink className="nav-link" href="/Register">Register</NavLink>
                                     </NavItem>
                                 </React.Fragment>
                                 }
