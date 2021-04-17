@@ -1,11 +1,7 @@
-.linkclass {
-    margin: 10px;
-    padding-top: 20px;
-    color: whitesmoke;
-    font-size: 15px;
+.nav-link:hover {
+    cursor: pointer;
 }
 
-.linkclass:hover {
-    color:whitesmoke;
-    font-size: 16px; 
+#nav-logo {
+  margin-right: 10px;
 }
