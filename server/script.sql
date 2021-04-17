@@ -19,6 +19,7 @@ create table teachers
     rating_points int,
     sessions_taken int,
     verfied int,
+    doc_link varchar(100),
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
