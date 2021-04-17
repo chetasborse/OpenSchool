@@ -1,15 +1,15 @@
 const mailer = require("nodemailer");
 
 const getEmailData = (to, dat, template) => {
-    let data = null;
-    
-    switch(template) {
-        case "teacher_session_confirm":
-            data = {
-                from: "OpenSchool <jjeff3087@gmail.com>",
-                to: to,
-                subject: `Approval of request`,
-                html: `<!DOCTYPE html>
+  let data = null;
+
+  switch (template) {
+    case "teacher_session_confirm":
+      data = {
+        from: "OpenSchool <jjeff3087@gmail.com>",
+        to: to,
+        subject: `Approval of request`,
+        html: `<!DOCTYPE html>
                 <html>
                     <head>
                         <title>
@@ -30,16 +30,16 @@ const getEmailData = (to, dat, template) => {
                             <p>Topic: ${dat.topic}</p>
                         </div>
                     </body>
-                </html>`
-            }
-            break;
+                </html>`,
+      };
+      break;
 
-        case "student_session_confirm":
-            data = {
-                from: "OpenSchool <jjeff3087@gmail.com>",
-                to: to,
-                subject: `Your request has been approved`,
-                html: `<!DOCTYPE html>
+    case "student_session_confirm":
+      data = {
+        from: "OpenSchool <jjeff3087@gmail.com>",
+        to: to,
+        subject: `Your request has been approved`,
+        html: `<!DOCTYPE html>
                 <html>
                     <head>
                         <title>
@@ -61,15 +61,15 @@ const getEmailData = (to, dat, template) => {
                             <p>Topic: ${dat.topic}</p>
                         </div>
                     </body>
-                </html>`
-            }
-            break;
-        case "finish_student":
-            data = {
-                from: "OpenSchool <jjeff3087@gmail.com>",
-                to: to,
-                subject: `Thank you for taking the session`,
-                html: `<!DOCTYPE html>
+                </html>`,
+      };
+      break;
+    case "finish_student":
+      data = {
+        from: "OpenSchool <jjeff3087@gmail.com>",
+        to: to,
+        subject: `Thank you for taking the session`,
+        html: `<!DOCTYPE html>
                 <html>
                     <head>
                         <title>
@@ -87,15 +87,15 @@ const getEmailData = (to, dat, template) => {
                             <h5>Review given: ${dat.review}/5</h5>
                         </div>
                     </body>
-                </html>`
-            }
-            break;
-        case "finish_teacher":
-            data = {
-                from: "OpenSchool <jjeff3087@gmail.com>",
-                to: to,
-                subject: `Thank you for taking the session`,
-                html: `<!DOCTYPE html>
+                </html>`,
+      };
+      break;
+    case "finish_teacher":
+      data = {
+        from: "OpenSchool <jjeff3087@gmail.com>",
+        to: to,
+        subject: `Thank you for taking the session`,
+        html: `<!DOCTYPE html>
                 <html>
                     <head>
                         <title>
@@ -113,15 +113,15 @@ const getEmailData = (to, dat, template) => {
                             <h5>Review given: ${dat.review}/5</h5>
                         </div>
                     </body>
-                </html>`
-            }
-            break;
-        case "student_send_url":
-            data = {
-                from: "OpenSchool <jjeff3087@gmail.com>",
-                to: to,
-                subject: `Meeting Link`,
-                html: `<!DOCTYPE html>
+                </html>`,
+      };
+      break;
+    case "student_send_url":
+      data = {
+        from: "OpenSchool <jjeff3087@gmail.com>",
+        to: to,
+        subject: `Meeting Link`,
+        html: `<!DOCTYPE html>
                 <html>
                     <head>
                         <title>
@@ -142,15 +142,15 @@ const getEmailData = (to, dat, template) => {
                             <h6>Enjoy the session :)</h6>
                         </div>
                     </body>
-                </html>`
-            }
-            break;
-        case "teacher_send_url":
-            data = {
-                from: "OpenSchool <jjeff3087@gmail.com>",
-                to: to,
-                subject: `Meeting Link`,
-                html: `<!DOCTYPE html>
+                </html>`,
+      };
+      break;
+    case "teacher_send_url":
+      data = {
+        from: "OpenSchool <jjeff3087@gmail.com>",
+        to: to,
+        subject: `Meeting Link`,
+        html: `<!DOCTYPE html>
                 <html>
                     <head>
                         <title>
@@ -171,15 +171,15 @@ const getEmailData = (to, dat, template) => {
                             <h6>Enjoy the session :)</h6>
                         </div>
                     </body>
-                </html>`
-            }
-            break;
-        case "send_verification":
-            data = {
-                from: "OpenSchool <jjeff3087@gmail.com>",
-                to: to,
-                subject: `Verification of account`,
-                html: `<!DOCTYPE html>
+                </html>`,
+      };
+      break;
+    case "send_verification":
+      data = {
+        from: "OpenSchool <jjeff3087@gmail.com>",
+        to: to,
+        subject: `Verification of account`,
+        html: `<!DOCTYPE html>
                 <html>
                     <head>
                         <title>
@@ -192,15 +192,15 @@ const getEmailData = (to, dat, template) => {
                             <h3>Your account has been verified</h3>
                         </div>
                     </body>
-                </html>`
-            }
-            break;
-        case "send_suspension":
-            data = {
-                from: "OpenSchool <jjeff3087@gmail.com>",
-                to: to,
-                subject: `Meeting Link`,
-                html: `<!DOCTYPE html>
+                </html>`,
+      };
+      break;
+    case "send_suspension":
+      data = {
+        from: "OpenSchool <jjeff3087@gmail.com>",
+        to: to,
+        subject: `Meeting Link`,
+        html: `<!DOCTYPE html>
                 <html>
                     <head>
                         <title>
@@ -213,15 +213,15 @@ const getEmailData = (to, dat, template) => {
                             <h3>Your account has been suspended</h3>
                         </div>
                     </body>
-                </html>`
-            }
-            break;
-        case "otp":
-            data = {
-                from: "OpenSchool <jjeff3087@gmail.com>",
-                to: to,
-                subject: `OTP for changing password`,
-                html: `<!DOCTYPE html>
+                </html>`,
+      };
+      break;
+    case "otp":
+      data = {
+        from: "OpenSchool <jjeff3087@gmail.com>",
+        to: to,
+        subject: `OTP for changing password`,
+        html: `<!DOCTYPE html>
                 <html>
                     <head>
                         <title>
@@ -237,38 +237,58 @@ const getEmailData = (to, dat, template) => {
                             <h5>Enter this otp in the space provided in the application</h5>
                         </div>
                     </body>
-                </html>`
-            }
-            break;
-        default:
-            data;        
-    }
-    return data
-}
+                </html>`,
+      };
+      break;
+    case "send_review":
+      data = {
+        from: "OpenSchool <jjeff3087@gmail.com>",
+        to: to,
+        subject: `Approval of request`,
+        html: `<!DOCTYPE html>
+                    <html>
+                        <head>
+                            <title>
+                                Approval
+                            </title>
+                        </head>
+                        <body>
+                            <div>
+                                <h1>Good Day Student</h1>
+                                <h3>You have completed the session on ${dat.topic} by ${dat.first_name} ${dat.last_name}</h3>
+                                <br>
+                                <h5>We would love to hear your feedback on the session! <br>You may also let us know about your concerns and problems with the session by filling out this google form - </h5>
+                                <h5>https://docs.google.com/forms/d/e/1FAIpQLSduDXg3BuNyCFJJPSFA71QQ-B_W7wQruk-3zTSQY3ZAgHU30g/viewform?usp=sf_link/</h5>
+                            </div>
+                        </body>
+                    </html>`,
+      };
+      break;
+    default:
+      data;
+  }
+  return data;
+};
 
 const sendEmail = (bod) => {
-    
-    const smtpTransport = mailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: "jjeff3087@gmail.com",
-            pass: "Jerry@3087"
-        }
-    })
+  const smtpTransport = mailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "jjeff3087@gmail.com",
+      pass: "Jerry@3087",
+    },
+  });
 
-    const mail = getEmailData(bod.receiver, bod, bod.type)
+  const mail = getEmailData(bod.receiver, bod, bod.type);
 
-    smtpTransport.sendMail(mail, function(error, response) {
-        if(error) {
-            console.log(error.message)
-        }
-        else {
-            console.log("Email sent successfully")
-        }
-        smtpTransport.close()
-    })
+  smtpTransport.sendMail(mail, function (error, response) {
+    if (error) {
+      console.log(error.message);
+    } else {
+      console.log("Email sent successfully");
+    }
+    smtpTransport.close();
+  });
+};
 
-
-}
-
-module.exports = { sendEmail }
+module.exports = { sendEmail };

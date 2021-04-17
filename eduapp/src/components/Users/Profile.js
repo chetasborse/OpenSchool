@@ -290,7 +290,7 @@ class Profile extends Component {
                 {is_teacher && (
                   <React.Fragment>
                     <p>Qualification: {qualification}</p>
-                    <p>Rating Points: {rating_points}</p>
+                    <p>Rating Points: {rating_points / session_taken}</p>
                   </React.Fragment>
                 )}
                 {!is_teacher && (
