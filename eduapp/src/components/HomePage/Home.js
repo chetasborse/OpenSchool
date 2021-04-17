@@ -307,7 +307,6 @@ class Home extends Component {
           <React.Fragment>
             <Container>
               <Col style={{ textAlign: "left" }}>
-                <h2 className="dashboard font1">Dashboard</h2>
                 {this.props.LoggedIn && !this.props.is_teacher && (
                   <ReqSession />
                 )}

@@ -3,10 +3,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 import { send_request } from '../../redux/Session/sessionAction';
+import "./Styles.css";
 
 class ReqSession extends Component {
     constructor() {
-        super() 
+        super()
         this.state = {
             modal: false,
             subject_id: '',
@@ -63,7 +64,7 @@ class ReqSession extends Component {
             languages: []
         })
     }
-    
+
     componentDidUpdate(prevProps, prevState) {
         if(prevState.modal != this.state.modal && this.state.modal) {
             this.setState({
@@ -86,8 +87,15 @@ class ReqSession extends Component {
         return(
             <React.Fragment>
 
-                <div>
-                    <Button color="danger" onClick={this.toggle}>Request a Session</Button>
+              <main role="main">
+                <div className="row d-flex justify-content-center">
+                  <div className="col-12 col-sm-6 text-center" id="req-session">
+                    <section id="prompt">
+                      <p>What topic do you want to discuss?</p>
+                      <p>We have many mentors in the community willing to discuss topics both in and out of your school curriculum.</p>
+                    </section>
+                    <Button className="btn btn-info" onClick={this.toggle}>Request a Session</Button>
+                  </div>
                 </div>
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalHeader>Session Request</ModalHeader>
@@ -137,10 +145,9 @@ class ReqSession extends Component {
                             <Button color="danger" onClick={this.toggle}>Back</Button>
                         </Form>
                     </ModalBody>
-
-
-
                 </Modal>
+              </main>
+
             </React.Fragment>
         )
     }
@@ -150,7 +157,7 @@ const mapStateToProps = state => {
     return {
         user_id: state.users.user_id,
         all_subjects: state.users.all_subjects,
-        all_languages: state.users.all_languages, 
+        all_languages: state.users.all_languages,
     }
 }
 
