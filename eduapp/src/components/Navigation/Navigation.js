@@ -11,12 +11,12 @@ import {
     Container
 } from 'reactstrap';
 import './Styles.css'
+import {connect} from 'react-redux';
 import Home from '../HomePage/Home';
 import Login from '../Users/Login';
 import Register from '../Users/Register';
 import Logout from '../Users/Logout';
 import Profile from '../Users/Profile';
-import {connect} from 'react-redux';
 import Request_view from '../Sessions/Request_view';
 import ForgotPassword from '../Admin/ForgotPassword';
 // import Request_session from '../Sessions/Request_session';
@@ -65,23 +65,23 @@ class Navigation extends Component {
                                     <React.Fragment>
                                         {   !this.props.is_admin &&
                                             <NavItem>
-                                                <NavLink className="nav-link" to="/Profile">Profile</NavLink>
+                                                <NavLink className="nav-link" href="/Profile">Profile</NavLink>
                                             </NavItem>
                                         }
                                         {/* {
                                             !this.props.is_teacher &&
                                             <NavItem>
-                                                <NavLink className="nav-link" to="/Request_Session">Req_Sess</NavLink>
+                                                <NavLink className="nav-link" href="/Request_Session">Req_Sess</NavLink>
                                             </NavItem>
                                         } */}
                                         {
                                             this.props.is_teacher &&
                                             <NavItem>
-                                                <NavLink className="nav-link" to="/View_Requests">Requests</NavLink>
+                                                <NavLink className="nav-link" href="/View_Requests">Requests</NavLink>
                                             </NavItem>
                                         }
                                         <NavItem>
-                                            <NavLink className="nav-link" to="/Logout">Logout</NavLink>
+                                            <NavLink className="nav-link" href="/Logout">Logout</NavLink>
                                         </NavItem>
                                     </React.Fragment>
                                 }
