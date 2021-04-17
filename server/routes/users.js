@@ -114,7 +114,7 @@ router.post("/login", (req, res) => {
                     res.send(result);
                 }
                 else {
-                    res.send({message: "Wrong combination of username/password"})
+                    res.send({message: "Incorrect username or password.\nTry again."})
                 }
             })
 

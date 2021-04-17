@@ -6,13 +6,13 @@ import React, {Component} from 'react';
 class Request_view extends Component {
 
     constructor(props) {
-        super(props) 
+        super(props)
         this.state = {
             requests: [],
             verfied: props.verfied
         }
     }
-    
+
     componentDidMount() {
         if(this.props.verfied === 1) {
             axios.get("http://localhost:5000/session/request", {
@@ -95,7 +95,7 @@ class Request_view extends Component {
     }
 
     render() {
-        
+
 
         const reqs = this.state.requests.map((req) => (
             <React.Fragment key={req.request_id}>
@@ -109,14 +109,14 @@ class Request_view extends Component {
                     }
                     <Row>
                         <Col sm = {6}>
-                            Sender: {req.first_name} {req.last_name} 
+                            Sender: {req.first_name} {req.last_name}
                         </Col>
                         <Col sm = {3}>
                             Grade: {req.grade}
                         </Col>
                         <Col sm = {3}>
                             Board: {req.board}
-                        </Col> 
+                        </Col>
                     </Row>
                     <Row>
                         <Col sm = {6}>
@@ -161,9 +161,12 @@ class Request_view extends Component {
                     (
                         this.state.verfied == 0 ?
                         <React.Fragment>
-                            <h3>Your account hasn't been verified yet.</h3>
-                            <p>You will see the requests once the administrator verifies your profile</p>
-                            <p>Try refreshing the page</p>
+                          <main role="main" className="text-center">
+                            <i class="bi bi-exclamation-triangle"></i><br/><br/>
+                            <h2>Your account is pending for verification.</h2>
+                            <p>You will be able to log in once the administrator verifies your profile.<br/>
+                            If you think it has already been verified, try refreshing the page.</p>
+                          </main>
                         </React.Fragment>:
                         <React.Fragment>
                             <h3>Sorry {this.props.first_name} {this.props.last_name}, your account has been <span style={{color: "red"}}>suspended</span></h3>
@@ -186,7 +189,7 @@ const mapStateToProps = state => {
         sessions_taken: state.users.session_taken,
         qualification: state.users.qualification,
         rating: state.users.rating_points,
-        verfied: state.users.verfied 
+        verfied: state.users.verfied
     }
 }
 

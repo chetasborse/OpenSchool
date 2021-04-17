@@ -31,7 +31,6 @@ class Login extends Component {
                 alert(response.data.message)
             }
             else {
-                alert("Welcome user")
                 this.props.login(response.data[0])
                 console.log(response.data[0])
             }
@@ -44,9 +43,9 @@ class Login extends Component {
 
     forgotPass = ()  => {
         var otp = Math.floor(Math.random() * 1000000)
-        var prom = prompt("A mail has been sent with the otp. Enter the otp here to continue");
+        var prom = prompt("A mail has been sent with an OTP. Enter the OTP here to continue");
         if(prom == otp) {
-            console.log("otp matches")
+            console.log("OTP matches")
         }
     }
 
@@ -62,8 +61,8 @@ class Login extends Component {
                 </div>
 
                 <div className="content-section col-12 col-md-4">
-                  <br/><h3>Login</h3>
-                  <Form onSubmit={this.handleSubmit}>
+                  <br/><h3 className="text-center">Login</h3>
+                  <Form id="login-form" onSubmit={this.handleSubmit}>
                       <FormGroup row>
                           <Label for="username" sm={2}>Username</Label>
                           <Input type="text" name="username" id="username" placeholder="Enter Username" value={this.state.username} onChange={(e) => this.setState({username: e.target.value})}></Input>

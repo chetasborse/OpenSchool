@@ -65,7 +65,7 @@ class Navigation extends Component {
                                     <React.Fragment>
                                         {   !this.props.is_admin &&
                                             <NavItem>
-                                                <Link className="nav-link" to="/Profile">{ this.props.username }</Link>
+                                                <Link className="nav-link" to="/Profile"><i className="bi bi-person-circle"></i> { this.props.username }</Link>
                                             </NavItem>
                                         }
                                         {/* {
