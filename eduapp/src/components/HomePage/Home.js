@@ -11,6 +11,7 @@ import {
   Row,
 } from "reactstrap";
 import { fetch_home } from "../../redux/Session/sessionAction";
+import LandingPage from "./LandingPage";
 import AdminHome from "../Admin/AdminHome";
 import MeetingLinkShare from "../Sessions/MeetingLinkShare";
 import ReqSession from "../Sessions/ReqSession";
@@ -303,12 +304,17 @@ class Home extends Component {
 
     return (
       <div className="toplookout">
+        {!this.props.LoggedIn && (
+          <React.Fragment>
+            <LandingPage />
+          </React.Fragment>
+        )}
         {this.props.is_admin && (
           <React.Fragment>
             <AdminHome />
           </React.Fragment>
         )}
-        {!this.props.is_admin && (
+        {this.props.LoggedIn && !this.props.is_admin && (
           <React.Fragment>
             <Container>
               <Col style={{ textAlign: "left" }}>
