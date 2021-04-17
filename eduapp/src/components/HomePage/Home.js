@@ -228,10 +228,21 @@ class Home extends Component {
           {this.props.is_teacher && (
             <Row>
               <Col>
-                Student: {up.first_name} {up.last_name}
+                {" "}
+                <h4>
+                  <b>
+                    {" "}
+                    {up.first_name} {up.last_name}
+                  </b>
+                </h4>
               </Col>
-              <Col>Grade: {up.grade}</Col>
-              <Col>Board: {up.board}</Col>
+              <Col>
+                <h5>
+                  <i>
+                    Grade: {up.grade}, {up.board}
+                  </i>{" "}
+                </h5>
+              </Col>
             </Row>
           )}
           {!this.props.is_teacher && (
@@ -282,7 +293,7 @@ class Home extends Component {
           <Row>
             <Col className="padded">
               <h4 className="padded">
-                <b>🎖️Rating: {up.review}/5</b>
+                <b>🎖️Your Rating: {up.review}/5</b>
               </h4>
             </Col>
           </Row>
