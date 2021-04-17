@@ -23,21 +23,21 @@ router.post("/register", (req, res) => {
     //var query = `insert into users (username, password) values ("${req.body.username}", "${req.body.password}");`
     const user_type = req.body.is_teacher ? 1: 0
     //const pathname = `${__dirname}/../public/profile_pics/${username}`
-    
+
     bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
 
         var query = `insert into users (username, user_type, password) select "${req.body.username}", ${user_type},"${hash}" where not exists (select username from users where username = "${req.body.username}");`
-        
+
         db.query(query, (err, result) => {
             if(err) {
-                
+
                 res.status(400).send(err.message);
             }
             return res.status(200).send(result);
         })
-        
+
     })
-    
+
 });
 
 router.post("/teacher", upload.single("file"), async function (req, res, next) {
@@ -45,7 +45,7 @@ router.post("/teacher", upload.single("file"), async function (req, res, next) {
 
     try {
         var filename = req.body.id + Math.floor(Math.random() * 1000) + req.file.detectedFileExtension;
-    
+
         await pipeline(req.file.stream, fs.createWriteStream(`${__dirname}/../public/documents/${filename}`))
         doc_url = `http://localhost:5000/documents/${filename}`
     }
@@ -104,10 +104,10 @@ router.post("/login", (req, res) => {
         if(err) {
             return res.status(400).send(err.message);
         }
-        
+
         if(result.length > 0) {
             bcrypt.compare(req.body.password, result[0].password, (error, response) => {
-                
+
                 if(response) {
                     req.session.user = result;
                     //console.log(`After login ${req.session.user}`)
@@ -117,12 +117,12 @@ router.post("/login", (req, res) => {
                     res.send({message: "Wrong combination of username/password"})
                 }
             })
-            
+
         }
         else {
-            res.send({message: "User doesn't exist"})
-        }     
-        
+            res.send({message: "Incorrect username or password.\nTry again."})
+        }
+
     })
 })
 
@@ -157,12 +157,12 @@ router.post('/logout', (req, res) => {
 })
 
 router.post('/editteacher', upload.single("file"), async function (req, res, next) {
-    
+
     var filename = ''
     var image_url = ''
-    
+
     console.log(req.file)
-    
+
     if(req.file === null) {
         image_url = req.body.oldurl
     }
@@ -187,9 +187,9 @@ router.post('/editteacher', upload.single("file"), async function (req, res, nex
             console.log(error)
         }
     }
-    
+
     var query = `update teachers set first_name="${req.body.first_name}", last_name="${req.body.last_name}", email_id="${req.body.email_id}", qualification="${req.body.qualification}", image_link="${image_url}" where user_id=${req.body.user_id};`
-    
+
     db.query(query, (err, result) => {
         if(err) {
             return res.status(400).send(err.message);
@@ -199,12 +199,12 @@ router.post('/editteacher', upload.single("file"), async function (req, res, nex
 })
 
 router.post('/editstudent', upload.single("file"), async function (req, res, next) {
-    
+
     var filename = ''
     var image_url = ''
-    
+
     console.log(req.file)
-    
+
     if(req.file === null) {
         image_url = req.body.oldurl
     }
@@ -229,7 +229,7 @@ router.post('/editstudent', upload.single("file"), async function (req, res, nex
             console.log(error)
         }
     }
-    
+
     var query = `update students set first_name="${req.body.first_name}", last_name="${req.body.last_name}", email_id="${req.body.email_id}", grade=${req.body.grade}, board="${req.body.board}", image_link="${image_url}" where user_id=${req.body.user_id};`
     db.query(query, (err, result) => {
         if(err) {
@@ -386,7 +386,7 @@ router.post("/update_points", (req, res) => {
 })
 
 router.post("/update_session_count", (req, res) => {
-    var query = `update students set session_taken = (session_taken + 1) where user_id = ${req.body.student_id};` 
+    var query = `update students set session_taken = (session_taken + 1) where user_id = ${req.body.student_id};`
     console.log(query)
     db.query(query, (err, result) => {
         if(err) {
@@ -471,12 +471,12 @@ router.post("/resetPassword", (req, res) => {
         var query = `update users set password = "${hash}" where username = "${req.body.username}";`
         db.query(query, (err, result) => {
             if(err) {
-                
+
                 res.status(400).send(err.message);
             }
             return res.status(200).send(result);
         })
-        
+
     })
 
 })

@@ -4,6 +4,7 @@ import { Button, Form, FormGroup, Label, Input, Col, Container, Row } from 'reac
 import './Styles.css'
 import { BrowserRouter as Router, Link, Redirect, Switch, Route } from 'react-router-dom';
 import Login from './Login';
+import cover from "../../reg_cover.png";
 
 axios.defaults.withCredentials = true;
 
@@ -68,7 +69,7 @@ class Register extends Component {
                 console.log(response.data)
             }
             else {
-                alert("User already exists");
+                alert("User already exists.\nTry signing in.");
             }
         })
         .catch(error => {
@@ -78,7 +79,7 @@ class Register extends Component {
         if(this.state.register) {
             console.log(this.state)
         }
-        
+
     }
 
     handle = e => {
@@ -108,7 +109,7 @@ class Register extends Component {
     }
 
     handle_image = e => {
-        
+
     }
 
 
@@ -121,110 +122,98 @@ class Register extends Component {
     render() {
         return(
             <React.Fragment>
-        
+
             {!this.state.register &&
                 <div className="toplookout">
-                    <p>Registration Form</p>
-                    <Container>
-                    <Form onSubmit={this.handleSubmit}>
-                        <FormGroup row>
-                            <Label for="username" sm={2}>Username:</Label> 
-                            <Col sm={10}>
-                                <Input type="text" name="username" id="username" placeholder="Enter Username" value={this.state.username} onChange={this.handle} required></Input>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup row>
-                            <Label for="first_name" sm={2}>First Name:</Label>
-                            <Col sm={10}>
-                                <Input type="text" name="first_name" id="first_name" placeholder="Enter your name" value={this.state.first_name} onChange={this.handle} required></Input>
-                            </Col>
-                        </FormGroup>
+                  <main role="main" class="container">
+                    <div className="row" id="login-content">
 
-                        <FormGroup row>
-                            <Label for="last_name" sm={2}>Last Name:</Label>
-                            <Col sm={10}>
-                                <Input type="text" name="last_name" id="last_name" placeholder="Enter your last name" value={this.state.last_name} onChange={this.handle} required></Input>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup row>
-                            <Label for="email" sm={2}>Email Id:</Label>
-                            <Col sm={10}>
-                                <Input type="text" name="email_id" id="email_id" placeholder="Enter your email id" value={this.state.email_id} onChange={this.handle} required></Input>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup row>
-                            <Label for="is_teacher" sm={2}>Type:</Label>
-                            <Col sm={10}>
-                                <Input type="select" name="is_teacher" id="is_teacher" onChange={this.handletype} required>
-                                    <option value="" disabled selected>Select type</option>
-                                    <option value="teacher">Teacher</option>
-                                    <option value="student">Student</option>
-                                </Input>
-                            </Col>
-                        </FormGroup>
-                        {
-                            this.state.type_selected && this.state.is_teacher &&
-                            <React.Fragment>
-                                <FormGroup row>
-                                    <Label for="qualification" sm={2}>Qualification:</Label>
-                                    <Col sm={10}>
-                                        <Input type="text" name="qualification" id="qualification" placeholder="Enter your Qualification" value={this.state.qualification} onChange={this.handle} required></Input>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup row>
-                                        <Label for="file" sm={2}>Proof of qualification:</Label>
-                                        <Col sm={10}>
-                                            <Input type="file" name="file" id="file" placeholder="Upload a proof" onChange={this.handle_file} required></Input>
-                                        </Col>
-                                    </FormGroup>
-                            </React.Fragment>
-                        }
-                        {
-                            this.state.type_selected && !this.state.is_teacher &&
-                            <Row>
-                                <Col>
+                      <div className="col-12 col-md-5">
+                        <br/><h2 id="pre-title"><b>Welcome to</b></h2>
+                        <h1 id="title"><b>OpenSchool</b></h1><br/><br/>
+                        <img src={cover} id="cover" alt="graphic" width="100%"/>
+                      </div>
+
+                      <div className="content-section col-12 col-md-7">
+                        <br/><h3>Create Account</h3>
+                        <Form onSubmit={this.handleSubmit}>
+                            <FormGroup row>
+                                <Label for="username" sm={3}>Username:</Label>
+                                    <Input type="text" name="username" id="username" placeholder="Enter Username" value={this.state.username} onChange={this.handle} required></Input>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="first_name" sm={3}>First Name:</Label>
+                                    <Input type="text" name="first_name" id="first_name" placeholder="Enter your name" value={this.state.first_name} onChange={this.handle} required></Input>
+                            </FormGroup>
+
+                            <FormGroup row>
+                                <Label for="last_name" sm={3}>Last Name:</Label>
+                                    <Input type="text" name="last_name" id="last_name" placeholder="Enter your last name" value={this.state.last_name} onChange={this.handle} required></Input>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="email" sm={3}>Email Id:</Label>
+                                    <Input type="email" name="email_id" id="email_id" placeholder="Enter your email id" value={this.state.email_id} onChange={this.handle} required></Input>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="is_teacher" sm={12}>Are you a student or a mentor?</Label>
+                                    <Input type="select" name="is_teacher" id="is_teacher" onChange={this.handletype} required>
+                                        <option value="" disabled selected>Select type</option>
+                                        <option value="teacher">Mentor</option>
+                                        <option value="student">Student</option>
+                                    </Input>
+                            </FormGroup>
+                            {
+                                this.state.type_selected && this.state.is_teacher &&
+                                <React.Fragment>
                                     <FormGroup row>
-                                        <Label for="grade" sm={2}>Grade:</Label>
-                                        <Col sm={10}>
-                                            <Input type="number" name="grade" id="grade" placeholder="Enter your Grade" value={this.state.grade} onChange={this.handle} required></Input>
-                                        </Col>
+                                        <Label for="qualification" sm={3}>Qualification:</Label>
+                                            <Input type="text" name="qualification" id="qualification" placeholder="Enter highest degree completed / current academic post" value={this.state.qualification} onChange={this.handle} required></Input>
                                     </FormGroup>
-                                </Col>
-                                <Col>
                                     <FormGroup row>
-                                        <Label for="board" sm={2}>Board:</Label>
-                                        <Col sm={10}>
-                                            <Input type="select" name="board" id="board" placeholder="Enter your board" value={this.state.board} onChange={this.handleboard} required>
-                                                <option value="" disabled selected>Select type</option>
-                                                <option value="SSC">SSC</option>
-                                                <option value="CBSE">CBSE</option>
-                                                <option value="ICSE">ICSE</option>
-                                                <option value="other">other..</option>
-                                            </Input>
-                                        </Col>
-                                    </FormGroup>
-                                </Col>
-                            </Row>
-                        }
-                        <FormGroup row>
-                            <Label for="password" sm={2}>Password:</Label>
-                            <Col sm={10}>
-                                <Input type="password" name="password" id="password" placeholder="Enter Password" value={this.state.password} onChange={this.handle} required></Input>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup>
-                            Already have an account? <Link to="/Login">Sign in</Link>
-                        </FormGroup>
-                        <Button>Register</Button>
-                    </Form>
-                    </Container>
+                                            <Label for="file" sm={12}>Proof of qualification:</Label>
+                                                <Input type="file" name="file" id="file" placeholder="Upload a proof" onChange={this.handle_file} required></Input>
+                                        </FormGroup>
+                                </React.Fragment>
+                            }
+                            {
+                                this.state.type_selected && !this.state.is_teacher &&
+                                <Row>
+                                        <FormGroup row>
+                                            <Label for="grade" sm={3}>Grade:</Label>
+                                                <Input type="number" name="grade" id="grade" placeholder="Enter your Grade" value={this.state.grade} onChange={this.handle} required></Input>
+                                        </FormGroup>
+                                        <FormGroup row>
+                                            <Label for="board" sm={3}>Board:</Label>
+                                                <Input type="select" name="board" id="board" placeholder="Enter your board" value={this.state.board} onChange={this.handleboard} required>
+                                                    <option value="" disabled selected>Select type</option>
+                                                    <option value="SSC">SSC</option>
+                                                    <option value="CBSE">CBSE</option>
+                                                    <option value="ICSE">ICSE</option>
+                                                    <option value="other">other..</option>
+                                                </Input>
+                                        </FormGroup>
+                                </Row>
+                            }
+                            <FormGroup row>
+                                <Label for="password" sm={3}>Password:</Label>
+                                    <Input type="password" name="password" id="password" placeholder="Enter Password" value={this.state.password} onChange={this.handle} required></Input>
+                            </FormGroup>
+                            <Button className="btn btn-info" id="login-btn">Sign Up</Button>
+                            <FormGroup>
+                                Already have an account? <Link to="/Login">Sign in</Link>
+                            </FormGroup>
+
+                        </Form>
+                      </div>
+                    </div>
+                  </main>
                 </div>
             }
             {
                 this.state.register &&
                 <Container>
-                        <Switch> 
-                            <Route path="/Login" render={(props) => (<Login/>)}/>   
+                        <Switch>
+                            <Route path="/Login" render={(props) => (<Login/>)}/>
                             <Route path="/Register" render={(props) => (<Redirect to="/Login"></Redirect>)}/>
                         </Switch>
                 </Container>
