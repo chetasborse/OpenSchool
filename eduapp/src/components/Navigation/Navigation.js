@@ -48,15 +48,15 @@ class Navigation extends Component {
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="ml-auto" navbar>
                                 <NavItem>
-                                    <NavLink className="nav-link" href="/">Home</NavLink>
+                                    <Link className="nav-link" to="/">Home</Link>
                                 </NavItem>
                                 {!this.props.LoggedIn &&
                                 <React.Fragment>
                                     <NavItem>
-                                        <NavLink className="nav-link" href="/Login">Login</NavLink>
+                                        <Link className="nav-link" to="/Login">Login</Link>
                                     </NavItem>
                                     <NavItem>
-                                        <NavLink className="nav-link" href="/Register">Register</NavLink>
+                                        <Link className="nav-link" to="/Register">Register</Link>
                                     </NavItem>
                                 </React.Fragment>
                                 }
@@ -65,23 +65,23 @@ class Navigation extends Component {
                                     <React.Fragment>
                                         {   !this.props.is_admin &&
                                             <NavItem>
-                                                <NavLink className="nav-link" href="/Profile">Profile</NavLink>
+                                                <Link className="nav-link" to="/Profile"><i className="bi bi-person-circle"></i> { this.props.username }</Link>
                                             </NavItem>
                                         }
                                         {/* {
                                             !this.props.is_teacher &&
                                             <NavItem>
-                                                <NavLink className="nav-link" href="/Request_Session">Req_Sess</NavLink>
+                                                <Link className="nav-link" to="/Request_Session">Req_Sess</Link>
                                             </NavItem>
                                         } */}
                                         {
                                             this.props.is_teacher &&
                                             <NavItem>
-                                                <NavLink className="nav-link" href="/View_Requests">Requests</NavLink>
+                                                <Link className="nav-link" to="/View_Requests">Requests</Link>
                                             </NavItem>
                                         }
                                         <NavItem>
-                                            <NavLink className="nav-link" href="/Logout">Logout</NavLink>
+                                            <Link className="nav-link" to="/Logout">Logout</Link>
                                         </NavItem>
                                     </React.Fragment>
                                 }
@@ -108,7 +108,8 @@ const mapStateToProps = state => {
     return {
         LoggedIn: state.users.loggedIn,
         is_teacher: state.users.is_teacher,
-        is_admin: state.users.is_admin
+        is_admin: state.users.is_admin,
+        username: state.users.username
     }
 }
 
