@@ -93,10 +93,20 @@ class Home extends Component {
           {this.props.is_teacher && (
             <Row>
               <Col>
-                Student: {up.first_name} {up.last_name}
+                {" "}
+                <h5>
+                  <b>
+                    {" "}
+                    Student: {up.first_name} {up.last_name}
+                  </b>
+                </h5>
               </Col>
-              <Col>Grade: {up.grade}</Col>
-              <Col>Board: {up.board}</Col>
+              {/* <Col>Grade: {up.grade}</Col> */}
+              <Col>
+                <h5>
+                  {up.grade}th Grade, {up.board} Board
+                </h5>
+              </Col>
             </Row>
           )}
           {!this.props.is_teacher && (
@@ -176,10 +186,12 @@ class Home extends Component {
             ) : (
               <Row>
                 <Col>
-                  Meeting Url:{" "}
-                  <a href={up.meeting_url} target="_blank">
-                    {up.meeting_url}
-                  </a>
+                  <h5>
+                    Meeting Url:{" "}
+                    <a href={up.meeting_url} target="_blank">
+                      {up.meeting_url}
+                    </a>
+                  </h5>
                 </Col>
               </Row>
             ))}

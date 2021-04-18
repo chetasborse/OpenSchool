@@ -54,7 +54,7 @@ const getEmailData = (to, dat, template) => {
                             <h4>Details</h4>
                             <p>Mentor: ${dat.first_name} ${dat.last_name}</p>
                             <p>Qualification: ${dat.qualification}</p>
-                            <p>Ratings: ${dat.rating}</p>
+                            <p>Average Rating: ${(dat.rating / dat.sessions_taken).toFixed(2)}</p>
                             <p>Sessions taken: ${dat.sessions_taken}</p>
                             <p>Date: ${dat.req_date}</p>
                             <p>Time Slot: ${dat.time_slot}</p>

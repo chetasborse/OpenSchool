@@ -74,7 +74,8 @@ class Recommendations extends Component {
             {/* <Col>Qualification: {rec.qualification}</Col> */}
             <Col>
               <h5>
-                🎖️ Average Rating : {rec.rating_points / rec.sessions_taken}
+                🎖️ Average Rating :{" "}
+                {(rec.rating_points / rec.sessions_taken).toFixed(2)}
               </h5>
             </Col>
             <Col>

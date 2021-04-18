@@ -195,15 +195,15 @@ class Profile extends Component {
           <Row>
             <Col sm={1}></Col>
             <Col sm={8}>
-              <div id="pref-list-item">
-                {subject.subject_name}
-              </div>
+              <div id="pref-list-item">{subject.subject_name}</div>
             </Col>
             <Col sm={2}>
-              <i className="bi bi-x-square-fill"
+              <i
+                className="bi bi-x-square-fill"
                 onClick={() =>
                   this.deleteSubject(subject.subject_id, subject.subject_name)
-                }></i>
+                }
+              ></i>
             </Col>
             <Col sm={1}></Col>
           </Row>
@@ -221,18 +221,18 @@ class Profile extends Component {
             <Row>
               <Col sm={1}></Col>
               <Col sm={8}>
-                <div id="pref-list-item">
-                  {language.language_name}
-                </div>
+                <div id="pref-list-item">{language.language_name}</div>
               </Col>
               <Col sm={2}>
-                <i className="bi bi-x-square-fill"
+                <i
+                  className="bi bi-x-square-fill"
                   onClick={() =>
                     this.deleteLanguage(
                       language.language_id,
                       language.language_name
-                  )}>
-                </i>
+                    )
+                  }
+                ></i>
               </Col>
               <Col sm={1}></Col>
             </Row>
@@ -271,101 +271,131 @@ class Profile extends Component {
                 <Row>
                   <Col>
                     {/* <p>Image Link: {image_link}</p> */}
-                    <img src={this.props.image_link} className="profilepic"></img>
+                    <img
+                      src={this.props.image_link}
+                      className="profilepic"
+                    ></img>
                   </Col>
                   <Col>
                     {!this.state.edit_profile && (
                       <React.Fragment>
-                        <p>Username: <b>{username}</b></p>
-                        <p>Name: <b>{first_name} {last_name}</b></p>
-                        <p>Email: <b>{email_id}</b></p>
+                        <p>
+                          Username: <b>{username}</b>
+                        </p>
+                        <p>
+                          Name:{" "}
+                          <b>
+                            {first_name} {last_name}
+                          </b>
+                        </p>
+                        <p>
+                          Email: <b>{email_id}</b>
+                        </p>
                         {is_teacher && (
                           <React.Fragment>
-                          <p>Qualification: <b>{qualification}</b></p>
-                          <p>Rating Points: <b>{rating_points}</b></p>
+                            <p>
+                              Qualification: <b>{qualification}</b>
+                            </p>
+                            <p>
+                              Average Rating Points:{" "}
+                              <b>
+                                {(rating_points / session_taken).toFixed(2)}
+                              </b>
+                            </p>
                           </React.Fragment>
                         )}
                         {!is_teacher && (
                           <React.Fragment>
-                          <p>Grade: <b>{grade}</b></p>
-                          <p>Board: <b>{board}</b></p>
+                            <p>
+                              Grade: <b>{grade}</b>
+                            </p>
+                            <p>
+                              Board: <b>{board}</b>
+                            </p>
                           </React.Fragment>
                         )}
-                        <p>Sessions done: <b>{session_taken}</b></p>
-                        <Button className="btn btn-info" onClick={this.toggle_profile}><i className="bi bi-pencil-fill"></i> Edit Profile</Button>
+                        <p>
+                          Sessions done: <b>{session_taken}</b>
+                        </p>
+                        <Button
+                          className="btn btn-info"
+                          onClick={this.toggle_profile}
+                        >
+                          <i className="bi bi-pencil-fill"></i> Edit Profile
+                        </Button>
                       </React.Fragment>
-                      )}
-                      {this.state.edit_profile && (
-                        <React.Fragment>
-                          <Form>
+                    )}
+                    {this.state.edit_profile && (
+                      <React.Fragment>
+                        <Form>
+                          <FormGroup row>
+                            <Label for="first_name">First Name:</Label>
+                            <Col sm={12}>
+                              <Input
+                                type="text"
+                                name="first_name"
+                                id="first_name"
+                                placeholder="Enter your name"
+                                value={this.state.first_name}
+                                onChange={this.handle}
+                              ></Input>
+                            </Col>
+                          </FormGroup>
+                          <FormGroup row>
+                            <Label for="last_name">Last Name:</Label>
+                            <Col sm={12}>
+                              <Input
+                                type="text"
+                                name="last_name"
+                                id="last_name"
+                                placeholder="Enter your last name"
+                                value={this.state.last_name}
+                                onChange={this.handle}
+                              ></Input>
+                            </Col>
+                          </FormGroup>
+                          <FormGroup row>
+                            <Label for="email">Email Id:</Label>
+                            <Col sm={12}>
+                              <Input
+                                type="text"
+                                name="email_id"
+                                id="email_id"
+                                placeholder="Enter your email id"
+                                value={this.state.email_id}
+                                onChange={this.handle}
+                              ></Input>
+                            </Col>
+                          </FormGroup>
+                          <FormGroup row>
+                            <Label for="file">Profile Photo:</Label>
+                            <Col sm={12}>
+                              <Input
+                                type="file"
+                                name="file"
+                                id="file"
+                                placeholder="Upload a profile photo"
+                                onChange={this.handle_file}
+                              ></Input>
+                            </Col>
+                          </FormGroup>
+                          {this.props.is_teacher && (
                             <FormGroup row>
-                              <Label for="first_name">First Name:</Label>
+                              <Label for="qualification">Qualification:</Label>
                               <Col sm={12}>
                                 <Input
                                   type="text"
-                                  name="first_name"
-                                  id="first_name"
-                                  placeholder="Enter your name"
-                                  value={this.state.first_name}
+                                  name="qualification"
+                                  id="qualification"
+                                  placeholder="Enter your Qualification"
+                                  value={this.state.qualification}
                                   onChange={this.handle}
                                 ></Input>
                               </Col>
                             </FormGroup>
-                            <FormGroup row>
-                              <Label for="last_name">Last Name:</Label>
-                              <Col sm={12}>
-                                <Input
-                                  type="text"
-                                  name="last_name"
-                                  id="last_name"
-                                  placeholder="Enter your last name"
-                                  value={this.state.last_name}
-                                  onChange={this.handle}
-                                ></Input>
-                              </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                              <Label for="email">Email Id:</Label>
-                              <Col sm={12}>
-                                <Input
-                                  type="text"
-                                  name="email_id"
-                                  id="email_id"
-                                  placeholder="Enter your email id"
-                                  value={this.state.email_id}
-                                  onChange={this.handle}
-                                ></Input>
-                              </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                              <Label for="file">Profile Photo:</Label>
-                              <Col sm={12}>
-                                <Input
-                                  type="file"
-                                  name="file"
-                                  id="file"
-                                  placeholder="Upload a profile photo"
-                                  onChange={this.handle_file}
-                                ></Input>
-                              </Col>
-                            </FormGroup>
-                            {this.props.is_teacher && (
-                              <FormGroup row>
-                                <Label for="qualification">Qualification:</Label>
-                                <Col sm={12}>
-                                  <Input
-                                    type="text"
-                                    name="qualification"
-                                    id="qualification"
-                                    placeholder="Enter your Qualification"
-                                    value={this.state.qualification}
-                                    onChange={this.handle}
-                                  ></Input>
-                                </Col>
-                              </FormGroup>
-                            )}
-                            {!this.props.is_teacher && (
-                              <React.Fragment>
+                          )}
+                          {!this.props.is_teacher && (
+                            <React.Fragment>
                               <FormGroup row>
                                 <Label for="grade">Grade:</Label>
                                 <Col sm={12}>
@@ -390,7 +420,9 @@ class Profile extends Component {
                                     value={this.state.board}
                                     onChange={this.handleboard}
                                   >
-                                    <option value="" disabled selected>Select type</option>
+                                    <option value="" disabled selected>
+                                      Select type
+                                    </option>
                                     <option value="SSC">SSC</option>
                                     <option value="CBSE">CBSE</option>
                                     <option value="ICSE">ICSE</option>
@@ -401,8 +433,19 @@ class Profile extends Component {
                             </React.Fragment>
                           )}
                         </Form>
-                        <Button className="row-btns" color="success" onClick={this.complete_edit}>Save</Button>
-                        <Button className="row-btns" onClick={this.toggle_profile}>Cancel</Button>
+                        <Button
+                          className="row-btns"
+                          color="success"
+                          onClick={this.complete_edit}
+                        >
+                          Save
+                        </Button>
+                        <Button
+                          className="row-btns"
+                          onClick={this.toggle_profile}
+                        >
+                          Cancel
+                        </Button>
                       </React.Fragment>
                     )}
                   </Col>
@@ -410,11 +453,13 @@ class Profile extends Component {
               </div>
             </Col>
           </Row>
-          <br/><br/>
+          <br />
+          <br />
           <Row className="justify-content-center">
             <Col sm={6}>
               <div className="profile-section">
-                <h5>What subjects are you interested in?</h5><br/>
+                <h5>What subjects are you interested in?</h5>
+                <br />
                 {subjects}
                 {this.state.add_subject && (
                   <React.Fragment>
@@ -425,28 +470,38 @@ class Profile extends Component {
                           onChange={(e) =>
                             this.setState({
                               selected_subject_id:
-                              e.target[e.target.selectedIndex].id,
+                                e.target[e.target.selectedIndex].id,
                               selected_subject:
-                              e.target[e.target.selectedIndex].value,
+                                e.target[e.target.selectedIndex].value,
                             })
-                          }>
-                          <option value="" disabled selected>Select subject</option>
+                          }
+                        >
+                          <option value="" disabled selected>
+                            Select subject
+                          </option>
                           {all_subjects}
                         </Input>
                       </Col>
                       <Col sm={2}>
-                          <i class="bi bi-check-square-fill" onClick={this.addSubject}></i>
+                        <i
+                          class="bi bi-check-square-fill"
+                          onClick={this.addSubject}
+                        ></i>
                       </Col>
                     </Row>
                   </React.Fragment>
                 )}
-                <br/><button className="btn btn-info" onClick={this.toggle_subject}>Add Subject</button>
+                <br />
+                <button className="btn btn-info" onClick={this.toggle_subject}>
+                  Add Subject
+                </button>
               </div>
             </Col>
             {this.props.is_teacher && (
               <Col sm={6}>
                 <div className="profile-section">
-                  <h5>What languages are you comfortable with?</h5><br/>
+                  <h5>What languages are you comfortable with?</h5>
+                  <br />
                   {languages}
                   {this.state.add_language && (
                     <React.Fragment>
@@ -457,11 +512,12 @@ class Profile extends Component {
                             onChange={(e) =>
                               this.setState({
                                 selected_language_id:
-                                e.target[e.target.selectedIndex].id,
+                                  e.target[e.target.selectedIndex].id,
                                 selected_language:
-                                e.target[e.target.selectedIndex].value,
+                                  e.target[e.target.selectedIndex].value,
                               })
-                            }>
+                            }
+                          >
                             <option value="" disabled selected>
                               Select language
                             </option>
@@ -469,12 +525,21 @@ class Profile extends Component {
                           </Input>
                         </Col>
                         <Col sm={2}>
-                          <i class="bi bi-check-square-fill" onClick={this.addLanguage}></i>
+                          <i
+                            class="bi bi-check-square-fill"
+                            onClick={this.addLanguage}
+                          ></i>
                         </Col>
                       </Row>
                     </React.Fragment>
                   )}
-                  <br/><button className="btn btn-info" onClick={this.toggle_language}>Add Language</button>
+                  <br />
+                  <button
+                    className="btn btn-info"
+                    onClick={this.toggle_language}
+                  >
+                    Add Language
+                  </button>
                 </div>
               </Col>
             )}
