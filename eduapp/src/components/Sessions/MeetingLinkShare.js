@@ -73,9 +73,12 @@ class MeetingLinkShare extends Component {
       <React.Fragment>
         {!this.state.urlsent && (
           <FormGroup row>
-            <Label for="meeting" sm={2}>
-              Meeting URL
-            </Label>
+            {" "}
+            <h5>
+              <Label for="meeting" sm={2}>
+                Meeting URL
+              </Label>
+            </h5>
             <Col sm={8}>
               <Input
                 type="text"

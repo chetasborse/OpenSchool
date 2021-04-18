@@ -106,6 +106,7 @@ class SessionCompleted extends Component {
       .post("http://localhost:5000/users/sendmail", bod)
       .then((res) => {
         console.log("email sent");
+        alert("Feedback form sent on your registered email ID");
       })
       .catch((err) => {
         console.log("error in sending mail");

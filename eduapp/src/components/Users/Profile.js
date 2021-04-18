@@ -297,7 +297,10 @@ class Profile extends Component {
                               Qualification: <b>{qualification}</b>
                             </p>
                             <p>
-                              Rating Points: <b>{rating_points}</b>
+                              Average Rating Points:{" "}
+                              <b>
+                                {(rating_points / session_taken).toFixed(2)}
+                              </b>
                             </p>
                           </React.Fragment>
                         )}
