@@ -59,6 +59,17 @@ class PendingReqMentor extends Component {
                 bod1.board = this.props.board
                 bod1.type = "teacher_session_confirm"
                 bod1.receiver = this.state.teacher.email_id
+                var bod = {
+                    request_id: this.props.request_id,
+                    mentor_id: this.state.teacher.user_id
+                }
+                axios.post("http://localhost:5000/session/set_approval", bod)
+                .then(respo => {
+                    console.log("done")
+                })
+                .catch(err => {
+                    console.log(err.message)
+                })
                 axios.post("http://localhost:5000/users/sendmail", bod1)
                 .then(re => {
                     console.log("Email sent successfully")

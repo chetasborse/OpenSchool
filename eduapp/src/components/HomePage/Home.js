@@ -10,7 +10,7 @@ import {
   Label,
   Row,
 } from "reactstrap";
-import { fetch_home } from "../../redux/Session/sessionAction";
+import { del_pend, fetch_home } from "../../redux/Session/sessionAction";
 import LandingPage from "./LandingPage";
 import AdminHome from "../Admin/AdminHome";
 import MeetingLinkShare from "../Sessions/MeetingLinkShare";
@@ -19,6 +19,7 @@ import SessionCompleted from "../Sessions/SessionCompleted";
 import Recommendations from "./Recommendations";
 import "./Styles.css";
 import PendingReqMentor from "./PendingReqMentor";
+import axios from "axios";
 
 class Home extends Component {
   constructor(props) {
@@ -58,6 +59,20 @@ class Home extends Component {
     this.props.fetchHome(this.props.user_id, this.props.is_teacher);
   };
 
+  delete_pending = (request_id, mentor_id) => {
+    var body = {
+      request_id,
+      mentor_id
+    }
+    axios.post("http://localhost:5000/session/delete_pending", body)
+    .then(res => {
+        this.props.del_pending(body)
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.user_id != this.props.user_id && !this.props.is_admin) {
       if (this.props.LoggedIn) {
@@ -94,11 +109,6 @@ class Home extends Component {
                   </b>
                 </h4>
                 {/* Subject: {this.props.all_subjects.find(sub => sub.id = up.subject_id).subject_name} */}
-                <Col>
-                  <h4>
-                    <i> - {up.topic} </i>
-                  </h4>
-                </Col>
               </Col>
               <Col>
                 <h5>
@@ -126,6 +136,11 @@ class Home extends Component {
           <Row>
             <Col>
               <h4>⏲️ {up.time_slot}</h4>
+            </Col>
+            <Col>
+              <h4>
+                <i> - {up.topic} </i>
+              </h4>
             </Col>
             <Col>
               <h5>📅 {String(up.req_date).slice(0, 10)}</h5>
@@ -183,7 +198,72 @@ class Home extends Component {
       </React.Fragment>
     ));
 
-    const pending = this.props.pending_requests.map((req) => (
+    const pending_teachers = this.props.is_teacher ? this.props.pending_requests.map((req) => (
+      <React.Fragment key={req.request_id}>
+        <Container className="spaceout">
+          <Row>
+            <Col sm={11}>
+              <h4>
+                <b>
+                  {this.props.all_subjects[parseInt(req.subject_id) - 1].subject_name}
+                </b>
+              </h4>
+            </Col>
+            <Col style={{alignItems: "end"}} sm={1}>
+                <Button className="delitem" color="none" onClick={() => this.delete_pending(req.request_id, req.mentor_id)}>&#10060;</Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h5>
+                <i>- {req.topic}</i>
+              </h5>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h5><b>Student</b>: {req.user.first_name} {req.user.last_name}</h5>  
+            </Col>
+            <Col>
+              <h5><b>Grade</b>: {req.user.grade}</h5>  
+            </Col>
+            <Col>
+              <h5><b>Board</b>: {req.user.board}</h5>  
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h5>📅 {String(req.req_date).slice(0, 10)}</h5>
+            </Col>
+            <Col>
+              <h5>⏲️ {req.time_slot}</h5>
+            </Col>
+            <Col>
+              <h5>
+                🔡 {this.props.all_languages[parseInt(req.language_id) - 1].language_name}
+              </h5>
+              {/* Language: {req.subject_id} */}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6><b>Status: </b>
+              {
+                req.final === 0 && req.approved === 0 &&
+                <span style={{color: "green"}}>Student hasn't confirmed any mentor yet</span>
+              }
+              {
+                req.final === 0 && req.approved === 1 &&
+                <span style={{color: "red"}}>Student has chosen another mentor</span>
+              }
+              </h6>
+            </Col>
+          </Row>
+        </Container>
+      </React.Fragment>
+    )) : null;
+
+    const pending = !this.props.is_teacher ? this.props.pending_requests.map((req) => (
       <React.Fragment key={req.request_id}>
         <Container className="spaceout">
           <Row>
@@ -235,7 +315,7 @@ class Home extends Component {
           }
         </Container>
       </React.Fragment>
-    ));
+    )): null;
 
     const past = this.props.past_sessions.map((up) => (
       <React.Fragment key={up.session_id}>
@@ -351,32 +431,7 @@ class Home extends Component {
             </Container>
             <br></br>
             {this.props.LoggedIn && (
-              <Container
-                style={{
-                  border: "1px solid #cecece",
-                  height: "500px",
-                  overflow: "auto",
-                }}
-              >
-                {/* <Row>
-                  <Col>
-                    <Button color="warning" onClick={this.showupcoming}>
-                      Upcoming Sessions
-                    </Button>
-                  </Col>
-                  {!this.props.is_teacher && (
-                    <Col>
-                      <Button color="warning" onClick={this.showpending}>
-                        Pending Requests
-                      </Button>
-                    </Col>
-                  )}
-                  <Col>
-                    <Button color="warning" onClick={this.showpast}>
-                      Past Sessions
-                    </Button>
-                  </Col>
-                </Row> */}
+              <React.Fragment>
                 <ButtonGroup style={{ alignSelf: "left" }}>
                   <Button color="warning" onClick={this.showupcoming}>
                     Upcoming Sessions
@@ -388,33 +443,61 @@ class Home extends Component {
                     Past Sessions
                   </Button>
                 </ButtonGroup>
-                <Row>
-                  {this.state.show_upcom &&
-                    (this.props.upcoming_sessions.length === 0 ? (
-                      <Container style={{ textAlign: "center" }}>
-                        No upcoming Sessions
-                      </Container>
-                    ) : (
-                      <Container>{upcoming}</Container>
-                    ))}
-                  {this.state.show_pend &&
-                    (this.props.pending_requests.length === 0 ? (
-                      <Container style={{ textAlign: "center" }}>
-                        No Pending Requests
-                      </Container>
-                    ) : (
-                      <Container>{pending}</Container>
-                    ))}
-                  {this.state.show_past &&
-                    (this.props.past_sessions.length === 0 ? (
-                      <Container style={{ textAlign: "center" }}>
-                        No Past Sessions
-                      </Container>
-                    ) : (
-                      <Container>{past}</Container>
-                    ))}
-                </Row>
-              </Container>
+                <Container
+                  style={{
+                    border: "1px solid #cecece",
+                    height: "500px",
+                    overflow: "auto",
+                  }}
+                >
+                  {/* <Row>
+                    <Col>
+                      <Button color="warning" onClick={this.showupcoming}>
+                        Upcoming Sessions
+                      </Button>
+                    </Col>
+                    {!this.props.is_teacher && (
+                      <Col>
+                        <Button color="warning" onClick={this.showpending}>
+                          Pending Requests
+                        </Button>
+                      </Col>
+                    )}
+                    <Col>
+                      <Button color="warning" onClick={this.showpast}>
+                        Past Sessions
+                      </Button>
+                    </Col>
+                  </Row> */}
+                  <Row>
+                    {this.state.show_upcom &&
+                      (this.props.upcoming_sessions.length === 0 ? (
+                        <Container style={{ textAlign: "center" }}>
+                          No upcoming Sessions
+                        </Container>
+                      ) : (
+                        <Container>{upcoming}</Container>
+                      ))}
+                    {this.state.show_pend &&
+                      (this.props.pending_requests.length === 0 ? (
+                        <Container style={{ textAlign: "center" }}>
+                          No Pending Requests
+                        </Container>
+                      ) : (this.props.is_teacher ?
+                        <Container>{pending_teachers}</Container>:
+                        <Container>{pending}</Container>
+                      ))}
+                    {this.state.show_past &&
+                      (this.props.past_sessions.length === 0 ? (
+                        <Container style={{ textAlign: "center" }}>
+                          No Past Sessions
+                        </Container>
+                      ) : (
+                        <Container>{past}</Container>
+                      ))}
+                  </Row>
+                </Container>
+              </React.Fragment>
             )}
           </React.Fragment>
         )}
@@ -443,6 +526,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchHome: (id, is_teacher) => dispatch(fetch_home(id, is_teacher)),
+    del_pending: (value) => dispatch(del_pend(value))
   };
 };
 

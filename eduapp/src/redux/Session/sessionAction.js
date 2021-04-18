@@ -1,24 +1,21 @@
 import axios from "axios"
-import { ADD_PENDING_SESSION, SET_MEETING_URL, SET_PAST_SESSIONS, SET_PENDING_REQUESTS, SET_UPCOMING_SESSIONS } from "./sessionTypes"
+import { ADD_PENDING_SESSION, DEL_PENDING_SESSION, SET_MEETING_URL, SET_PAST_SESSIONS, SET_PENDING_REQUESTS, SET_UPCOMING_SESSIONS } from "./sessionTypes"
 
 
 export const fetch_home = (id, is_teacher, dispatch) => {
     return (dispatch) => {
-        axios.get("http://localhost:5000/session/pending_requests", {
-            params : {
-                user_id: id
-            }
-        })
-        .then((response) => {
-            dispatch(set_pending(response.data))
-        })
-        .catch((err) => {
-            console.log(err.message)
-        })
-        // if(is_admin) {
-
-        // }
         if(is_teacher) {
+            axios.get("http://localhost:5000/session/pending_requests_teacher", {
+                params : {
+                    user_id: id
+                }
+            })
+            .then((response) => {
+                dispatch(set_pending(response.data))
+            })
+            .catch((err) => {
+                console.log(err.message)
+            })
             axios.get("http://localhost:5000/session/upcoming_sessions_teachers", {
                 params : {
                     user_id: id,
@@ -44,6 +41,17 @@ export const fetch_home = (id, is_teacher, dispatch) => {
             })
         } 
         else {
+            axios.get("http://localhost:5000/session/pending_requests", {
+                params : {
+                    user_id: id
+                }
+            })
+            .then((response) => {
+                dispatch(set_pending(response.data))
+            })
+            .catch((err) => {
+                console.log(err.message)
+            })
             axios.get("http://localhost:5000/session/upcoming_sessions_students", {
                 params : {
                     user_id: id,
@@ -119,6 +127,13 @@ export const add_pending = (value) => {
 export const set_past = (value) => {
     return {
         type: SET_PAST_SESSIONS,
+        payload: value
+    }
+}
+
+export const del_pend = (value) => {
+    return {
+        type: DEL_PENDING_SESSION,
         payload: value
     }
 }

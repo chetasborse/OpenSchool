@@ -56,3 +56,12 @@ main {
   margin-bottom: 5px;
   font-family: 'Courier New', Courier, monospace;
 }
+
+.delitem {
+  width: 20px;
+  cursor: pointer;
+}
+
+.delitem:hover {
+  width: 25px;
+}
