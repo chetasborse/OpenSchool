@@ -6,7 +6,7 @@ import { send_request } from '../../redux/Session/sessionAction';
 
 class ReqIndiSession extends Component {
     constructor(props) {
-        super(props) 
+        super(props)
         this.state = {
             modal: false,
             subject_id: '',
@@ -63,7 +63,7 @@ class ReqIndiSession extends Component {
             languages: []
         })
     }
-    
+
     componentDidUpdate(prevProps, prevState) {
         if(prevState.modal != this.state.modal && this.state.modal) {
             axios.get("http://localhost:5000/users/languages", {
@@ -93,12 +93,12 @@ class ReqIndiSession extends Component {
             .catch(err => {
                 console.log(err)
             })
-            
+
         }
     }
 
     render() {
-        
+
 
         var all_subjects = this.state.subjects.map((subject) => (
             <option key={subject.subject_id} value={subject.subject_id} id={subject.subject_id}>{subject.subject_name}</option>
@@ -117,12 +117,12 @@ class ReqIndiSession extends Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalHeader>Session Request</ModalHeader>
                     <ModalBody>
-                        <Form>
+                        <Form id="request-form">
                             <FormGroup row>
-                                <Label for="subject_id" sm={2}>Subject</Label>
-                                <Col sm={10}>
+                                <Label for="subject_id" sm={10}>Subject</Label>
+                                <Col sm={12}>
                                     <Input type="select" name="subject_id" id="subject" onChange={this.handle1}>
-                                        <option value="" disabled selected>Select the subject</option>
+                                        <option value="" disabled selected>Select a broad subject category (Ex. Maths)</option>
                                         {
                                             all_subjects
                                         }
@@ -130,26 +130,48 @@ class ReqIndiSession extends Component {
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label for="topic" sm={2}>Topic</Label>
-                                <Col sm={10}>
-                                    <Input type="text" name="topic" id="topic" placeholder="Enter the topic" value={this.state.topic} onChange={this.handle}></Input>
+                                <Label for="topic" sm={10}>Topic</Label>
+                                <Col sm={12}>
+                                    <Input type="text" name="topic" id="topic" placeholder="Enter a more specific description (Ex. Prime numbers)" value={this.state.topic} onChange={this.handle}></Input>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label for="time_slot" sm={2}>Time Slot</Label>
-                                <Col sm={10}>
-                                    <Input type="text" name="time_slot" id="time_slot" value={this.state.time_slot} onChange={this.handle} placeholder="Format: hh:mm to hh:mm"></Input>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label for="date_slot" sm={2}>Date</Label>
-                                <Col sm={10}>
+                                <Label for="date_slot" sm={10}>What date do you prefer?</Label>
+                                <Col sm={12}>
                                     <Input type="date" name="date_slot" id="date_slot" value={this.state.date_slot} onChange={this.handle}></Input>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label for="lang" sm={2}>Language</Label>
-                                <Col sm={10}>
+                              <Label for="time_slot_start" sm={5}>
+                                From :
+                              </Label>
+                              <Col sm={12}>
+                                <Input
+                                  type="time"
+                                  name="time_slot_start"
+                                  id="time_slot_start"
+                                  value={this.state.time_slot_start}
+                                  onChange={this.handle}
+                                  placeholder="Format: hh:mm"
+                                ></Input>
+                              </Col>
+                              <Label for="time_slot_end" sm={5}>
+                                To :
+                              </Label>
+                              <Col sm={12}>
+                                <Input
+                                  type="time"
+                                  name="time_slot_end"
+                                  id="time_slot_end"
+                                  value={this.state.time_slot_end}
+                                  onChange={this.handle}
+                                  placeholder="Format: hh:mm"
+                                ></Input>
+                              </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="lang" sm={10}>What language are you comfortable with?</Label>
+                                <Col sm={12}>
                                     <Input type="select" name="language_id" id="lang" onChange={this.handle1}>
                                         <option value="" disabled selected>Select the language</option>
                                         {
@@ -158,8 +180,20 @@ class ReqIndiSession extends Component {
                                     </Input>
                                 </Col>
                             </FormGroup>
-                            <Button color="success" onClick={this.handleSubmit}>Request</Button>
-                            <Button color="danger" onClick={this.toggle}>Back</Button>
+                            <Button
+                              className="row-btns"
+                              color="success"
+                              onClick={this.handleSubmit}
+                            >
+                              Send
+                            </Button>
+                            <Button
+                              className="row-btns"
+                              color="danger"
+                              onClick={this.toggle}
+                            >
+                              Cancel
+                            </Button>
                         </Form>
                     </ModalBody>
 
@@ -175,7 +209,7 @@ const mapStateToProps = state => {
     return {
         user_id: state.users.user_id,
         all_subjects: state.users.all_subjects,
-        all_languages: state.users.all_languages, 
+        all_languages: state.users.all_languages,
     }
 }
 

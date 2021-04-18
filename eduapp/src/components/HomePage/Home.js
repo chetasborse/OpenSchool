@@ -20,6 +20,7 @@ import Recommendations from "./Recommendations";
 import "./Styles.css";
 import PendingReqMentor from "./PendingReqMentor";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 class Home extends Component {
   constructor(props) {
@@ -316,7 +317,7 @@ class Home extends Component {
 
     const past = this.props.past_sessions.map((up) => (
       <React.Fragment key={up.session_id}>
-        <Container className="spaceout">
+        <Container className="spaceout-tabs-contents">
           <Row>
             <Col>
               {this.props.is_teacher && (
@@ -388,6 +389,23 @@ class Home extends Component {
               <Col style={{ textAlign: "left" }}>
                 {this.props.LoggedIn && !this.props.is_teacher && (
                   <ReqSession />
+                )}
+                {this.props.LoggedIn && this.props.is_teacher && (
+                  <main role="main">
+                    <div className="row d-flex justify-content-center">
+                      <div className="col-12 col-sm-6 text-center" id="req-session">
+                        <section id="prompt">
+                          <h3>Help curious students get the best out of their education!</h3><br/>
+                          <p>
+                            Check if there are any requests for sessions in the subjects of your expertise, and accept if you would like to conduct the session.
+                          </p>
+                        </section>
+                        <Link className="btn btn-info" to="/View_Requests">
+                          View New Requests
+                        </Link><hr/>
+                      </div>
+                    </div>
+                  </main>
                 )}
               </Col>
             </Container>

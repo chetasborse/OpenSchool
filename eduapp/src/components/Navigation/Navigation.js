@@ -74,12 +74,12 @@ class Navigation extends Component {
                                                 <Link className="nav-link" to="/Request_Session">Req_Sess</Link>
                                             </NavItem>
                                         } */}
-                                        {
+                                        {/*
                                             this.props.is_teacher &&
                                             <NavItem>
                                                 <Link className="nav-link" to="/View_Requests">Requests</Link>
                                             </NavItem>
-                                        }
+                                        */}
                                         <NavItem>
                                             <Link className="nav-link" to="/Logout">Logout</Link>
                                         </NavItem>

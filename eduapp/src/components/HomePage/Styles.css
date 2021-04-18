@@ -64,6 +64,10 @@ main {
   /* font-family: 'Times New Roman', Times, serif; */
 }
 
+#prompt {
+  font-size: 20px;
+}
+
 #accepted-mentors {
   display: inline;
   margin-right: 20px;
