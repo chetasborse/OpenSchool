@@ -74,13 +74,16 @@ export const fetch_home = (id, is_teacher, dispatch) => {
 export const send_request = (data, dispatch) => {
     return(dispatch) => {
         var body = data
+        body.entry = []
         axios.post("http://localhost:5000/session/request", body)
         .then((response) => {
+            console.log(response.data)
             dispatch(add_pending(body))
             alert("Request sent successfully")
         })
         .catch(err => {
-            console.log(err.message)
+            console.log("ithe")
+            console.log(err)
         })
     }
 }

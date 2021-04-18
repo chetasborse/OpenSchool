@@ -3,19 +3,20 @@ import {BrowserRouter as Router, Route, Switch, Link, Redirect} from 'react-rout
 import {
     Collapse,
     Navbar,
-    NavbarBrand, 
+    NavbarBrand,
     NavbarToggler,
     Nav,
     NavItem,
+    NavLink,
     Container
 } from 'reactstrap';
 import './Styles.css'
+import {connect} from 'react-redux';
 import Home from '../HomePage/Home';
 import Login from '../Users/Login';
 import Register from '../Users/Register';
 import Logout from '../Users/Logout';
 import Profile from '../Users/Profile';
-import {connect} from 'react-redux';
 import Request_view from '../Sessions/Request_view';
 import ForgotPassword from '../Admin/ForgotPassword';
 // import Request_session from '../Sessions/Request_session';
@@ -39,20 +40,23 @@ class Navigation extends Component {
             <Router>
                 <Navbar color="dark" dark expand="sm" className="mb-5" fixed="top">
                     <Container>
-                        <NavbarBrand>OpenSchool</NavbarBrand>
+                        <NavbarBrand className="mr-auto" href="/">
+                          <img id="nav-logo" src='../../logo4.png' height="40" alt='OpenSchool' />
+                          OpenSchool
+                        </NavbarBrand>
                         <NavbarToggler onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
-                            <Nav className="ml-auto" navbar> 
+                            <Nav className="ml-auto" navbar>
                                 <NavItem>
-                                    <Link className="linkclass" to="/">Home</Link>
+                                    <Link className="nav-link" to="/">Home</Link>
                                 </NavItem>
                                 {!this.props.LoggedIn &&
                                 <React.Fragment>
                                     <NavItem>
-                                        <Link className="linkclass" to="/Login">Login</Link>
-                                    </NavItem> 
+                                        <Link className="nav-link" to="/Login">Login</Link>
+                                    </NavItem>
                                     <NavItem>
-                                        <Link className="linkclass" to="/Register">Register</Link>
+                                        <Link className="nav-link" to="/Register">Register</Link>
                                     </NavItem>
                                 </React.Fragment>
                                 }
@@ -61,31 +65,31 @@ class Navigation extends Component {
                                     <React.Fragment>
                                         {   !this.props.is_admin &&
                                             <NavItem>
-                                                <Link className="linkclass" to="/Profile">Profile</Link>
+                                                <Link className="nav-link" to="/Profile">{ this.props.username }</Link>
                                             </NavItem>
                                         }
                                         {/* {
                                             !this.props.is_teacher &&
                                             <NavItem>
-                                                <Link className="linkclass" to="/Request_Session">Req_Sess</Link>
+                                                <Link className="nav-link" to="/Request_Session">Req_Sess</Link>
                                             </NavItem>
                                         } */}
                                         {
                                             this.props.is_teacher &&
                                             <NavItem>
-                                                <Link className="linkclass" to="/View_Requests">Requests</Link>
+                                                <Link className="nav-link" to="/View_Requests">Requests</Link>
                                             </NavItem>
                                         }
                                         <NavItem>
-                                            <Link className="linkclass" to="/Logout">Logout</Link>
+                                            <Link className="nav-link" to="/Logout">Logout</Link>
                                         </NavItem>
                                     </React.Fragment>
-                                }       
-                            </Nav> 
+                                }
+                            </Nav>
                         </Collapse>
                     </Container>
                 </Navbar>
-                <Switch>  
+                <Switch>
                     <Route path="/Login" render={(props) => (!this.props.LoggedIn ? (<Login/>) : (<Redirect to="/"></Redirect>))}/>
                     <Route path="/Register" render={(props) => (!this.props.LoggedIn ? (<Register/>) : (<Redirect to="/"></Redirect>))}/>
                     <Route path="/Logout" render={(props) => (this.props.LoggedIn ? (<Logout/>) : (<Redirect to="/Login"></Redirect>))}/>
@@ -93,8 +97,8 @@ class Navigation extends Component {
                     <Route path="/Profile" render={(props) => (this.props.LoggedIn && !this.props.is_admin ? (<Profile/>) : (<Redirect to="/"></Redirect>))}/>
                     <Route path="/View_Requests" render={(props) => (this.props.LoggedIn ? (this.props.is_teacher ? (<Request_view/>): (<Redirect to="/"></Redirect>)): (<Redirect to="/Login"></Redirect>))}/>
                     {/* <Route path="/Request_Session" render={(props) => (this.props.LoggedIn ? (!this.props.is_teacher ? (<Request_session/>): (<Redirect to="/View_Requests"></Redirect>)): (<Redirect to="/Login"></Redirect>))}/> */}
-                    <Route path="/" exact component={Home}/>                           
-                </Switch> 
+                    <Route path="/" exact component={Home}/>
+                </Switch>
             </Router>
         )
     }
@@ -104,9 +108,9 @@ const mapStateToProps = state => {
     return {
         LoggedIn: state.users.loggedIn,
         is_teacher: state.users.is_teacher,
-        is_admin: state.users.is_admin
+        is_admin: state.users.is_admin,
+        username: state.users.username
     }
 }
 
 export default connect(mapStateToProps)(Navigation)
-

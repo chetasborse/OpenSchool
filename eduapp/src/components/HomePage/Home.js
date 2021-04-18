@@ -11,12 +11,14 @@ import {
   Row,
 } from "reactstrap";
 import { fetch_home } from "../../redux/Session/sessionAction";
+import LandingPage from "./LandingPage";
 import AdminHome from "../Admin/AdminHome";
 import MeetingLinkShare from "../Sessions/MeetingLinkShare";
 import ReqSession from "../Sessions/ReqSession";
 import SessionCompleted from "../Sessions/SessionCompleted";
 import Recommendations from "./Recommendations";
 import "./Styles.css";
+import PendingReqMentor from "./PendingReqMentor";
 
 class Home extends Component {
   constructor(props) {
@@ -186,10 +188,9 @@ class Home extends Component {
         <Container className="spaceout">
           <Row>
             <Col>
-              {/* Subject: {req.subject_id} */}
               <h4>
                 <b>
-                  {this.props.all_subjects[req.subject_id - 1].subject_name}
+                  {this.props.all_subjects[parseInt(req.subject_id) - 1].subject_name}
                 </b>
               </h4>
               <Col>
@@ -208,11 +209,30 @@ class Home extends Component {
             </Col>
             <Col>
               <h5>
-                🔡 {this.props.all_languages[req.language_id - 1].language_name}
+                🔡 {this.props.all_languages[parseInt(req.language_id) - 1].language_name}
               </h5>
               {/* Language: {req.subject_id} */}
             </Col>
           </Row>
+          {
+            req.entry.length === 0 && req.mentor_specific === -1?
+            <Row>
+              <h5>None of the mentors have accepted your request</h5>              
+            </Row> :
+            (req.mentor_specific === -1 ?
+            <React.Fragment>
+              <Row>
+                <h5>Mentors who have accepted your request:</h5>
+              </Row>
+                {
+                  req.entry.map((entr, index) => (
+                    <Row key={entr.mentor_id}>
+                      <PendingReqMentor index={index} user_id={entr.mentor_id} username={entr.username} request_id={req.request_id}/>
+                    </Row>
+                  ))
+                }
+            </React.Fragment> : <Row><h5>This request is mentor specific</h5></Row>)
+          }
         </Container>
       </React.Fragment>
     ));
@@ -228,10 +248,21 @@ class Home extends Component {
           {this.props.is_teacher && (
             <Row>
               <Col>
-                Student: {up.first_name} {up.last_name}
+                {" "}
+                <h4>
+                  <b>
+                    {" "}
+                    {up.first_name} {up.last_name}
+                  </b>
+                </h4>
               </Col>
-              <Col>Grade: {up.grade}</Col>
-              <Col>Board: {up.board}</Col>
+              <Col>
+                <h5>
+                  <i>
+                    Grade: {up.grade}, {up.board}
+                  </i>{" "}
+                </h5>
+              </Col>
             </Row>
           )}
           {!this.props.is_teacher && (
@@ -282,7 +313,7 @@ class Home extends Component {
           <Row>
             <Col className="padded">
               <h4 className="padded">
-                <b>🎖️Rating: {up.review}/5</b>
+                <b>🎖️Your Rating: {up.review}/5</b>
               </h4>
             </Col>
           </Row>
@@ -292,16 +323,20 @@ class Home extends Component {
 
     return (
       <div className="toplookout">
+        {!this.props.LoggedIn && (
+          <React.Fragment>
+            <LandingPage />
+          </React.Fragment>
+        )}
         {this.props.is_admin && (
           <React.Fragment>
             <AdminHome />
           </React.Fragment>
         )}
-        {!this.props.is_admin && (
+        {this.props.LoggedIn && !this.props.is_admin && (
           <React.Fragment>
             <Container>
               <Col style={{ textAlign: "left" }}>
-                <h2 className="dashboard font1">Dashboard</h2>
                 {this.props.LoggedIn && !this.props.is_teacher && (
                   <ReqSession />
                 )}

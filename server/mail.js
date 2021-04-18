@@ -19,7 +19,7 @@ const getEmailData = (to, dat, template) => {
                     <body>
                         <div>
                             <h1>Good Day Teacher</h1>
-                            <h3>You have approved the session on ${dat.topic}</h3>
+                            <h3>Your approval of the session on ${dat.topic} has been confirmed by student</h3>
                             <br>
                             <h4>Details</h4>
                             <p>Student: ${dat.first_name} ${dat.last_name}</p>

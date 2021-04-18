@@ -9,7 +9,8 @@ class Request_view extends Component {
         super(props) 
         this.state = {
             requests: [],
-            verfied: props.verfied
+            verfied: props.verfied,
+            count: 0
         }
     }
     
@@ -17,14 +18,15 @@ class Request_view extends Component {
         if(this.props.verfied === 1) {
             axios.get("http://localhost:5000/session/request", {
                 params: {
-                    user_id: this.props.user_id
+                    user_id: this.props.user_id,
                 }
             })
             .then(response => {
                 this.setState({
-                    requests: response.data
+                    requests: response.data,
+                    count: response.data.filter((obj) => obj.count === 0).length
                 })
-                console.log(response.data)
+                console.log(response)
             })
             .catch(err => {
                 console.log(err)
@@ -33,20 +35,36 @@ class Request_view extends Component {
     }
 
     approveRequest = (req) => {
-
-        var body = {
-            request_id: req.request_id,
-            teacher_id: this.props.user_id,
-            student_id: req.user_id,
-            completed: 0,
-            review: 0
-        }
-        axios.post("http://localhost:5000/session/approve_post", body)
-        .then(response => {
-            if(response.data.affectedRows === 0) {
-                alert(`Sorry the response has already been approved`)
+        if(req.mentor_specific === -1) {
+            var body = {
+                request_id: req.request_id,
+                mentor_id: this.props.user_id,
             }
-            else {
+            axios.post("http://localhost:5000/session/approve_req", body)
+            .then(response => {
+                alert("Request approved. Check pending tab in home page for confirmation from student")
+                this.setState(state => {
+                    const requests = state.requests.filter(req1 => req1.request_id !== req.request_id);
+                    return {
+                        requests,
+                        count: state.count - 1
+                    };
+                })
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+        else {
+            var body = {
+                request_id: req.request_id,
+                teacher_id: this.props.user_id,
+                student_id: req.user_id,
+                completed: 0,
+                review: 0
+            }
+            axios.post("http://localhost:5000/session/approve_post_spec", body)
+            .then(response => {
                 alert(`You have successfully approved the session`)
                 axios.post("http://localhost:5000/session/session", body)
                 .then(response => {
@@ -81,17 +99,19 @@ class Request_view extends Component {
                 .catch(err => {
                     console.log(err.message)
                 })
-            }
-            this.setState(state => {
-                const requests = state.requests.filter(req1 => req1.request_id !== req.request_id);
-                return {
-                    requests,
-                };
+                this.setState(state => {
+                    const requests = state.requests.filter(req1 => req1.request_id !== req.request_id);
+                    return {
+                        requests,
+                        count: state.count - 1
+                    };
+                })
             })
-        })
-        .catch(err => {
-            console.log(err.message)
-        })
+            .catch(err => {
+                console.log(err.message)
+            })
+
+        }
     }
 
     render() {
@@ -99,6 +119,8 @@ class Request_view extends Component {
 
         const reqs = this.state.requests.map((req) => (
             <React.Fragment key={req.request_id}>
+                {
+                    req.count === 0 &&
                 <Container style={{border:"1px solid black"}}>
                     {   req.mentor_specific !== -1 &&
                         <Row>
@@ -143,6 +165,7 @@ class Request_view extends Component {
                         <Button color ="success" onClick={() => this.approveRequest(req)}>Respond</Button>
                     </Container>
                 </Container>
+                }
 
             </React.Fragment>
         ))
@@ -154,7 +177,7 @@ class Request_view extends Component {
                         <h3>Requests</h3>
                         <Container style={{border: "1px solid #cecece"}}>
                             {
-                                this.state.requests.length === 0 ? <Container>No requests</Container> : <Container>{reqs}</Container>
+                                this.state.count === 0 ? <Container>No requests</Container> : <Container>{reqs}</Container>
                             }
                         </Container>
                     </React.Fragment> :
