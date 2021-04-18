@@ -114,7 +114,6 @@ router.get("/pending_requests", async (req, res) => {
 
 router.post("/request", (req, res) => {
     var query  = `insert into requests(sender_id, subject_id, topic, time_slot, req_date, language_id, approved, mentor_specific) values (${req.body.sender_id}, ${req.body.subject_id}, "${req.body.topic}", "${req.body.time_slot}", "${req.body.req_date}", ${req.body.language_id}, ${req.body.approved}, ${req.body.mentor_specific});`
-    console.log(query)
     db.query(query, (err, result) => {
         if(err) {
             res.status(400).send("Unable to post request")
@@ -252,16 +251,42 @@ router.post("/send_meeting_url", (req, res) => {
     })
 })
 
-router.post("/approve_req", (req, res) => {
-    var query = `insert into request_pending(request_id, mentor_id, approved) values (${req.body.request_id}, ${req.body.mentor_id}, 0);`
-    db.query(query, (err, result) => {
-        if(err) {
-            res.status(400).send(err.message)
+router.post("/approve_req", async (req, res) => {
+    try {
+        var resul = await new Promise((resolve, reject) => {
+            var query = `select approved from requests where request_id = ${req.body.request_id};`
+            db.query(query, (err, result) => {
+                if(err) {
+                    reject(err)
+                }
+                else {
+                    resolve(result)
+                }
+            })
+        })
+
+        if(resul[0].approved === 0) {
+            resul = await new Promise((resolve, reject) => {
+                var query = `insert into request_pending(request_id, mentor_id, approved) values (${req.body.request_id}, ${req.body.mentor_id}, 0);`
+                db.query(query, (err, result) => {
+                    if(err) {
+                        reject(err)
+                    }
+                    else {
+                        resolve(result)
+                    }
+                })
+            })
+            res.status(200).send(resul)
         }
         else {
-            res.status(200).send("Request approved")
+            res.status(200).send("done")
         }
-    })
+
+    }
+    catch(err) {
+        res.status(400).send(err)
+    }
 })
 
 

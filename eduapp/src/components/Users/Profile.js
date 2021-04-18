@@ -140,7 +140,7 @@ class Profile extends Component {
       });
       this.toggle_subject();
     } else {
-      alert("Please enter a subject");
+      alert("Please select a subject");
     }
   };
 
@@ -162,18 +162,16 @@ class Profile extends Component {
       });
       this.toggle_language();
     } else {
-      alert("Please enter a language");
+      alert("Please select a language");
     }
   };
 
   deleteSubject = (id, sub) => {
     this.props.removeSubject(this.props.user_id, this.props.is_teacher, id);
-    alert(`${sub} subject removed successfully`);
   };
 
   deleteLanguage = (id, lang) => {
     this.props.removeLanguage(this.props.user_id, id);
-    alert(`${lang} language removed successfully`);
   };
 
   render() {
@@ -197,19 +195,15 @@ class Profile extends Component {
           <Row>
             <Col sm={1}></Col>
             <Col sm={8}>
-              <div>
-                {index + 1} {subject.subject_name}
+              <div id="pref-list-item">
+                {subject.subject_name}
               </div>
             </Col>
             <Col sm={2}>
-              <Button
-                color="danger"
+              <i className="bi bi-x-square-fill"
                 onClick={() =>
                   this.deleteSubject(subject.subject_id, subject.subject_name)
-                }
-              >
-                &times;
-              </Button>
+                }></i>
             </Col>
             <Col sm={1}></Col>
           </Row>
@@ -227,22 +221,18 @@ class Profile extends Component {
             <Row>
               <Col sm={1}></Col>
               <Col sm={8}>
-                <div>
-                  {index + 1} {language.language_name}
+                <div id="pref-list-item">
+                  {language.language_name}
                 </div>
               </Col>
               <Col sm={2}>
-                <Button
-                  color="danger"
+                <i className="bi bi-x-square-fill"
                   onClick={() =>
                     this.deleteLanguage(
                       language.language_id,
                       language.language_name
-                    )
-                  }
-                >
-                  &times;
-                </Button>
+                  )}>
+                </i>
               </Col>
               <Col sm={1}></Col>
             </Row>
@@ -274,217 +264,191 @@ class Profile extends Component {
 
     return (
       <Container className="toplookout">
-        <Row>
-          <Col>
-            <h3>Personal Details</h3>
-            {!this.state.edit_profile && (
-              <React.Fragment>
-                <p>Username: {username}</p>
-                <p>
-                  Name: {first_name} {last_name}
-                </p>
-                <p>Email: {email_id}</p>
-                {/* <p>Image Link: {image_link}</p> */}
-                <img src={this.props.image_link} className="profilepic"></img>
-                <p>Sessions taken: {session_taken}</p>
-                {is_teacher && (
-                  <React.Fragment>
-                    <p>Qualification: {qualification}</p>
-                    <p>Rating Points: {rating_points / session_taken}</p>
-                  </React.Fragment>
-                )}
-                {!is_teacher && (
-                  <React.Fragment>
-                    <p>Grade: {grade}</p>
-                    <p>Board: {board}</p>
-                  </React.Fragment>
-                )}
-                <Button onClick={this.toggle_profile}>Edit Profile</Button>
-              </React.Fragment>
-            )}
-            {this.state.edit_profile && (
-              <React.Fragment>
-                <Form>
-                  <FormGroup row>
-                    <Label for="first_name" sm={2}>
-                      First Name:
-                    </Label>
-                    <Col sm={10}>
-                      <Input
-                        type="text"
-                        name="first_name"
-                        id="first_name"
-                        placeholder="Enter your name"
-                        value={this.state.first_name}
-                        onChange={this.handle}
-                      ></Input>
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Label for="last_name" sm={2}>
-                      Last Name:
-                    </Label>
-                    <Col sm={10}>
-                      <Input
-                        type="text"
-                        name="last_name"
-                        id="last_name"
-                        placeholder="Enter your last name"
-                        value={this.state.last_name}
-                        onChange={this.handle}
-                      ></Input>
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Label for="email" sm={2}>
-                      Email Id:
-                    </Label>
-                    <Col sm={10}>
-                      <Input
-                        type="text"
-                        name="email_id"
-                        id="email_id"
-                        placeholder="Enter your email id"
-                        value={this.state.email_id}
-                        onChange={this.handle}
-                      ></Input>
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Label for="file" sm={2}>
-                      Profile Photo:
-                    </Label>
-                    <Col sm={10}>
-                      <Input
-                        type="file"
-                        name="file"
-                        id="file"
-                        placeholder="Upload a profile photo"
-                        onChange={this.handle_file}
-                      ></Input>
-                    </Col>
-                  </FormGroup>
-                  {this.props.is_teacher && (
-                    <FormGroup row>
-                      <Label for="qualification" sm={2}>
-                        Qualification:
-                      </Label>
-                      <Col sm={10}>
-                        <Input
-                          type="text"
-                          name="qualification"
-                          id="qualification"
-                          placeholder="Enter your Qualification"
-                          value={this.state.qualification}
-                          onChange={this.handle}
-                        ></Input>
-                      </Col>
-                    </FormGroup>
-                  )}
-                  {!this.props.is_teacher && (
-                    <React.Fragment>
-                      <FormGroup row>
-                        <Label for="grade" sm={2}>
-                          Grade:
-                        </Label>
-                        <Col sm={10}>
-                          <Input
-                            type="number"
-                            name="grade"
-                            id="grade"
-                            placeholder="Enter your Grade"
-                            value={this.state.grade}
-                            onChange={this.handle}
-                          ></Input>
-                        </Col>
-                      </FormGroup>
-                      <FormGroup row>
-                        <Label for="board" sm={2}>
-                          Board:
-                        </Label>
-                        <Col sm={10}>
-                          <Input
-                            type="select"
-                            name="board"
-                            id="board"
-                            placeholder="Enter your board"
-                            value={this.state.board}
-                            onChange={this.handleboard}
-                          >
-                            <option value="" disabled selected>
-                              Select type
-                            </option>
-                            <option value="SSC">SSC</option>
-                            <option value="CBSE">CBSE</option>
-                            <option value="ICSE">ICSE</option>
-                            <option value="other">other..</option>
-                          </Input>
-                        </Col>
-                      </FormGroup>
-                    </React.Fragment>
-                  )}
-                </Form>
+        <div className="profile-wrapper">
+          <Row className="justify-content-center">
+            <Col sm={9}>
+              <div className="profile-section">
                 <Row>
                   <Col>
-                    <Button onClick={this.toggle_profile}>Back</Button>
+                    {/* <p>Image Link: {image_link}</p> */}
+                    <img src={this.props.image_link} className="profilepic"></img>
                   </Col>
                   <Col>
-                    <Button color="success" onClick={this.complete_edit}>
-                      Submit
-                    </Button>
-                  </Col>
-                </Row>
-              </React.Fragment>
-            )}
-          </Col>
-          <Col>
-            <h3>Interests</h3>
-            <React.Fragment>
-              <Row>
-                {this.props.is_teacher && (
-                  <Col>
-                    <div>
-                      <h4>Languages</h4>
-                      {languages}
-                    </div>
-                    {this.state.add_language && (
+                    {!this.state.edit_profile && (
                       <React.Fragment>
-                        <Row>
-                          <Col sm={10}>
-                            <Input
-                              type="select"
-                              onChange={(e) =>
-                                this.setState({
-                                  selected_language_id:
-                                    e.target[e.target.selectedIndex].id,
-                                  selected_language:
-                                    e.target[e.target.selectedIndex].value,
-                                })
-                              }
-                            >
-                              <option value="" disabled selected>
-                                Select subject
-                              </option>
-                              {all_languages}
-                            </Input>
-                          </Col>
-                          <Col sm={2}>
-                            <Button color="success" onClick={this.addLanguage}>
-                              &#43;
-                            </Button>
-                          </Col>
-                        </Row>
+                        <p>Username: <b>{username}</b></p>
+                        <p>Name: <b>{first_name} {last_name}</b></p>
+                        <p>Email: <b>{email_id}</b></p>
+                        {is_teacher && (
+                          <React.Fragment>
+                          <p>Qualification: <b>{qualification}</b></p>
+                          <p>Rating Points: <b>{rating_points}</b></p>
+                          </React.Fragment>
+                        )}
+                        {!is_teacher && (
+                          <React.Fragment>
+                          <p>Grade: <b>{grade}</b></p>
+                          <p>Board: <b>{board}</b></p>
+                          </React.Fragment>
+                        )}
+                        <p>Sessions done: <b>{session_taken}</b></p>
+                        <Button className="btn btn-info" onClick={this.toggle_profile}><i className="bi bi-pencil-fill"></i> Edit Profile</Button>
+                      </React.Fragment>
+                      )}
+                      {this.state.edit_profile && (
+                        <React.Fragment>
+                          <Form>
+                            <FormGroup row>
+                              <Label for="first_name">First Name:</Label>
+                              <Col sm={12}>
+                                <Input
+                                  type="text"
+                                  name="first_name"
+                                  id="first_name"
+                                  placeholder="Enter your name"
+                                  value={this.state.first_name}
+                                  onChange={this.handle}
+                                ></Input>
+                              </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                              <Label for="last_name">Last Name:</Label>
+                              <Col sm={12}>
+                                <Input
+                                  type="text"
+                                  name="last_name"
+                                  id="last_name"
+                                  placeholder="Enter your last name"
+                                  value={this.state.last_name}
+                                  onChange={this.handle}
+                                ></Input>
+                              </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                              <Label for="email">Email Id:</Label>
+                              <Col sm={12}>
+                                <Input
+                                  type="text"
+                                  name="email_id"
+                                  id="email_id"
+                                  placeholder="Enter your email id"
+                                  value={this.state.email_id}
+                                  onChange={this.handle}
+                                ></Input>
+                              </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                              <Label for="file">Profile Photo:</Label>
+                              <Col sm={12}>
+                                <Input
+                                  type="file"
+                                  name="file"
+                                  id="file"
+                                  placeholder="Upload a profile photo"
+                                  onChange={this.handle_file}
+                                ></Input>
+                              </Col>
+                            </FormGroup>
+                            {this.props.is_teacher && (
+                              <FormGroup row>
+                                <Label for="qualification">Qualification:</Label>
+                                <Col sm={12}>
+                                  <Input
+                                    type="text"
+                                    name="qualification"
+                                    id="qualification"
+                                    placeholder="Enter your Qualification"
+                                    value={this.state.qualification}
+                                    onChange={this.handle}
+                                  ></Input>
+                                </Col>
+                              </FormGroup>
+                            )}
+                            {!this.props.is_teacher && (
+                              <React.Fragment>
+                              <FormGroup row>
+                                <Label for="grade">Grade:</Label>
+                                <Col sm={12}>
+                                  <Input
+                                    type="number"
+                                    name="grade"
+                                    id="grade"
+                                    placeholder="Enter your Grade"
+                                    value={this.state.grade}
+                                    onChange={this.handle}
+                                  ></Input>
+                                </Col>
+                              </FormGroup>
+                              <FormGroup row>
+                                <Label for="board">Board:</Label>
+                                <Col sm={12}>
+                                  <Input
+                                    type="select"
+                                    name="board"
+                                    id="board"
+                                    placeholder="Enter your board"
+                                    value={this.state.board}
+                                    onChange={this.handleboard}
+                                  >
+                                    <option value="" disabled selected>Select type</option>
+                                    <option value="SSC">SSC</option>
+                                    <option value="CBSE">CBSE</option>
+                                    <option value="ICSE">ICSE</option>
+                                    <option value="other">other..</option>
+                                  </Input>
+                                </Col>
+                              </FormGroup>
+                            </React.Fragment>
+                          )}
+                        </Form>
+                        <Button className="row-btns" color="success" onClick={this.complete_edit}>Save</Button>
+                        <Button className="row-btns" onClick={this.toggle_profile}>Cancel</Button>
                       </React.Fragment>
                     )}
-                    <button onClick={this.toggle_language}>Add Language</button>
                   </Col>
+                </Row>
+              </div>
+            </Col>
+          </Row>
+          <br/><br/>
+          <Row className="justify-content-center">
+            <Col sm={6}>
+              <div className="profile-section">
+                <h5>What subjects are you interested in?</h5><br/>
+                {subjects}
+                {this.state.add_subject && (
+                  <React.Fragment>
+                    <Row>
+                      <Col sm={10}>
+                        <Input
+                          type="select"
+                          onChange={(e) =>
+                            this.setState({
+                              selected_subject_id:
+                              e.target[e.target.selectedIndex].id,
+                              selected_subject:
+                              e.target[e.target.selectedIndex].value,
+                            })
+                          }>
+                          <option value="" disabled selected>Select subject</option>
+                          {all_subjects}
+                        </Input>
+                      </Col>
+                      <Col sm={2}>
+                          <i class="bi bi-check-square-fill" onClick={this.addSubject}></i>
+                      </Col>
+                    </Row>
+                  </React.Fragment>
                 )}
-                <Col>
-                  <div>
-                    <h4>Subjects</h4>
-                    {subjects}
-                  </div>
-                  {this.state.add_subject && (
+                <br/><button className="btn btn-info" onClick={this.toggle_subject}>Add Subject</button>
+              </div>
+            </Col>
+            {this.props.is_teacher && (
+              <Col sm={6}>
+                <div className="profile-section">
+                  <h5>What languages are you comfortable with?</h5><br/>
+                  {languages}
+                  {this.state.add_language && (
                     <React.Fragment>
                       <Row>
                         <Col sm={10}>
@@ -492,33 +456,30 @@ class Profile extends Component {
                             type="select"
                             onChange={(e) =>
                               this.setState({
-                                selected_subject_id:
-                                  e.target[e.target.selectedIndex].id,
-                                selected_subject:
-                                  e.target[e.target.selectedIndex].value,
+                                selected_language_id:
+                                e.target[e.target.selectedIndex].id,
+                                selected_language:
+                                e.target[e.target.selectedIndex].value,
                               })
-                            }
-                          >
+                            }>
                             <option value="" disabled selected>
-                              Select subject
+                              Select language
                             </option>
-                            {all_subjects}
+                            {all_languages}
                           </Input>
                         </Col>
                         <Col sm={2}>
-                          <Button color="success" onClick={this.addSubject}>
-                            &#43;
-                          </Button>
+                          <i class="bi bi-check-square-fill" onClick={this.addLanguage}></i>
                         </Col>
                       </Row>
                     </React.Fragment>
                   )}
-                  <button onClick={this.toggle_subject}>Add Subject</button>
-                </Col>
-              </Row>
-            </React.Fragment>
-          </Col>
-        </Row>
+                  <br/><button className="btn btn-info" onClick={this.toggle_language}>Add Language</button>
+                </div>
+              </Col>
+            )}
+          </Row>
+        </div>
       </Container>
     );
   }

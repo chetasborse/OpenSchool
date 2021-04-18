@@ -18,8 +18,11 @@ class Logout extends Component {
     render() {
         return(
             <div className="toplookout">
-                <p>Do you wish to logout?</p>
-                <button onClick={this.removeout}>Yes</button>
+              <main role="main" className="text-center">
+                <i class="bi bi-exclamation-triangle"></i><br/><br/>
+                <h4>Are you sure you want to logout?</h4>
+                <button className="btn btn-warning btn-lg" onClick={this.removeout}>Yes</button>
+              </main>
             </div>
         )
     }
