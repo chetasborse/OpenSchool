@@ -234,13 +234,13 @@ class Home extends Component {
           </Row>
           <Row>
             <Col>
-              <h5><b>Student</b>: {req.user.first_name} {req.user.last_name}</h5>  
+              <h5><b>Student</b>: {req.user.first_name} {req.user.last_name}</h5>
             </Col>
             <Col>
-              <h5><b>Grade</b>: {req.user.grade}</h5>  
+              <h5><b>Grade</b>: {req.user.grade}</h5>
             </Col>
             <Col>
-              <h5><b>Board</b>: {req.user.board}</h5>  
+              <h5><b>Board</b>: {req.user.board}</h5>
             </Col>
           </Row>
           <Row>
@@ -277,55 +277,40 @@ class Home extends Component {
 
     const pending = !this.props.is_teacher ? this.props.pending_requests.map((req) => (
       <React.Fragment key={req.request_id}>
-        <Container className="spaceout">
+        <div className="spaceout-tabs-contents">
+          <h4><b>{this.props.all_subjects[parseInt(req.subject_id) - 1].subject_name}</b> - {req.topic}</h4><br/>
           <Row>
-            <Col>
-              <h4>
-                <b>
-                  {this.props.all_subjects[parseInt(req.subject_id) - 1].subject_name}
-                </b>
-              </h4>
-              <Col>
-                <h5>
-                  <i>- {req.topic}</i>
-                </h5>
-              </Col>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col sm={2}>
               <h5>📅 {String(req.req_date).slice(0, 10)}</h5>
             </Col>
-            <Col>
+            <Col sm={3}>
               <h5>⏲️ {req.time_slot}</h5>
             </Col>
-            <Col>
+            <Col sm={2}>
               <h5>
                 🔡 {this.props.all_languages[parseInt(req.language_id) - 1].language_name}
               </h5>
               {/* Language: {req.subject_id} */}
             </Col>
-          </Row>
+          </Row><br/>
           {
             req.entry.length === 0 && req.mentor_specific === -1?
-            <Row>
-              <h5>None of the mentors have accepted your request</h5>              
-            </Row> :
+            <span>
+              <h5>Your request has not yet been accepted by any mentor.</h5>
+            </span> :
             (req.mentor_specific === -1 ?
             <React.Fragment>
-              <Row>
-                <h5>Mentors who have accepted your request:</h5>
-              </Row>
+                <h5>Accepted! View profile and select mentor.</h5>
                 {
                   req.entry.map((entr, index) => (
-                    <Row key={entr.mentor_id}>
+                    <span key={entr.mentor_id}>
                       <PendingReqMentor index={index} user_id={entr.mentor_id} username={entr.username} request_id={req.request_id}/>
-                    </Row>
+                    </span>
                   ))
                 }
             </React.Fragment> : <Row><h5>This request is mentor specific</h5></Row>)
           }
-        </Container>
+        </div>
       </React.Fragment>
     )): null;
 
@@ -334,79 +319,51 @@ class Home extends Component {
         <Container className="spaceout">
           <Row>
             <Col>
-              <img src={up.image_link} className="profilepic2"></img>
-            </Col>
-          </Row>
-          {this.props.is_teacher && (
-            <Row>
-              <Col>
-                {" "}
-                <h4>
-                  <b>
-                    {" "}
-                    {up.first_name} {up.last_name}
-                  </b>
-                </h4>
-              </Col>
-              <Col>
-                <h5>
-                  <i>
-                    Grade: {up.grade}, {up.board}
-                  </i>{" "}
-                </h5>
-              </Col>
-            </Row>
-          )}
-          {!this.props.is_teacher && (
-            <Row>
-              <Col>
-                <h4>
-                  <b>
-                    {" "}
-                    📖 {this.props.all_subjects[up.subject_id - 1].subject_name}
-                  </b>
-                </h4>
-                <Col>
-                  <h5>
-                    <i> - {up.topic} </i>
-                  </h5>
-                </Col>
-              </Col>
-              <Col>
-                <h5>
+              {this.props.is_teacher && (
+                <React.Fragment>
                   {" "}
-                  <i>by </i>
-                  <b>
-                    <i>
-                      {up.first_name} {up.last_name}, {up.qualification}
-                    </i>
-                  </b>
-                </h5>
-                <Col>
+                  <h4>
+                    <b>
+                      {" "}
+                      {up.first_name} {up.last_name}
+                    </b>
+                  </h4>
                   <h5>
-                    {" "}
-                    🔡{" "}
-                    {this.props.all_languages[up.language_id - 1].language_name}
-                    {/* Language: {this.props.all_languages.find(lang => lang.id = up.language_id).language_name} */}
+                    <i>
+                      Grade: {up.grade}, {up.board}
+                    </i>{" "}
                   </h5>
+                </React.Fragment>
+              )}
+              {!this.props.is_teacher && (
+                <React.Fragment>
+                  <h4><b>{this.props.all_subjects[up.subject_id - 1].subject_name}</b> - {up.topic}</h4>
+                  <Row>
+                    <Col sm={2}>
+                      <h5>📅 {String(up.req_date).slice(0, 10)}</h5>
+                    </Col>
+                    <Col sm={3}>
+                      <h5>⏲️ {up.time_slot}</h5>
+                    </Col>
+                    <Col sm={2}>
+                      <h5>🔡 {this.props.all_languages[up.language_id - 1].language_name}</h5>
+                      {/* Language: {req.subject_id} */}
+                    </Col>
+                  </Row><br/>
+                  <h5>Mentor: {up.first_name} {up.last_name}, {up.qualification}</h5>
+                  {/* Chetas : Put meeting link here <br/> Mark session completed button*/}
+                </React.Fragment>
+              )}
+              <Row>
+                <Col className="padded">
+                  <h4 className="padded">
+                    <b>🎖️Your Rating: {up.review}/5</b>
+                  </h4>
                 </Col>
-              </Col>
-            </Row>
-          )}
-          <Row></Row>
-          <Row>
-            <Col>
-              <h5>⏲️ {up.time_slot}</h5>
+              </Row>
             </Col>
-            <Col>
-              <h5>📅 {String(up.req_date).slice(0, 10)}</h5>
-            </Col>
-          </Row>
-          <Row>
-            <Col className="padded">
-              <h4 className="padded">
-                <b>🎖️Your Rating: {up.review}/5</b>
-              </h4>
+            <Col sm={3}>
+              <img src={up.image_link} className="profilepic2"></img>
             </Col>
           </Row>
         </Container>
@@ -433,18 +390,11 @@ class Home extends Component {
                   <ReqSession />
                 )}
               </Col>
-              {this.props.LoggedIn && (
-                <Col style={{ textAlign: "right" }}>
-                  <Button color="danger" onClick={this.refresh}>
-                    Refresh Tab
-                  </Button>
-                </Col>
-              )}
             </Container>
-            <br></br>
+            <br></br><br/>
             {this.props.LoggedIn && (
               <React.Fragment>
-                <ButtonGroup style={{ alignSelf: "left" }}>
+                <ButtonGroup>
                   <Button color="warning" onClick={this.showupcoming}>
                     Upcoming Sessions
                   </Button>
@@ -455,9 +405,14 @@ class Home extends Component {
                     Past Sessions
                   </Button>
                 </ButtonGroup>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <Button color="danger" onClick={this.refresh}>
+                  Refresh Tab
+                </Button>
                 <Container
                   style={{
                     border: "1px solid #cecece",
+                    background: "#f8f0fd",
                     height: "500px",
                     overflow: "auto",
                   }}

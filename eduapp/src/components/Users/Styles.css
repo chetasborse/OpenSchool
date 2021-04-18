@@ -3,7 +3,7 @@
     margin-bottom: 150px;
 }
 
-#login-form {
+#login-form, #reg-form {
   margin: 30px;
   text-align: left;
 }
@@ -96,13 +96,13 @@
     border-bottom: 1px solid black;
     padding-top: 25px;
     padding-bottom: 25px;
-    font-family: 'Times New Roman', Times, serif;
+    /* font-family: 'Times New Roman', Times, serif; */
 }
 
 .padded{
     padding-top: 20px;
 }
 
-.font1{
+/* .font1{
     font-family: 'Times New Roman', Times, serif;
-}
+} */

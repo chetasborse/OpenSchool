@@ -47,14 +47,27 @@ main {
 .titleModal {
   margin: 0 auto;
   font-size: 23px;
-  font-family: 'Courier New', Courier, monospace;
+  /* font-family: 'Courier New', Courier, monospace; */
 }
 
 .modalfield {
   margin-top: 5px;
   font-size: 20px;
   margin-bottom: 5px;
-  font-family: 'Courier New', Courier, monospace;
+  /* font-family: 'Courier New', Courier, monospace; */
+}
+
+.spaceout-tabs-contents{
+  border-bottom: 1px solid black;
+  padding: 40px;
+  text-align: left;
+  /* font-family: 'Times New Roman', Times, serif; */
+}
+
+#accepted-mentors {
+  display: inline;
+  margin-right: 20px;
+  margin-bottom: 10px;
 }
 
 .delitem {
