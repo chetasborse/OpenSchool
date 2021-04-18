@@ -8,11 +8,11 @@
 
 ### 📝 Table of Contents
 
-- [Description](#description)
+- [Description](#-description)
 - [How To Use](#how-to-use)
-- [🎮 Demonstration](#demonstration)
-- [🎉 Acknowledgements](#acknowledgements)
-- [Authors](#author-info)
+- [Demonstration](#-demonstration)
+- [Acknowledgements](#-acknowledgements)
+- [Authors](#-author-info)
 
 ---
 
@@ -34,7 +34,7 @@ mentors to facilitate the education of school students.
 - Frontend Library: React.js
 - Database: MySQL.
 
-[Back To The Top](#read-me-template)
+<!-- [Back To The Top](#read-me-template) -->
 
 ---
 
@@ -72,24 +72,24 @@ npm run start
 - Register as a student or mentor and login.
 - You can check and edit your profile by clicking on your username in the navigation bar.
 - For Students:
-- - 1. Enter your subjects of interest in your profile.
-- - 2. In the home page, you can request sessions on any topic of interest by clicking on  <p style='background-color:yellow'>Request Session<p>. You can directly request sessions from recommended metors too!
-- - 3. Keep checking the status of your request in the <p style='background-color:yellow'>Pending Sessions</p> tab.
-- - 4. You can choose from a list of mentors who are available and confirm the session.
-- - 5. You will receive a meeting link in <p style='background-color:yellow'>Upcoming Sessions<p> tab. Join the meeting and enjoy the session!
-- - 6. You can submit the feedback and rating for the session by clicking on  <p style='background-color:green'>Session Completed</p>.
+- 1. Enter your subjects of interest in your profile.
+- 2. In the home page, you can request sessions on any topic of interest by clicking on  <p style='background-color:yellow'>Request Session<p>. You can directly request sessions from recommended metors too!
+- 3. Keep checking the status of your request in the <p style='background-color:yellow'>Pending Sessions</p> tab.
+- 4. You can choose from a list of mentors who are available and confirm the session.
+- 5. You will receive a meeting link in <p style='background-color:yellow'>Upcoming Sessions<p> tab. Join the meeting and enjoy the session!
+- 6. You can submit the feedback and rating for the session by clicking on  <p style='background-color:green'>Session Completed</p>.
 
 - For Mentors:
-- - 1. Submit the necessary qualification documents. Once it is verified by the admin, check 
+- 1. Submit the necessary qualification documents. Once it is verified by the admin, check 
 
-[Back To The Top](#read-me-template) 
+<!-- [Back To The Top](#read-me-template)  -->
 
 ---
 
 ## 🎮 Demonstration
 ![app demo](eduapp/public/demo.gif)
 
-[Back To The Top](#read-me-template)
+<!-- [Back To The Top](#read-me-template) -->
 
 ---
 
@@ -98,7 +98,7 @@ npm run start
 - 
 - 
 
-[Back To The Top](#read-me-template)
+<!-- [Back To The Top](#read-me-template) -->
 
 ---
 ## 🖋️ Authors <a name = "authors"></a>
@@ -107,7 +107,7 @@ npm run start
 - [@Mugdha0210](https://github.com/Mugdha0210)
 - [@Urvi2904](https://github.com/Urvi2904)
 
-[Back To The Top](#read-me-template)
+<!-- [Back To The Top](#read-me-template) -->
 
 ---
 
