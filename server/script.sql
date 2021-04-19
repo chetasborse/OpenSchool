@@ -19,6 +19,7 @@ create table teachers
     rating_points int,
     sessions_taken int,
     verfied int,
+    doc_link varchar(100),
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
@@ -104,3 +105,13 @@ create table sessions_taken
     FOREIGN KEY (student_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (request_id) REFERENCES requests(request_id) ON DELETE CASCADE
 );
+
+create table request_pending
+ ( 
+    id int PRIMARY KEY AUTO_INCREMENT,
+    request_id int,
+    mentor_id int,
+    approved int,
+    FOREIGN KEY (request_id) REFERENCES requests(request_id) ON DELETE CASCADE,
+    FOREIGN KEY (mentor_id) REFERENCES teachers(user_id) ON DELETE CASCADE
+ );

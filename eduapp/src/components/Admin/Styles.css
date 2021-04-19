@@ -1,0 +1,13 @@
+.bi-check-square-fill {
+  font-size: 1.5rem;
+  color: green;
+}
+
+.bi-x-square-fill {
+  font-size: 1.5rem;
+  color: red;
+}
+
+.bi-check-square-fill:hover, .bi-x-square-fill:hover {
+  cursor: pointer;
+}
