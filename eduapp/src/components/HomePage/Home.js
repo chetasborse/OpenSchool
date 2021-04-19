@@ -177,8 +177,9 @@ class Home extends Component {
     const pending_teachers = this.props.is_teacher ? this.props.pending_requests.map((req) => (
       <React.Fragment key={req.request_id}>
         <div className="spaceout-tabs-contents">
+          <Button color="none" style={{float: "right"}} onClick={() => this.delete_pending(req.request_id, this.props.user_id)}><i class="bi bi-trash"></i><br/><br/></Button>
           <Row>
-            <Col>
+            <Col sm={9}>
               <h4><b>{this.props.all_subjects[parseInt(req.subject_id) - 1].subject_name}</b> - {req.topic}</h4><br/>
               <Row>
                 <Col sm={4}>

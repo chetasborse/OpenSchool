@@ -30,8 +30,8 @@ main {
 }
 
 .profilepic2 {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     border-radius: 50%;
     transition: width 1s, height 1s, border-radius 1s;
