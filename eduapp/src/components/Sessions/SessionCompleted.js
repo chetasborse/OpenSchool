@@ -9,6 +9,7 @@ import {
   Label,
   Modal,
   ModalBody,
+  ModalFooter,
   ModalHeader,
 } from "reactstrap";
 
@@ -18,6 +19,7 @@ class SessionCompleted extends Component {
     this.state = {
       modal: false,
       rate: 3,
+      feedback: false,
     };
   }
 
@@ -94,6 +96,9 @@ class SessionCompleted extends Component {
   };
 
   sendReviewMail = () => {
+    this.setState({
+      feedback: true
+    })
     var bod = {
       topic: this.props.topic,
       review: this.state.rate,
@@ -106,7 +111,6 @@ class SessionCompleted extends Component {
       .post("http://localhost:5000/users/sendmail", bod)
       .then((res) => {
         console.log("email sent");
-        alert("Feedback form sent on your registered email ID");
       })
       .catch((err) => {
         console.log("error in sending mail");
@@ -131,10 +135,14 @@ class SessionCompleted extends Component {
           <ModalHeader>Rate the experience</ModalHeader>
           <ModalBody>
             <FormGroup row>
-              <Label sm={10}>Receive Email for Feedback Link - </Label>
-              <Button color="success" onClick={this.sendReviewMail}>
-                Receive
-              </Button>
+            <Label sm={8}>Receive Email for Feedback Link - {this.state.feedback && <b>Sent</b>}</Label>
+              {
+                !this.state.feedback ?
+                <Button color="success" onClick={this.sendReviewMail}>
+                  Receive
+                </Button>:null
+              }
+              <Input type="checkbox">d</Input>
               <Label for="rate" sm={10}>
                 Ratings:
               </Label>
@@ -157,13 +165,15 @@ class SessionCompleted extends Component {
                 </Input>
               </Col>
             </FormGroup>
+          </ModalBody>
+          <ModalFooter>
             <Button color="success" onClick={this.rate}>
               Rate
             </Button>
             <Button color="danger" onClick={this.toggle}>
               Back
             </Button>
-          </ModalBody>
+          </ModalFooter>
         </Modal>
       </React.Fragment>
     );

@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Col, Container, Row } from "reactstrap";
+import { Link } from 'react-router-dom';
 import ReqIndiSession from "../Sessions/ReqIndiSession";
 
 class Recommendations extends Component {
@@ -54,36 +55,30 @@ class Recommendations extends Component {
   render() {
     const recommens = this.state.recomms.map((rec) => (
       <React.Fragment key={rec.user_id}>
-        <Container className="font1" style={{ border: "1px solid #cece" }}>
+        <Container className="text-left" style={{ background: "#f8f0fd", padding: 30 }}>
           <Row>
-            <Col>
+            <Col sm={3}>
               <img src={rec.image_link} className="profilepic2"></img>
             </Col>
-          </Row>
-          <Row>
             <Col>
-              <h5>
-                <b>
-                  {" "}
-                  {rec.first_name} {rec.last_name}, {rec.qualification}
-                </b>
-              </h5>
+              <h4><b>{rec.first_name} {rec.last_name}</b></h4>
+              <h5>{rec.qualification}</h5><br/>
+              <Row>
+                <Col sm={4}>
+                  <h5>📖 Sessions Taken: {rec.sessions_taken}</h5>
+                </Col>
+                <Col sm={4}>
+                  <h5>
+                    🎖️ Average Rating :{" "}
+                    {(rec.rating_points / rec.sessions_taken).toFixed(2)}
+                  </h5>
+                </Col>
+              </Row><br/>
+              {/* <Button color="success" onClick={}>Request session from {rec.first_name}</Button> */}
+              <ReqIndiSession {...rec} /><br/>
             </Col>
           </Row>
-          <Row>
-            {/* <Col>Qualification: {rec.qualification}</Col> */}
-            <Col>
-              <h5>
-                🎖️ Average Rating :{" "}
-                {(rec.rating_points / rec.sessions_taken).toFixed(2)}
-              </h5>
-            </Col>
-            <Col>
-              <h5>📖 Sessions Count: {rec.sessions_taken}</h5>
-            </Col>
-          </Row>
-          {/* <Button color="success" onClick={}>Request session from {rec.first_name}</Button> */}
-          <ReqIndiSession {...rec} />
+          <hr/>
         </Container>
       </React.Fragment>
     ));
@@ -92,15 +87,22 @@ class Recommendations extends Component {
       <Container>
         {
           <React.Fragment>
-            <Row>
-              <Col style={{ textAlign: "left", marginTop: "30px" }}>
-                <h2 className="dashboard font1">Recommendations</h2>
-              </Col>
-            </Row>
+           <br/><br/><hr/><br/><br/>
+           <h2 className="dashboard font1">Recommendations</h2><br/>
             {this.state.recomms.length === 0 ? (
-              <h3>Add favorite subjects in profile to see recommendations</h3>
+              <div className="text-left">
+                <h5>Add your favorite subjects to your profile so we can recommend mentors!</h5>
+                <Link className="btn btn-warning btn-lg" to="/Profile">
+                  Add Now!
+                </Link>
+              </div>
             ) : (
-              <Row>{recommens}</Row>
+              <Container style={{
+                border: "1px solid #cecece",
+                background: "#f8f0fd",
+                height: "500px",
+                overflow: "auto",
+              }}>{recommens}</Container>
             )}
           </React.Fragment>
         }

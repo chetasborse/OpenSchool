@@ -116,7 +116,7 @@ class ReqSession extends Component {
           <div className="row d-flex justify-content-center">
             <div className="col-12 col-sm-6 text-center" id="req-session">
               <section id="prompt">
-                <p>What topic do you want to discuss?</p>
+                <h3>What topic do you want to discuss?</h3><br/>
                 <p>
                   We have many mentors in the community willing to discuss
                   topics both in and out of your school curriculum.
@@ -124,7 +124,7 @@ class ReqSession extends Component {
               </section>
               <Button className="btn btn-info" onClick={this.toggle}>
                 Request a Session
-              </Button>
+              </Button><hr/>
             </div>
           </div>
           <Modal isOpen={this.state.modal} toggle={this.toggle}>

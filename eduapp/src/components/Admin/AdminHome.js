@@ -116,8 +116,7 @@ class AdminHome extends Component {
         <td>
           {teacher.verfied == 0 ? (
             <React.Fragment>
-              <Button
-                color="success"
+              <i className="bi bi-check-square-fill"
                 onClick={() =>
                   this.verify(
                     teacher.user_id,
@@ -127,10 +126,9 @@ class AdminHome extends Component {
                   )
                 }
               >
-                &#10004;
-              </Button>
-              <Button
-                color="danger"
+              </i>
+              &nbsp;
+              <i className="bi bi-x-square-fill"
                 onClick={() =>
                   this.suspend(
                     teacher.user_id,
@@ -140,8 +138,7 @@ class AdminHome extends Component {
                   )
                 }
               >
-                &#10006;
-              </Button>
+              </i>
             </React.Fragment>
           ) : teacher.verfied == 1 ? (
             <p style={{ color: "green" }}>Verified</p>
@@ -167,30 +164,26 @@ class AdminHome extends Component {
       <div>
         <Container className="font1">
           <Col style={{ textAlign: "center" }}>
-            <h2>Welcome, Admin!</h2>
+            <br/><h2>Welcome, Admin!</h2><br/>
           </Col>
-
-          <Col style={{ textAlign: "right" }}>
-            <Button color="danger" onClick={() => this.props.fetchAllusers()}>
-              Refresh Tab
-            </Button>
-          </Col>
-          <Col style={{ textAlign: "left" }}>
+          <Col>
             <Button
-              color="Info"
+              className="btn btn-info btn-lg"
               href="https://docs.google.com/spreadsheets/d/17-1omO8lJTXgLEPLchGxxXJvACAEa4XAmtVAbr3du7M/edit?usp=sharing"
               target="_blank"
             >
-              Check Session Feedback
-            </Button>
+              Check Session Feedback Responses
+            </Button><br/><br/><hr/><br/>
           </Col>
         </Container>
         <Button
           color="warning"
-          onClick={this.toggle_mentor}
-          style={{ marginBottom: "1rem" }}
         >
-          Mentors
+          Mentors waiting for verification
+        </Button>
+        &nbsp;&nbsp;
+        <Button color="danger" onClick={() => this.props.fetchAllusers()}>
+          Refresh Tab
         </Button>
         <Collapse isOpen={this.state.teacher_toggle}>
           <Container
@@ -218,7 +211,7 @@ class AdminHome extends Component {
         <Button
           color="warning"
           onClick={this.toggle_student}
-          style={{ marginBottom: "1rem" }}
+          style={{ marginBottom: "1rem", display:"none" }}
         >
           Students
         </Button>

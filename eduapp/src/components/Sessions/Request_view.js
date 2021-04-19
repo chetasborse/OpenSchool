@@ -2,6 +2,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { Button, Col, Container, Row } from "reactstrap";
 import React, {Component} from 'react';
+import Prompt from "../Prompt";
 
 class Request_view extends Component {
 
@@ -35,6 +36,7 @@ class Request_view extends Component {
     }
 
     approveRequest = (req) => {
+        
         if(req.mentor_specific === -1) {
             var body = {
                 request_id: req.request_id,
@@ -43,9 +45,9 @@ class Request_view extends Component {
             axios.post("http://localhost:5000/session/approve_req", body)
             .then(response => {
                 if(response.data === "done")
-                    alert("The student has already confirmed some other mentor")
+                    alert("The student has already confirmed some other mentor.")
                 else
-                    alert("Request approved. Check pending tab in home page for confirmation from student")
+                    alert("Request approved. Check pending tab on home page for confirmation from student.")
                 this.setState(state => {
                     const requests = state.requests.filter(req1 => req1.request_id !== req.request_id);
                     return {
@@ -124,49 +126,41 @@ class Request_view extends Component {
             <React.Fragment key={req.request_id}>
                 {
                     req.count === 0 &&
-                <Container style={{border:"1px solid black"}}>
+                    <Container
+                      style={{
+                        background: "#f8f0fd",
+                        overflow: "auto",
+                      }}
+                    >
                     {   req.mentor_specific !== -1 &&
-                        <Row>
-                            <Col>
-                                <h3>Specific to you</h3>
-                            </Col>
-                        </Row>
+                        <h5 color="warning"><i>Specifically sent to you</i></h5>
                     }
                     <Row>
-                        <Col sm = {6}>
-                            Sender: {req.first_name} {req.last_name}
-                        </Col>
-                        <Col sm = {3}>
-                            Grade: {req.grade}
-                        </Col>
-                        <Col sm = {3}>
-                            Board: {req.board}
-                        </Col>
+                      <Container className="center">
+                        <div className="spaceout-tabs-contents">
+                          <h4><b>{this.props.all_subjects[req.subject_id - 1].subject_name}</b> - {req.topic}</h4><br/>
+                          <Row>
+                            <Col sm={4}>
+                              <h5>📅 {String(req.req_date).slice(0, 10)}</h5>
+                            </Col>
+                            <Col sm={4}>
+                              <h5>⏲️ {req.time_slot}</h5>
+                            </Col>
+                            <Col sm={4}>
+                              <h5>🔡 {this.props.all_languages[req.language_id - 1].language_name}</h5>
+                              {/* Language: {req.subject_id} */}
+                            </Col>
+                          </Row><br/>
+                          <span>
+                            <h5>From student:&nbsp;
+                              <span> {req.first_name} {req.last_name} </span> | <span> Grade - {req.grade} </span> | <span> School Board - {req.board} </span>
+                            </h5>
+                          </span>
+                          <Prompt color="success" buttext="Accept" captext="Are you sure you want to accept?" func={this.approveRequest} param={req}></Prompt>
+                        </div>
+                      </Container>
                     </Row>
-                    <Row>
-                        <Col sm = {6}>
-                            Subject: {this.props.all_subjects[req.subject_id - 1].subject_name}
-                            {/* Subject: {this.props.all_subjects.find(sub => sub.id = req.subject_id).subject_name} */}
-                        </Col>
-                        <Col sm = {3}>
-                            Topic: {req.topic}
-                        </Col>
-                        <Col sm = {3}>
-                            Language: {this.props.all_languages[req.language_id - 1].language_name}
-                            {/* Language: {this.props.all_languages.find(lang => lang.id = req.language_id).language_name} */}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col sm = {6}>
-                            Time Slot: {req.time_slot}
-                        </Col>
-                        <Col sm = {3}>
-                            Date: {req.req_date}
-                        </Col>
-                    </Row>
-                    <Container style={{textAlign: "center"}}>
-                        <Button color ="success" onClick={() => this.approveRequest(req)}>Respond</Button>
-                    </Container>
+
                 </Container>
                 }
 
@@ -177,10 +171,17 @@ class Request_view extends Component {
             <div className="toplookout">
                 {   this.state.verfied == 1 ?
                     <React.Fragment>
-                        <h3>Requests</h3>
                         <Container style={{border: "1px solid #cecece"}}>
                             {
-                                this.state.count === 0 ? <Container>No requests</Container> : <Container>{reqs}</Container>
+                                this.state.count === 0 ? 
+                                <Container>
+                                    <main role="main" className="text-center">
+                                        <i class="bi bi-exclamation-triangle"></i><br/><br/>
+                                        <h4>No requests.</h4>
+                                        <h5>Refresh the page to get new sessions</h5>
+                                    </main>
+                                </Container> : 
+                                <Container>{reqs}</Container>
                             }
                         </Container>
                     </React.Fragment> :

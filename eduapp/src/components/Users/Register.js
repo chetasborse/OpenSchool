@@ -154,8 +154,8 @@ class Register extends Component {
 
                 <div className="content-section col-12 col-md-7">
                   <br />
-                  <h3>Create Account</h3>
-                  <Form onSubmit={this.handleSubmit}>
+                  <h3 className="text-center">Create Account</h3>
+                  <Form id="reg-form" onSubmit={this.handleSubmit}>
                     <FormGroup row>
                       <Label for="username" sm={3}>
                         Username:
@@ -264,41 +264,44 @@ class Register extends Component {
                     )}
                     {this.state.type_selected && !this.state.is_teacher && (
                       <Row>
-                        <FormGroup row>
-                          <Label for="grade" sm={3}>
-                            Grade:
-                          </Label>
-                          <Input
-                            type="number"
-                            name="grade"
-                            id="grade"
-                            placeholder="Enter your Grade"
-                            value={this.state.grade}
-                            onChange={this.handle}
-                            required
-                          ></Input>
-                        </FormGroup>
-                        <FormGroup row>
-                          <Label for="board" sm={3}>
-                            Board:
-                          </Label>
-                          <Input
-                            type="select"
-                            name="board"
-                            id="board"
-                            placeholder="Enter your board"
-                            value={this.state.board}
-                            onChange={this.handleboard}
-                            required
-                          >
-                            <option value="" disabled selected>
-                              Select type
-                            </option>
-                            <option value="SSC">SSC</option>
-                            <option value="CBSE">CBSE</option>
-                            <option value="ICSE">ICSE</option>
-                            <option value="other">other..</option>
-                          </Input>
+                        <FormGroup row className="justify-content-center">
+                          <Col sm={1}></Col>
+                          <Col sm="{3}" className="justify-content-center">
+                            <Label for="grade">
+                              Grade:
+                            </Label>
+                            <Input
+                              type="number"
+                              name="grade"
+                              id="grade"
+                              placeholder="Enter your Grade"
+                              value={this.state.grade}
+                              onChange={this.handle}
+                              required
+                            ></Input>
+                          </Col>
+                          <Col className="justify-content-center">
+                            <Label for="board">
+                              Board:
+                            </Label>
+                            <Input
+                              type="select"
+                              name="board"
+                              id="board"
+                              placeholder="Enter your board"
+                              value={this.state.board}
+                              onChange={this.handleboard}
+                              required
+                            >
+                              <option value="" disabled selected>
+                                Select board
+                              </option>
+                              <option value="SSC">SSC</option>
+                              <option value="CBSE">CBSE</option>
+                              <option value="ICSE">ICSE</option>
+                              <option value="other">other..</option>
+                            </Input>
+                          </Col>
                         </FormGroup>
                       </Row>
                     )}

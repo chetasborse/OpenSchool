@@ -1,8 +1,10 @@
 import axios from 'axios'
 import React, { Component } from 'react'
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
 import { Button, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap'
 import { fetch_home } from '../../redux/Session/sessionAction';
+import './Styles.css';
 
 class PendingReqMentor extends Component {
     constructor() {
@@ -54,7 +56,7 @@ class PendingReqMentor extends Component {
                 //console.log(response)
                 var bod1 = req
                 bod1.first_name = this.props.first_name
-                bod1.last_name = this.props.last_name 
+                bod1.last_name = this.props.last_name
                 bod1.grade = this.props.grade
                 bod1.board = this.props.board
                 bod1.type = "teacher_session_confirm"
@@ -109,39 +111,35 @@ class PendingReqMentor extends Component {
     render() {
         return(
             <React.Fragment>
-                <Button color="warning" onClick={this.toggle}>{this.props.username}</Button>
+                <Link className="btn btn-warning" id="accepted-mentors" onClick={this.toggle}>{this.props.username}</Link>
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                <ModalHeader className="titleModal">{this.state.teacher.first_name} {this.state.teacher.last_name}</ModalHeader>
+                <ModalHeader className="titleModal"><b>{this.state.teacher.first_name} {this.state.teacher.last_name}</b></ModalHeader>
                     <ModalHeader className="titleModal">
                         <Col sm = "auto">
                             <img
-                                style={{height: "200px"}}
+                                style={{height: "150px"}}
                                 src={this.state.teacher.image_link}
                                 alt="mentor image"
                             ></img>
                         </Col>
                     </ModalHeader>
                     <ModalBody>
-                        <Row>
-                            <Col lg="6">Username:</Col>
-                            <Col lg="6">{this.props.username}</Col>
-                        </Row>
-                        <Row>
-                            <Col lg="6">Qualification:</Col>
+                        <Row className="justify-content-center">
+                            <Col lg="4">Qualification:</Col>
                             <Col lg="6">{this.state.teacher.qualification}</Col>
                         </Row>
-                        <Row>
-                            <Col lg="6">Sessions Taken:</Col>
+                        <Row className="justify-content-center">
+                            <Col lg="4">Sessions Taken:</Col>
                             <Col lg="6">{this.state.teacher.sessions_taken}</Col>
                         </Row>
-                        <Row>
-                            <Col lg="6">Rating Points:</Col>
+                        <Row className="justify-content-center">
+                            <Col lg="4">Rating Points:</Col>
                             <Col lg="6">{this.state.teacher.rating_points}</Col>
                         </Row>
                     </ModalBody>
                     <ModalFooter>
                         <Button color="success" onClick={this.confirm_sess}>
-                            Confirm Approval
+                            Send Confirmation
                         </Button>
                         <Button color="danger" onClick={this.toggle}>
                             Back

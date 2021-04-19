@@ -1,4 +1,5 @@
 import axios from "axios"
+import { LOGOUT } from "../Users/userTypes"
 import { ADD_PENDING_SESSION, DEL_PENDING_SESSION, SET_MEETING_URL, SET_PAST_SESSIONS, SET_PENDING_REQUESTS, SET_UPCOMING_SESSIONS } from "./sessionTypes"
 
 
@@ -135,5 +136,11 @@ export const del_pend = (value) => {
     return {
         type: DEL_PENDING_SESSION,
         payload: value
+    }
+}
+
+export const sess_logout = (value) => {
+    return {
+        type: LOGOUT
     }
 }

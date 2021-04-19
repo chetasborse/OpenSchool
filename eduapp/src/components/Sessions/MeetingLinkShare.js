@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Col, FormGroup, Input, Label, Row } from "reactstrap";
 import { fetch_home } from "../../redux/Session/sessionAction";
+import Prompt from "../Prompt";
 
 class MeetingLinkShare extends Component {
   constructor() {
@@ -74,12 +75,14 @@ class MeetingLinkShare extends Component {
         {!this.state.urlsent && (
           <FormGroup row>
             {" "}
-            <h5>
-              <Label for="meeting" sm={2}>
-                Meeting URL
-              </Label>
-            </h5>
-            <Col sm={8}>
+            <Col sm={3}>
+              <h5>
+                <Label for="meeting">
+                  Meeting URL:
+                </Label>
+              </h5>
+            </Col>
+            <Col sm={7}>
               <Input
                 type="text"
                 name="meeting"
@@ -90,9 +93,7 @@ class MeetingLinkShare extends Component {
               ></Input>
             </Col>
             <Col sm={2}>
-              <Button color="success" onClick={this.share}>
-                Share
-              </Button>
+              <Prompt color="success" buttext="Share" captext="Are you sure this is the final link?" func={this.share} param={null}></Prompt>
             </Col>
           </FormGroup>
         )}

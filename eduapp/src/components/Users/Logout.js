@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import { logout } from '../../redux/Users/userActions';
 import axios from 'axios'
+import { sess_logout } from '../../redux/Session/sessionAction';
 
 class Logout extends Component {
     removeout = () => {
@@ -9,6 +10,7 @@ class Logout extends Component {
         .then((response) => {
             console.log(`Response after logout is ${response.data.loggedIn}`);
             this.props.logout()
+            this.props.sess_logout()
         })
         .catch(error => {
             console.log(error)
@@ -30,7 +32,8 @@ class Logout extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        logout: (data) => dispatch(logout(data))
+        logout: (data) => dispatch(logout(data)),
+        session_logout: () => dispatch(sess_logout())
     }
 }
 
