@@ -99,7 +99,7 @@ You can directly request sessions from recommended metors too!
 - 2. View new requests and accept if you are available.
 <p align="center">
  <img width=700px height=200px src="screenshots/request_session.png" alt="Complete and rate"></a>
-- 3. Wait for the student to confirm. 
+- 3. Wait for the student to confirm. You can share the meeting link if the student confirms. 
 <p align="center">
  <img width=700px height=200px src="screenshots/share_link" alt="Complete and rate"></a>
 <!-- [Back To The Top](#read-me-template)  -->
