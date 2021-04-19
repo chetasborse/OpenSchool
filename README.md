@@ -72,36 +72,41 @@ npm run start
 - Register as a student or mentor and login.
 - You can check and edit your profile by clicking on your username in the navigation bar.
 <p align="center">
- <img width=700px height=200px src="screenshots/edit_profile.png" alt="edit profile"></a>
+ <img width=700px height=300px src="screenshots/edit_profile.png" alt="edit profile"></a>
 
 - For Students:
-- 1. Enter your subjects of interest in your profile.
-- 2. In the home page, you can request sessions on any topic of interest by clicking on  Request Session. 
+1. Enter your subjects of interest in your profile.
+2. In the home page, you can request sessions on any topic of interest by clicking on  Request Session. 
+ <p align="center">
+ <img width=700px height=300px src="screenshots/ses_req.png" alt="Request a session"></a>
+
+3. You can also reqest sessions from recommended mentors!
 <p align="center">
- <img width=700px height=200px src="screenshots/recom.png" alt="recommendations"></p>
-You can directly request sessions from recommended metors too!
+ <img width=700px height=300px src="screenshots/recom.png" alt="recommendations"></a>
+ 
+4. Keep checking the status of your request in the Pending Sessions tab.
+5. You can choose from a list of mentors who are available and confirm the session.
 <p align="center">
- <img width=700px height=200px src="screenshots/ses_req.png" alt="Request a session"></a>
-- 3. Keep checking the status of your request in the Pending Sessions tab.
-- 4. You can choose from a list of mentors who are available and confirm the session.
+ <img width=700px height=300px src="screenshots/accept_request.png" alt="Request a session"></p>
+
+6. You will receive a meeting link in Upcoming Sessions tab. Join the meeting and enjoy the session!
+7. You can submit the feedback and rating for the session by clicking on Session Completed.
 <p align="center">
- <img width=700px height=200px src="screenshots/accept_request.png" alt="Request a session"></p>
-- 5. You will receive a meeting link in Upcoming Sessions tab. Join the meeting and enjoy the session!
-- 6. You can submit the feedback and rating for the session by clicking on Session Completed.
-<p align="center">
- <img width=700px height=200px src="screenshots/rate.png" alt="Complete and rate"></p>
+ <img width=700px height=300px src="screenshots/rate.png" alt="Complete and rate"></p>
 
 
 - For Mentors:
-- 1. Submit the necessary qualification document. Once it is verified by the admin, check "Home" in the navigation bar.
+1. Submit the necessary qualification document. Once it is verified by the admin, check "Home" in the navigation bar.
 <p align="center">
- <img width=700px height=200px src="screenshots/not_verified.png" alt="Complete and rate"></a>
-- 2. View new requests and accept if you are available.
+ <img width=700px height=300px src="screenshots/not_verified.png" alt="Complete and rate"></a>
+
+2. View new requests and accept if you are available.
 <p align="center">
- <img width=700px height=200px src="screenshots/request_session.png" alt="Complete and rate"></a>
-- 3. Wait for the student to confirm. You can share the meeting link if the student confirms. 
+ <img width=700px height=300px src="screenshots/request_session.png" alt="Complete and rate"></a>
+
+3. Wait for the student to confirm. You can share the meeting link if the student confirms. 
 <p align="center">
- <img width=700px height=200px src="screenshots/share_link" alt="Complete and rate"></a>
+ <img width=700px height=300px src="screenshots/share_link.png" alt="Complete and rate"></a>
 <!-- [Back To The Top](#read-me-template)  -->
 
 ---
@@ -112,11 +117,6 @@ You can directly request sessions from recommended metors too!
 <!-- [Back To The Top](#read-me-template) -->
 
 ---
-
-## 🎉 Acknowledgements <a name = "acknowledgement"></a>
-
-- 
-- 
 
 <!-- [Back To The Top](#read-me-template) -->
 
