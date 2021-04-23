@@ -23,9 +23,11 @@ class Request_view extends Component {
                 }
             })
             .then(response => {
+                var now = new Date()
+                var reqs = response.data.filter(pen => new Date(pen.req_date) >= now)
                 this.setState({
-                    requests: response.data,
-                    count: response.data.filter((obj) => obj.count === 0).length
+                    requests: reqs,
+                    count: reqs.filter((obj) => obj.count === 0).length
                 })
                 console.log(response)
             })

@@ -48,7 +48,9 @@ export const fetch_home = (id, is_teacher, dispatch) => {
                 }
             })
             .then((response) => {
-                dispatch(set_pending(response.data))
+                var now = new Date()
+                var res = response.data.filter(pen => new Date(pen.req_date) >= now)
+                dispatch(set_pending(res))
             })
             .catch((err) => {
                 console.log(err.message)

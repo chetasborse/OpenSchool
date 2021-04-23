@@ -71,6 +71,9 @@ router.get("/pending_requests_teacher", async (req, res) => {
                 }
             })         
         })
+        var now = new Date()
+        var resul = await resul.filter(pen => new Date(pen.req_date) >= now)
+        //console.log(resul.length)
         resul = await Promise.all(
             resul.map(async (item) => {
                 var user = await new Promise((resolve, reject) => {
