@@ -11,8 +11,11 @@ class ReqIndiSession extends Component {
             modal: false,
             subject_id: '',
             topic: '',
-            time_slot: '',
             date_slot: '',
+            language_id: '',
+            time_slot_start: '',
+            time_slot_end: '',
+            time_slot: '',
             lang: '',
             subjects: [],
             languages: []
@@ -38,32 +41,45 @@ class ReqIndiSession extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        console.log(this.state)
-
-        var body = {
-            sender_id: this.props.user_id,
-            subject_id: this.state.subject_id,
-            topic: this.state.topic,
-            time_slot: String(this.state.time_slot_start) +
-            " - " +
-            String(this.state.time_slot_end),
-            req_date: this.state.date_slot,
-            language_id: this.state.language_id,
-            approved: 0,
-            mentor_specific: this.props.t_id
+        var req_date = new Date(this.state.date_slot + " " + this.state.time_slot_start)
+        if(this.state.subject_id == '' || this.state.topic == '' || this.state.date_slot == '' || this.state.time_slot_end == '' || this.state.time_slot_start == '' || this.state.language_id == '') {
+            alert("Please enter all the fields")
         }
-        this.props.send_request(body)
+        else if(new Date() > req_date) {
+            alert("You cannot enter past date and time")
+        }
+        else if(this.state.time_slot_start > this.state.time_slot_end) {
+            alert("Start time cannot be more than end time")
+        }
+        else {
 
-        this.setState({
-            modal: false,
-            subject_id: '',
-            topic: '',
-            time_slot: '',
-            req_date: '',
-            language_id: '',
-            subjects: [],
-            languages: []
-        })
+            var body = {
+                sender_id: this.props.user_id,
+                subject_id: this.state.subject_id,
+                topic: this.state.topic,
+                time_slot: String(this.state.time_slot_start) +
+                " - " +
+                String(this.state.time_slot_end),
+                req_date: this.state.date_slot,
+                language_id: this.state.language_id,
+                approved: 0,
+                mentor_specific: this.props.t_id
+            }
+            this.props.send_request(body)
+    
+            this.setState({
+                modal: false,
+                subject_id: '',
+                topic: '',
+                time_slot: '',
+                req_date: '',
+                language_id: '',
+                subjects: [],
+                languages: [],
+                time_slot_end: "",
+                time_slot_start: "",
+            })
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {

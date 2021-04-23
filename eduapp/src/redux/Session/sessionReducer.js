@@ -13,9 +13,11 @@ const sessionReducer = (state = sessions_initial_State, action) => {
             ...state,
             upcoming_sessions: action.payload
         }
-        case SET_PENDING_REQUESTS: return {
-            ...state,
-            pending_requests: action.payload
+        case SET_PENDING_REQUESTS: {
+            return {
+                ...state,
+                pending_requests: action.payload
+            }
         }
         case SET_PAST_SESSIONS: return {
             ...state,
