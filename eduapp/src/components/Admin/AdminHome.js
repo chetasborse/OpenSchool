@@ -100,6 +100,27 @@ class AdminHome extends Component {
       });
   };
 
+  changeVerfied = (id) => {
+    //console.log("teacher obj is ", teacher);
+    //teacher.verfied = 2;
+    const data = {
+      user_id: id,
+    };
+    axios
+      .post("http://localhost:5000/users/changeVerfied", data)
+      .then((response) => {
+        alert("Profile status reverted");
+        const value = {
+          user_id: id,
+          verify: 0,
+        };
+        this.props.verifyUser(value);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
     var mentor_table = this.props.teachers.map((teacher) => (
       <tr key={teacher.user_id}>
@@ -146,6 +167,7 @@ class AdminHome extends Component {
             <p style={{ color: "red" }}>Suspended</p>
           )}
         </td>
+        <td><Button onClick = {() => this.changeVerfied(teacher.user_id)}>Change</Button></td>
       </tr>
     ));
 

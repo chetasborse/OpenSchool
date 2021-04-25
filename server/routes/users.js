@@ -440,6 +440,18 @@ router.post("/suspend", (req, res) => {
     })
 })
 
+router.post("/changeVerfied", (req, res) => {
+    var query = `update teachers set verfied = 0 where user_id = ${req.body.user_id};`
+    db.query(query, (err, result) => {
+        if(err) {
+            res.status(400).send(err.message)
+        }
+        else {
+            res.status(200).send(result);
+        }
+    })
+})
+
 router.get("/get_all_teachers", (req, res) => {
     var query = `select * from teachers order by user_id DESC;`
     db.query(query, (err, result) => {
