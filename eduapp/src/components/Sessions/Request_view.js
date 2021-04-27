@@ -60,6 +60,7 @@ class Request_view extends Component {
             })
             .catch(err => {
                 console.log(err)
+                alert("Unable to connect to server")
             })
         }
         else {
@@ -116,6 +117,7 @@ class Request_view extends Component {
             })
             .catch(err => {
                 console.log(err.message)
+                alert("Unable to contact the server")
             })
 
         }

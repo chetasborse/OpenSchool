@@ -16,10 +16,10 @@ class Prompt extends Component {
     }
 
     yes = () => {
-        this.props.func(this.props.param)
         this.setState({
             modal: false
         })
+        this.props.func(this.props.param)
     }
 
     render() {

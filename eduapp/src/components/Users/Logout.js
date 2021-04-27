@@ -10,7 +10,7 @@ class Logout extends Component {
         .then((response) => {
             console.log(`Response after logout is ${response.data.loggedIn}`);
             this.props.logout()
-            this.props.sess_logout()
+            this.props.session_logout()
         })
         .catch(error => {
             console.log(error)

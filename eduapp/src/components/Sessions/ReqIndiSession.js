@@ -42,6 +42,10 @@ class ReqIndiSession extends Component {
     handleSubmit = e => {
         e.preventDefault();
         var req_date = new Date(this.state.date_slot + " " + this.state.time_slot_start)
+        var end_date = new Date(this.state.date_slot + " " + this.state.time_slot_end)
+        var now = new Date()
+        var slot_diff = end_date - req_date;
+        var diff = req_date - now;
         if(this.state.subject_id == '' || this.state.topic == '' || this.state.date_slot == '' || this.state.time_slot_end == '' || this.state.time_slot_start == '' || this.state.language_id == '') {
             alert("Please enter all the fields")
         }
@@ -51,8 +55,13 @@ class ReqIndiSession extends Component {
         else if(this.state.time_slot_start > this.state.time_slot_end) {
             alert("Start time cannot be more than end time")
         }
+        else if(diff < 3600000) {
+            alert("The start time should be atleast 1 hour from current time.")
+        }
+        else if(slot_diff < 3600000) {
+        alert("The timeslot should be atleast 1 hour apart")
+        }
         else {
-
             var body = {
                 sender_id: this.props.user_id,
                 subject_id: this.state.subject_id,

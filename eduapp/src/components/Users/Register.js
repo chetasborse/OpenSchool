@@ -41,59 +41,102 @@ class Register extends Component {
       is_teacher: false,
       type_selected: false,
       register: false,
+      validFileExtensions : [".jpg", ".jpeg", ".bmp", ".gif", ".png"]
     };
+  }
+    
+  Validate = (oForm) => {
+      var arrInputs = oForm.getElementsByTagName("input");
+      for (var i = 0; i < arrInputs.length; i++) {
+          var oInput = arrInputs[i];
+          if (oInput.type == "file") {
+              var sFileName = oInput.value;
+              if (sFileName.length > 0) {
+                  var blnValid = false;
+                  for (var j = 0; j < this.state.validFileExtensions.length; j++) {
+                      var sCurExtension = this.state.validFileExtensions[j];
+                      if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                          blnValid = true;
+                          break;
+                      }
+                  }
+                  
+                  if (!blnValid) {
+                      alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + this.state.validFileExtensions.join(", "));
+                      return false;
+                  }
+              }
+          }
+      }
+      alert("file matches")
+      return true;
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     var body = this.state;
-    axios
-      .post("http://localhost:5000/users/register", body)
-      .then((response) => {
-        if (response.data.affectedRows === 1) {
-          this.setState({
-            register: true,
-            id: response.data.insertId,
+    var file_size = this.state.qualification_proof.size
+    var file_name = this.state.qualification_proof.name.slice(-4);
+    if(file_name !== ".pdf") {
+      alert("Please upload a pdf document")
+    }
+    else if(file_size < 1024 || file_size > 52428800) {
+      alert("The document size should be between 1 KB to 50 MB")
+    }
+    else {
+      if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.state.email_id)) {
+        axios
+          .post("http://localhost:5000/users/register", body)
+          .then((response) => {
+            if (response.data.affectedRows === 1) {
+              this.setState({
+                register: true,
+                id: response.data.insertId,
+              });
+              const data = new FormData();
+              data.append("file", this.state.qualification_proof);
+              data.append("id", response.data.insertId);
+              data.append("first_name", this.state.first_name);
+              data.append("last_name", this.state.last_name);
+              data.append("email_id", this.state.email_id);
+              data.append("image_link", this.state.image_link);
+              data.append("qualification", this.state.qualification);
+              if (this.state.is_teacher) {
+                axios
+                  .post("http://localhost:5000/users/teacher", data)
+                  .then((res) => {
+                    console.log("success");
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              } else {
+                axios
+                  .post("http://localhost:5000/users/student", this.state)
+                  .then((res) => {
+                    console.log("success");
+                  })
+                  .catch((err) => {
+                    console.log("fail");
+                  });
+              }
+              alert(`${this.state.username} has been registered`);
+              console.log(response.data);
+            } else {
+              alert("User already exists.\nTry signing in.");
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            console.log(body);
           });
-          const data = new FormData();
-          data.append("file", this.state.qualification_proof);
-          data.append("id", response.data.insertId);
-          data.append("first_name", this.state.first_name);
-          data.append("last_name", this.state.last_name);
-          data.append("email_id", this.state.email_id);
-          data.append("image_link", this.state.image_link);
-          data.append("qualification", this.state.qualification);
-          if (this.state.is_teacher) {
-            axios
-              .post("http://localhost:5000/users/teacher", data)
-              .then((res) => {
-                console.log("success");
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          } else {
-            axios
-              .post("http://localhost:5000/users/student", this.state)
-              .then((res) => {
-                console.log("success");
-              })
-              .catch((err) => {
-                console.log("fail");
-              });
-          }
-          alert(`${this.state.username} has been registered`);
-          console.log(response.data);
-        } else {
-          alert("User already exists.\nTry signing in.");
+        if (this.state.register) {
+          console.log(this.state);
         }
-      })
-      .catch((error) => {
-        console.log(error);
-        console.log(body);
-      });
-    if (this.state.register) {
-      console.log(this.state);
+      }
+      else {
+        alert("Please enter a valid email id")
+      }
     }
   };
 

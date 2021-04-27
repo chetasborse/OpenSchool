@@ -91,6 +91,7 @@ class SessionCompleted extends Component {
       })
       .catch((err) => {
         console.log(err.message);
+        alert("Unable to contact the server")
       });
     this.toggle();
   };

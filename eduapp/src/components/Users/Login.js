@@ -26,7 +26,6 @@ class Login extends Component {
         }
         axios.post("http://localhost:5000/users/login", body)
         .then(response => {
-
             if(typeof response.data.message !== 'undefined') {
                 alert(response.data.message)
             }
@@ -37,6 +36,7 @@ class Login extends Component {
         })
         .catch(error => {
             console.log(error)
+            alert("Cannot reach the server at the moment")
         })
 
     }

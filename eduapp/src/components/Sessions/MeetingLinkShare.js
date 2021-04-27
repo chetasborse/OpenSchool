@@ -26,47 +26,62 @@ class MeetingLinkShare extends Component {
       meeting_url: this.state.meetingUrL,
       session_id: this.props.session_id,
     };
-    axios
-      .post("http://localhost:5000/session/send_meeting_url", body)
-      .then((res) => {
-        // this.setState({
-        //     urlsent: true
-        // })
-        var bod = {
-          type: "student_send_url",
-          receiver: this.props.student_mail,
-          first_name: this.props.student_first,
-          last_name: this.props.student_last,
-          topic: this.props.topic,
-          date: this.props.date,
-          time: this.props.time,
-          meeting_url: this.state.meetingUrL,
-        };
+    var url;
+    try {
+      url = new URL(this.state.meetingUrL)
+      console.log(url.protocol)
+      if(url.protocol == "https:") {
+
         axios
-          .post("http://localhost:5000/users/sendmail", bod)
-          .then((re) => {
-            console.log("Email sent");
+          .post("http://localhost:5000/session/send_meeting_url", body)
+          .then((res) => {
+            // this.setState({
+            //     urlsent: true
+            // })
+            var bod = {
+              type: "student_send_url",
+              receiver: this.props.student_mail,
+              first_name: this.props.student_first,
+              last_name: this.props.student_last,
+              topic: this.props.topic,
+              date: this.props.date,
+              time: this.props.time,
+              meeting_url: this.state.meetingUrL,
+            };
+            axios
+              .post("http://localhost:5000/users/sendmail", bod)
+              .then((re) => {
+                console.log("Email sent");
+              })
+              .catch((er) => {
+                console.log("mail not sent");
+              });
+            bod.type = "teacher_send_url";
+            bod.first_name = this.props.first_name;
+            bod.last_name = this.props.last_name;
+            bod.receiver = this.props.email;
+            axios
+              .post("http://localhost:5000/users/sendmail", bod)
+              .then((re) => {
+                console.log("Email sent");
+              })
+              .catch((er) => {
+                console.log("mail not sent");
+              });
+            this.props.fetchHome(this.props.user_id, this.props.is_teacher);
           })
-          .catch((er) => {
-            console.log("mail not sent");
+          .catch((err) => {
+            console.log(err.message);
           });
-        bod.type = "teacher_send_url";
-        bod.first_name = this.props.first_name;
-        bod.last_name = this.props.last_name;
-        bod.receiver = this.props.email;
-        axios
-          .post("http://localhost:5000/users/sendmail", bod)
-          .then((re) => {
-            console.log("Email sent");
-          })
-          .catch((er) => {
-            console.log("mail not sent");
-          });
-        this.props.fetchHome(this.props.user_id, this.props.is_teacher);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+      }
+      else {
+        alert("Please enter a valid meeting link")
+      }
+    }
+    catch {
+      alert("Please enter a valid meeting link lol")
+    }
+
   };
 
   render() {
