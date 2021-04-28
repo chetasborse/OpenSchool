@@ -145,7 +145,7 @@ class Request_view extends Component {
                           <h4><b>{this.props.all_subjects[req.subject_id - 1].subject_name}</b> - {req.topic}</h4><br/>
                           <Row>
                             <Col sm={4}>
-                              <h5>📅 {String(req.req_date).slice(0, 10)}</h5>
+                              <h5>📅 {new Date(req.req_date).getDate() + "-" + (new Date(req.req_date).getMonth() + 1) + "-" + new Date(req.req_date).getFullYear()}</h5>
                             </Col>
                             <Col sm={4}>
                               <h5>⏲️ {req.time_slot}</h5>

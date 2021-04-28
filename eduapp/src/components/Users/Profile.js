@@ -62,37 +62,42 @@ class Profile extends Component {
   };
 
   complete_edit = () => {
-    this.toggle_profile();
-    const data = new FormData();
-    data.append("file", this.state.profile_photo);
-    data.append("user_id", this.props.user_id);
-    data.append("first_name", this.state.first_name);
-    data.append("last_name", this.state.last_name);
-    data.append("email_id", this.state.email_id);
-    data.append("grade", this.state.grade);
-    data.append("board", this.state.board);
-    data.append("qualification", this.state.qualification);
-    data.append("oldurl", this.props.image_link);
-    if (this.props.is_teacher) {
-      axios
-        .post("http://localhost:5000/users/editteacher", data)
-        .then((response) => {
-          this.props.checkUser();
-          alert("Profile updated");
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-    } else {
-      axios
-        .post("http://localhost:5000/users/editstudent", data)
-        .then((response) => {
-          this.props.checkUser();
-          alert("Profile updated");
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
+    if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.state.email_id)) {
+      this.toggle_profile();
+      const data = new FormData();
+      data.append("file", this.state.profile_photo);
+      data.append("user_id", this.props.user_id);
+      data.append("first_name", this.state.first_name);
+      data.append("last_name", this.state.last_name);
+      data.append("email_id", this.state.email_id);
+      data.append("grade", this.state.grade);
+      data.append("board", this.state.board);
+      data.append("qualification", this.state.qualification);
+      data.append("oldurl", this.props.image_link);
+      if (this.props.is_teacher) {
+        axios
+          .post("http://localhost:5000/users/editteacher", data)
+          .then((response) => {
+            this.props.checkUser();
+            alert("Profile updated");
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      } else {
+        axios
+          .post("http://localhost:5000/users/editstudent", data)
+          .then((response) => {
+            this.props.checkUser();
+            alert("Profile updated");
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      }
+    }
+    else {
+      alert("Please enter a valid email address")
     }
   };
 

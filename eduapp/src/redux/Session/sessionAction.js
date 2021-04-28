@@ -5,82 +5,91 @@ import { ADD_PENDING_SESSION, DEL_PENDING_SESSION, SET_MEETING_URL, SET_PAST_SES
 
 export const fetch_home = (id, is_teacher, dispatch) => {
     return (dispatch) => {
-        if(is_teacher) {
-            axios.get("http://localhost:5000/session/pending_requests_teacher", {
-                params : {
-                    user_id: id
-                }
-            })
-            .then((response) => {
-                var now = new Date()
-                var res = response.data.filter(pen => new Date(pen.req_date) >= now)
-                dispatch(set_pending(res))
-            })
-            .catch((err) => {
-                console.log(err.message)
-            })
-            axios.get("http://localhost:5000/session/upcoming_sessions_teachers", {
-                params : {
-                    user_id: id,
-                }
-            })
-            .then((response) => {
-                dispatch(set_upcoming(response.data))
-            })
-            .catch((err) => {
-                console.log(err.message)
-                console.log("lmao noob")
-            })
-            axios.get("http://localhost:5000/session/past_sessions_teachers", {
-                params : {
-                    user_id: id,
-                }
-            })
-            .then((response) => {
-                dispatch(set_past(response.data))
-            })
-            .catch((err) => {
-                console.log(err.message)
-            })
-        } 
-        else {
-            axios.get("http://localhost:5000/session/pending_requests", {
-                params : {
-                    user_id: id
-                }
-            })
-            .then((response) => {
-                var now = new Date()
-                var res = response.data.filter(pen => new Date(pen.req_date) >= now)
-                dispatch(set_pending(res))
-            })
-            .catch((err) => {
-                console.log(err.message)
-            })
-            axios.get("http://localhost:5000/session/upcoming_sessions_students", {
-                params : {
-                    user_id: id,
-                }
-            })
-            .then((response) => {
-                dispatch(set_upcoming(response.data))
-            })
-            .catch((err) => {
-                console.log(err.message)
-                console.log("lmao noob")
-            })
-            axios.get("http://localhost:5000/session/past_sessions_students", {
-                params : {
-                    user_id: id,
-                }
-            })
-            .then((response) => {
-                dispatch(set_past(response.data))
-            })
-            .catch((err) => {
-                console.log(err.message)
-            })
-        } 
+        var body = {
+            is_teacher,
+            id
+        }
+        axios.post("http://localhost:5000/session/move_to_past", body)
+        .then((res) => {
+            console.log(res.data)
+            if(is_teacher) {
+                axios.get("http://localhost:5000/session/pending_requests_teacher", {
+                    params : {
+                        user_id: id
+                    }
+                })
+                .then((response) => {
+                    var now = new Date()
+                    var res = response.data.filter(pen => new Date(pen.req_date) >= now)
+                    dispatch(set_pending(res))
+                })
+                .catch((err) => {
+                    alert("Cannot fetch the sessions. Please refresh the page")
+                })
+                axios.get("http://localhost:5000/session/upcoming_sessions_teachers", {
+                    params : {
+                        user_id: id,
+                    }
+                })
+                .then((response) => {
+                    dispatch(set_upcoming(response.data))
+                })
+                .catch((err) => {
+                    alert("Cannot fetch the sessions. Please refresh the page")
+                })
+                axios.get("http://localhost:5000/session/past_sessions_teachers", {
+                    params : {
+                        user_id: id,
+                    }
+                })
+                .then((response) => {
+                    dispatch(set_past(response.data))
+                })
+                .catch((err) => {
+                    alert("Cannot fetch the sessions. Please refresh the page")
+                })
+            } 
+            else {
+                axios.get("http://localhost:5000/session/pending_requests", {
+                    params : {
+                        user_id: id
+                    }
+                })
+                .then((response) => {
+                    var now = new Date()
+                    var res = response.data.filter(pen => new Date(pen.req_date) >= now)
+                    dispatch(set_pending(res))
+                })
+                .catch((err) => {
+                    alert("Cannot fetch the sessions. Please refresh the page")
+                })
+                axios.get("http://localhost:5000/session/upcoming_sessions_students", {
+                    params : {
+                        user_id: id,
+                    }
+                })
+                .then((response) => {
+                    dispatch(set_upcoming(response.data))
+                })
+                .catch((err) => {
+                    alert("Cannot fetch the sessions. Please refresh the page")
+                })
+                axios.get("http://localhost:5000/session/past_sessions_students", {
+                    params : {
+                        user_id: id,
+                    }
+                })
+                .then((response) => {
+                    dispatch(set_past(response.data))
+                })
+                .catch((err) => {
+                    alert("Cannot fetch the sessions. Please refresh the page")
+                })
+            } 
+        })
+        .catch(err => {
+            alert("Cannot fetch the sessions. Please refresh the page")
+        })
     }
 }
 

@@ -345,6 +345,27 @@ router.post("/approve_req", async (req, res) => {
     }
 })
 
-
+router.post("/move_to_past", (req, res) => {
+    var curr = new Date();
+    var set = new Date(curr.getTime() + 86400000)
+    var date = set.getFullYear().toString() + "-" + (set.getMonth() + 1).toString().padStart(2, "0") + "-" + set.getDate().toString().padStart(2, "0");
+    var query = '';
+    if(req.body.is_teacher) {
+        query = `update requests r join sessions_taken s on r.request_id = s.request_id set completed = 1 where r.req_date < "${date}" and s.teacher_id = ${req.body.id};`
+    }
+    else {
+        query = `update requests r join sessions_taken s on r.request_id = s.request_id set completed = 1 where r.req_date < "${date}" and s.student_id = ${req.body.id};`
+    }
+    console.log(query)
+    db.query(query, (err, result) => {
+        if(err) {
+            res.status(400).send("Unable to update")
+        }
+        else {
+            res.status(200).send("Successfully updated")
+        }
+    })
+    //res.status(200).send("success")
+})
 
 module.exports = router;

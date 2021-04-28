@@ -91,7 +91,7 @@ class Home extends Component {
               <h4><b>{this.props.all_subjects[up.subject_id - 1].subject_name}</b> - {up.topic}</h4>
               <Row>
                 <Col sm={4}>
-                  <h5>📅 {String(up.req_date).slice(0, 10)}</h5>
+                  <h5>📅 {new Date(up.req_date).getDate() + "-" + (new Date(up.req_date).getMonth() + 1) + "-" + new Date(up.req_date).getFullYear()}</h5>
                 </Col>
                 <Col sm={4}>
                   <h5>⏲️ {up.time_slot}</h5>
@@ -183,7 +183,7 @@ class Home extends Component {
               <h4><b>{this.props.all_subjects[parseInt(req.subject_id) - 1].subject_name}</b> - {req.topic}</h4><br/>
               <Row>
                 <Col sm={4}>
-                  <h5>📅 {String(req.req_date).slice(0, 10)}</h5>
+                  <h5>📅 {new Date(req.req_date).getDate() + "-" + (new Date(req.req_date).getMonth() + 1) + "-" + new Date(req.req_date).getFullYear()}</h5>
                 </Col>
                 <Col sm={4}>
                   <h5>⏲️ {req.time_slot}</h5>
@@ -225,7 +225,7 @@ class Home extends Component {
           <h4><b>{this.props.all_subjects[parseInt(req.subject_id) - 1].subject_name}</b> - {req.topic}</h4><br/>
           <Row>
             <Col sm={4}>
-              <h5>📅 {String(req.req_date).slice(0, 10)}</h5>
+              <h5>📅 {new Date(req.req_date).getDate() + "-" + (new Date(req.req_date).getMonth() + 1) + "-" + new Date(req.req_date).getFullYear()}</h5>
             </Col>
             <Col sm={4}>
               <h5>⏲️ {req.time_slot}</h5>
@@ -289,8 +289,8 @@ class Home extends Component {
                   <h4>
                     {
                       this.props.is_teacher ?
-                      <b>🎖️Your Rating: {up.review}/5</b>:
-                      <b>🎖️You Rated: {up.review}/5</b>
+                      <b>🎖️Your Rating: {up.review === 0 ? <span>Student didn't give a rating</span> : <span>{up.review}/5</span>}</b>:
+                      <b>🎖️You Rated: {up.review === 0 ? <span>You didn't give any review</span>: <span>{up.review}/5</span>}</b>
                     }
                   </h4>
                 </Col>
