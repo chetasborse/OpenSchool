@@ -10,7 +10,6 @@
 
 - [Description](#-description)
 - [How To Use](#how-to-use)
-- [Demonstration](#-demonstration)
 - [Acknowledgements](#-acknowledgements)
 - [Authors](#-author-info)
 
@@ -111,8 +110,6 @@ npm run start
 
 ---
 
-## 🎮 Demonstration
-![app demo](eduapp/public/demo.gif)
 
 <!-- [Back To The Top](#read-me-template) -->
 
