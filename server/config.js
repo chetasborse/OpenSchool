@@ -1,9 +1,9 @@
 module.exports = {
   mysql: {
     host: "localhost",
-    user: "root",
-    password: "sqlchetas123",
-    database: "eduapp",
+    user: "username",
+    password: "password",
+    database: "database_name",
   },
   port: 5000,
 };
