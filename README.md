@@ -48,7 +48,7 @@ mentors to facilitate the education of school students.
 Backend:
 
 ```bash
-cd eduapp
+cd server
 npm install
 nodemon index.js
 ```
@@ -56,7 +56,7 @@ nodemon index.js
 Front-end:
 
 ```bash
-cd server
+cd client
 npm install
 npm run start
 ```
